@@ -1,6 +1,7 @@
 set nocompatible
 filetype off
-let &runtimepath.='~/.config/nvim/plugged/ale'
+let &runtimepath.=',~/.config/nvim/plugged/ale'
+let filetypesWithTag = ['html', 'htmldjango', 'php', 'javascript.jsx', 'smarty', 'xml', 'xhtml']
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
@@ -13,13 +14,16 @@ Plug 'morhetz/gruvbox'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jreybert/vimagit'
 Plug 'mhinz/vim-signify'
-Plug 'heavenshell/vim-jsdoc'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'mattn/emmet-vim'
-Plug 'Valloric/MatchTagAlways'
+Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript.jsx' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript.jsx' }
+Plug 'mxw/vim-jsx', { 'for': 'javascript.jsx' }
+Plug 'mattn/emmet-vim', { 'for': filetypesWithTag }
+Plug 'Valloric/MatchTagAlways', { 'for': filetypesWithTag }
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'
+Plug 'scrooloose/nerdcommenter'
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+Plug 'gko/vim-coloresque', { 'for': ['css', 'scss', 'sass'] }
 call plug#end()
 
 filetype plugin on
@@ -32,7 +36,8 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set expandtab
-set foldmethod=syntax
+set foldtext=CustomFoldText()
+set foldmethod=indent
 set foldnestmax=3
 set relativenumber
 set nowrap
@@ -42,6 +47,8 @@ set wildignore+=*.pyc,*.zip
 set nobackup
 set noswapfile
 set nowritebackup
+highlight Normal ctermbg=none
+call matchadd('ColorColumn', '\%81v', 100)
 
 " YouCompleteMe
 let g:ycm_allow_changing_updatetime = 0
@@ -121,11 +128,13 @@ let g:mta_filetypes = {
   \ }
 
 " Functions
+" Airline
 function! AirlineInit()
   let g:airline_section_y = airline#section#create(['%p%%'])
   let g:airline_section_z = airline#section#create_right(['%l:%c'])
 endfunction
 
+" NERDTree
 function! NERDTreeInit()
   if argc() == 0 && !exists("s:std_in")
     NERDTree
@@ -149,3 +158,40 @@ endfunction
 
 autocmd VimEnter * call VimInit()
 autocmd bufenter * call VimBuffer()
+
+" Goyo
+function! s:goyo_enter()
+  highlight Normal ctermbg=235
+  set background=dark
+  set norelativenumber
+endfunction
+
+function! s:goyo_leave()
+  highlight Normal ctermbg=none
+  set relativenumber
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+" Fold
+function! CustomFoldText()
+	let fs = v:foldstart
+	while getline(fs) =~ '^\s*$' | let fs = nextnonblank(fs + 1)
+	endwhile
+	if fs > v:foldend
+		let line = getline(v:foldstart)
+	else
+		let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+	endif
+
+	let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
+	let foldSize = 1 + v:foldend - v:foldstart
+	let foldSizeStr = "+ | " . foldSize . " lines | "
+	let foldLevelStr = repeat("+--", v:foldlevel)
+	let lineCount = line("$")
+	let expansionString = repeat("-", w - strwidth(foldSizeStr.line.foldLevelStr))
+	return line . expansionString . foldSizeStr . foldLevelStr
+endf
+
+
