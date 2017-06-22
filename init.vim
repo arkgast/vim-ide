@@ -13,6 +13,13 @@ Plug 'morhetz/gruvbox'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jreybert/vimagit'
 Plug 'mhinz/vim-signify'
+Plug 'heavenshell/vim-jsdoc'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'mattn/emmet-vim'
+Plug 'Valloric/MatchTagAlways'
+Plug 'Raimondi/delimitMate'
+Plug 'godlygeek/tabular'
 call plug#end()
 
 filetype plugin on
@@ -25,7 +32,27 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 set expandtab
+set foldmethod=syntax
+set foldnestmax=3
+set relativenumber
+set nowrap
+set smartindent
+set wildmenu
 set wildignore+=*.pyc,*.zip
+set nobackup
+set noswapfile
+set nowritebackup
+
+" YouCompleteMe
+let g:ycm_allow_changing_updatetime = 0
+let g:ycm_complete_in_comments = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_goto_buffer_command = 'vertical-split'
+let g:ycm_semantic_triggers = {
+  \   'javascript,python': ['.'],
+  \   'ruby': ['.', '::'],
+  \   'php': ['->', '::']
+  \ }
 
 " ale - linter
 let g:ale_sign_column_always = 1
@@ -51,6 +78,38 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|dist)|(\.(git|hg|svn))$'
 
+" vim-jsdoc
+let g:jsdoc_allow_input_prompt = 1
+let g:jsdoc_input_description = 1
+let g:jsdoc_underscore_private = 1
+let g:jsdoc_enable_es6 = 1
+
+" vim-javascript
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_ngdoc = 1
+let g:javascript_plugin_flow = 1
+
+" vim-jsx
+let g:jsx_ext_required = 0
+
+" emmet-vim
+let g:user_emmet_install_global = 0
+let g:user_emmet_settings = {
+  \   'javascript.jsx': {
+  \     'extends': 'jsx'
+  \   }
+  \ }
+
+" MatchAlways
+let g:mta_filetypes = {
+  \ 'html': 1,
+  \ 'xhtml': 1,
+  \ 'xml': 1,
+  \ 'htmldjango': 1,
+  \ 'smarty': 1,
+  \ 'javascript.jsx': 1,
+  \ 'php': 1
+  \ }
 
 " Functions
 function! AirlineInit()
@@ -71,8 +130,8 @@ function! NERDTreeBuffer()
 endfunction
 
 function! VimInit()
-  call NERDTreeInit()
   call AirlineInit()
+  call NERDTreeInit()
 endfunction
 
 function! VimBuffer()
