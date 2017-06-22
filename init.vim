@@ -1,6 +1,6 @@
 set nocompatible
 filetype off
-let &runtimepath.='./plugged/ale'
+let &runtimepath.='~/.config/nvim/plugged/ale'
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
@@ -56,9 +56,18 @@ let g:ycm_semantic_triggers = {
 
 " ale - linter
 let g:ale_sign_column_always = 1
+let g:ale_sign_error='✗'
+let g:ale_sign_warning='⚠'
+let g:ale_echo_msg_error_str = '✗'
+let g:ale_echo_msg_warning_str = '⚠'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_linters = {
-\ 'javascript': ['eslint'],
-\}
+  \   'javascript': ['standard', 'eslint'],
+  \   'python': ['flake8'],
+  \   'php': ['php'],
+  \   'css': ['stylelint'],
+  \   'sass': ['stylelint']
+  \ }
 
 " airline status/tabline
 let g:airline_theme = 'badwolf'
@@ -114,7 +123,7 @@ let g:mta_filetypes = {
 " Functions
 function! AirlineInit()
   let g:airline_section_y = airline#section#create(['%p%%'])
-  let g:airline_section_z = airline#section#create_right(['%l', '%c'])
+  let g:airline_section_z = airline#section#create_right(['%l:%c'])
 endfunction
 
 function! NERDTreeInit()
