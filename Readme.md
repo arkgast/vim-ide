@@ -1,21 +1,22 @@
-# neovim configuration for developers
->(specially web developers)
+# [neo]vim configuration for web developers
+> django, php, reactjs, sass/css
 
-## Additional packages
+## Installation
 
-It's necessary to install `python-neovim` to use [YouCompleteMe](https://valloric.github.io/YouCompleteMe/)
+### To lint python
+    $ sudo pip install flake8
 
-    $ pip install neovim
+### To write markdown and see changes in realtime
+    $ sudo npm i -g instant-markdown-d
 
-### CSS - SASS
+### To lint **css/sass**
+    $ sudo npm i -g stylelint
+    $ npm i stylelint-scss
+    $ npm i stylelint-config-standard
 
-    $ npm install stylelint -g
-    $ npm install stylelint-scss
-    $ npm install stylelint-config-standard
+Create this file in your working dir **.stylelintrc.json**
 
-Then is necessary to create the next file **.stylelintrc.json**
-
-    // .stylelintrc.json
+    // create a file .stylelintrc.json in your working directory
     {
       "plugins": [
         "stylelint-scss"
@@ -23,8 +24,8 @@ Then is necessary to create the next file **.stylelintrc.json**
       "extends": "stylelint-config-standard"
     }
 
-## Possible issues
+## Possible errors
 
 I've got a permission error after installing **stylelint** so to fix it, it's necessary to do:
-    # Run as root
-    $ chmod 744 /opt/node/lib/node_modules/stylelint/node_modules/array-unique/index.js
+
+    $ sudo chmod 744 /opt/node/lib/node_modules/stylelint/node_modules/array-unique/index.js

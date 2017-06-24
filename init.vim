@@ -47,8 +47,32 @@ set wildignore+=*.pyc,*.zip
 set nobackup
 set noswapfile
 set nowritebackup
+set noshowmode
+set noshowcmd
+set mouse=a
 highlight Normal ctermbg=none
 call matchadd('ColorColumn', '\%81v', 100)
+set list
+exec "set listchars=tab:»·,nbsp:_,trail:·,eol:¬"
+
+" Custom mappings
+noremap ;l :
+inoremap <C-t> <Esc>:tabnew<CR>
+nnoremap <C-t> :tabnew<CR>
+nnoremap <C-Left> :tabprevious<CR>
+nnoremap <C-Right> :tabnext<CR>
+nnoremap <F5> :buffers<CR>:buffer<Space>
+nnoremap <F3> :set hlsearch!<CR>
+" Move lines, up or down
+vnoremap > >gv
+vnoremap < <gv
+" Move many lines, up or down
+nnoremap <C-Down> :m .+1<CR>==
+nnoremap <C-Up> :m .-2<CR>==
+inoremap <C-Down> <Esc>:m .+1<CR>==gi
+inoremap <C-Up> <Esc>:m .-2<CR>==gi
+vnoremap <C-Down> :m '>+1<CR>gv=gv
+vnoremap <C-Up> :m '<-2<CR>gv=gv
 
 " YouCompleteMe
 let g:ycm_allow_changing_updatetime = 0
@@ -87,6 +111,8 @@ nmap <leader>p :NERDTreeFind <CR>
 autocmd StdinReadPre * let s:std_in=1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
+let NERDTreeIgnore=["\.pyc$", "node_modules"]
+let NERDTreeMouseMode=2
 
 " ctrlp
 let g:ctrlp_map = '<c-p>'
@@ -176,22 +202,20 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " Fold
 function! CustomFoldText()
-	let fs = v:foldstart
-	while getline(fs) =~ '^\s*$' | let fs = nextnonblank(fs + 1)
-	endwhile
-	if fs > v:foldend
-		let line = getline(v:foldstart)
-	else
-		let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
-	endif
+  let fs = v:foldstart
+  while getline(fs) =~ '^\s*$' | let fs = nextnonblank(fs + 1)
+  endwhile
+  if fs > v:foldend
+    let line = getline(v:foldstart)
+  else
+    let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+  endif
 
-	let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
-	let foldSize = 1 + v:foldend - v:foldstart
-	let foldSizeStr = "+ | " . foldSize . " lines | "
-	let foldLevelStr = repeat("+--", v:foldlevel)
-	let lineCount = line("$")
-	let expansionString = repeat("-", w - strwidth(foldSizeStr.line.foldLevelStr))
-	return line . expansionString . foldSizeStr . foldLevelStr
+  let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
+  let foldSize = 1 + v:foldend - v:foldstart
+  let foldSizeStr = "+ | " . foldSize . " lines | "
+  let foldLevelStr = repeat("+--", v:foldlevel)
+  let lineCount = line("$")
+  let expansionString = repeat("-", w - strwidth(foldSizeStr.line.foldLevelStr))
+  return line . expansionString . foldSizeStr . foldLevelStr
 endf
-
-
