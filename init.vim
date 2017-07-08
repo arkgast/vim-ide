@@ -88,6 +88,7 @@ let g:ycm_semantic_triggers = {
   \   'ruby': ['.', '::'],
   \   'php': ['->', '::']
   \ }
+let g:EclimCompletionMethod = 'omnifunc'
 
 " ale - linter
 let g:ale_sign_column_always = 1
