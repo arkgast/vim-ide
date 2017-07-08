@@ -24,6 +24,7 @@ Plug 'godlygeek/tabular'
 Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'gko/vim-coloresque', { 'for': ['css', 'scss', 'sass'] }
+Plug 'alampros/vim-styled-jsx', { 'for': 'javascript.jsx' }
 call plug#end()
 
 filetype plugin on
@@ -50,10 +51,13 @@ set nowritebackup
 set noshowmode
 set noshowcmd
 set mouse=a
-highlight Normal ctermbg=none
-call matchadd('ColorColumn', '\%81v', 100)
+set autoread
+autocmd CursorHold * checktime
 set list
 exec "set listchars=tab:»·,nbsp:_,trail:·,eol:¬"
+
+call matchadd('ColorColumn', '\%81v', 100)
+highlight Normal ctermbg=none
 
 " Custom mappings
 noremap ;l :
@@ -93,12 +97,13 @@ let g:ale_echo_msg_error_str = '✗'
 let g:ale_echo_msg_warning_str = '⚠'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_linters = {
-  \   'javascript': ['standard', 'eslint'],
+  \   'javascript': ['standard'],
   \   'python': ['flake8'],
   \   'php': ['php'],
   \   'css': ['stylelint'],
   \   'sass': ['stylelint']
   \ }
+let g:ale_python_flake8_args = '--ignore=E501'
 
 " airline status/tabline
 let g:airline_theme = 'badwolf'
@@ -135,7 +140,7 @@ let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0
 
 " emmet-vim
-let g:user_emmet_install_global = 0
+let g:user_emmet_install_global = 1
 let g:user_emmet_settings = {
   \   'javascript.jsx': {
   \     'extends': 'jsx'
