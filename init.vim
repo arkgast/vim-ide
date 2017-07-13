@@ -3,7 +3,7 @@ filetype off
 let &runtimepath.=',~/.config/nvim/plugged/ale'
 let filetypesWithTag = ['html', 'htmldjango', 'php', 'javascript.jsx', 'smarty', 'xml', 'xhtml']
 
-call plug#begin('~/.config/nvim/plugged')
+call plug#begin('~/.vim/plugged')
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
 Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'
@@ -25,24 +25,27 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'gko/vim-coloresque', { 'for': ['css', 'scss', 'sass'] }
 Plug 'alampros/vim-styled-jsx', { 'for': 'javascript.jsx' }
+Plug 'jparise/vim-graphql', { 'for': 'javascript.jsx' }
 call plug#end()
 
-filetype plugin on
+filetype plugin indent on
 
 " Configurations
 colorscheme gruvbox
 set background=dark
 set backspace=2
+set encoding=utf8
+set expandtab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-set expandtab
 set foldtext=CustomFoldText()
 set foldmethod=indent
 set foldnestmax=3
 set relativenumber
 set nowrap
-set smartindent
+set hlsearch
+set incsearch
 set wildmenu
 set wildignore+=*.pyc,*.zip
 set nobackup
@@ -61,6 +64,7 @@ highlight Normal ctermbg=none
 
 " Custom mappings
 noremap ;l :
+inoremap jk <ESC>
 inoremap <C-t> <Esc>:tabnew<CR>
 nnoremap <C-t> :tabnew<CR>
 nnoremap <C-Left> :tabprevious<CR>
@@ -88,7 +92,6 @@ let g:ycm_semantic_triggers = {
   \   'ruby': ['.', '::'],
   \   'php': ['->', '::']
   \ }
-let g:EclimCompletionMethod = 'omnifunc'
 
 " ale - linter
 let g:ale_sign_column_always = 1
@@ -105,6 +108,11 @@ let g:ale_linters = {
   \   'sass': ['stylelint']
   \ }
 let g:ale_python_flake8_args = '--ignore=E501'
+
+" eclim
+let g:EclimCompletionMethod = 'omnifunc'
+let g:EclimJavascriptValidate = 0
+let g:EclimLogLevel = 'trace'
 
 " airline status/tabline
 let g:airline_theme = 'badwolf'
@@ -124,7 +132,7 @@ let NERDTreeMouseMode=2
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|dist)|(\.(git|hg|svn))$'
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|dist|build)|(\.(git|hg|svn))$'
 
 " vim-jsdoc
 let g:jsdoc_allow_input_prompt = 1

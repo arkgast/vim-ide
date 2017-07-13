@@ -1,4 +1,8 @@
-# Dirs
-plugged
-eclim
-plugin
+# DIRS
+# Plug
+autoload/
+plugged/
+
+# Eclim
+eclim/
+plugin/
