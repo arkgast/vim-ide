@@ -1,6 +1,6 @@
 set nocompatible
 filetype off
-let &runtimepath.=',~/.config/nvim/plugged/ale'
+let &runtimepath.=',~/.vim/plugged/ale'
 let filetypesWithTag = ['html', 'htmldjango', 'php', 'javascript.jsx', 'smarty', 'xml', 'xhtml']
 
 call plug#begin('~/.vim/plugged')
@@ -48,6 +48,7 @@ set hlsearch
 set incsearch
 set wildmenu
 set wildignore+=*.pyc,*.zip
+set showmatch
 set nobackup
 set noswapfile
 set nowritebackup
@@ -55,10 +56,12 @@ set noshowmode
 set noshowcmd
 set mouse=a
 set autoread
+set laststatus=2
 autocmd CursorHold * checktime
 set list
 exec "set listchars=tab:»·,nbsp:_,trail:·,eol:¬"
 
+let mapleader = ","
 call matchadd('ColorColumn', '\%81v', 100)
 highlight Normal ctermbg=none
 
@@ -71,6 +74,7 @@ nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>
 nnoremap <F5> :buffers<CR>:buffer<Space>
 nnoremap <F3> :set hlsearch!<CR>
+noremap % v%
 " Move lines, up or down
 vnoremap > >gv
 vnoremap < <gv
@@ -101,7 +105,7 @@ let g:ale_echo_msg_error_str = '✗'
 let g:ale_echo_msg_warning_str = '⚠'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_linters = {
-  \   'javascript': ['standard'],
+  \   'javascript': ['eslint'],
   \   'python': ['flake8'],
   \   'php': ['php'],
   \   'css': ['stylelint'],
@@ -157,6 +161,7 @@ let g:user_emmet_settings = {
   \ }
 
 " MatchAlways
+nnoremap <leader>% :MtaJumpToOtherTag<cr>
 let g:mta_filetypes = {
   \ 'html': 1,
   \ 'xhtml': 1,

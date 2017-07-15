@@ -1,22 +1,24 @@
 # [neo]vim configuration for web developers
 > django, php, reactjs, sass/css
 
+Configuration to speed up development
+
 ## Installation
 
-### To lint python
-    $ sudo pip install flake8
-
-### To write markdown and see changes in realtime
+### Markdown
     $ sudo npm i -g instant-markdown-d
 
-### To lint **css/sass**
+### Linters
+#### Python
+    $ sudo pip install flake8
+
+#### CSS SASS LESS
     $ sudo npm i -g stylelint
     $ npm i stylelint-scss
     $ npm i stylelint-config-standard
 
 Create this file in your working dir **.stylelintrc.json**
 
-    // create a file .stylelintrc.json in your working directory
     {
       "plugins": [
         "stylelint-scss"
