@@ -27,6 +27,7 @@ Plug 'gko/vim-coloresque', { 'for': ['css', 'scss', 'sass'] }
 Plug 'alampros/vim-styled-jsx', { 'for': 'javascript.jsx' }
 Plug 'jparise/vim-graphql', { 'for': 'javascript.jsx' }
 Plug 'OrangeT/vim-csharp'
+Plug 'alpertuna/vim-header'
 call plug#end()
 
 filetype plugin indent on
@@ -141,7 +142,7 @@ let NERDTreeMouseMode=2
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|dist|build)|(\.(git|hg|svn))$'
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|dist|build\/)|(\.(git|hg|svn))$'
 
 " vim-jsdoc
 let g:jsdoc_allow_input_prompt = 1
@@ -176,6 +177,16 @@ let g:mta_filetypes = {
   \ 'javascript.jsx': 1,
   \ 'php': 1
   \ }
+
+" vim-header
+let g:header_field_filename = 0
+let g:header_field_author = 'Arnold Gandarillas Castillo'
+let g:header_field_author_email = 'arkgast@gmail.com'
+let g:header_auto_add_header = 0
+map <C-h>h :AddHeader<CR>
+map <C-h>a :AddApacheLicense<CR>
+map <C-h>m :AddMITLicense<CR>
+map <C-h>g :AddGNULicense<CR>
 
 " Functions
 " Airline
