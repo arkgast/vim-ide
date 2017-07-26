@@ -28,6 +28,8 @@ Plug 'alampros/vim-styled-jsx', { 'for': 'javascript.jsx' }
 Plug 'jparise/vim-graphql', { 'for': 'javascript.jsx' }
 Plug 'OrangeT/vim-csharp'
 Plug 'alpertuna/vim-header'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 call plug#end()
 
 filetype plugin indent on
@@ -187,6 +189,12 @@ map <C-h>h :AddHeader<CR>
 map <C-h>a :AddApacheLicense<CR>
 map <C-h>m :AddMITLicense<CR>
 map <C-h>g :AddGNULicense<CR>
+
+" ultisnips
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsEditSplit="vertical"
 
 " Functions
 " Airline
