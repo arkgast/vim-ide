@@ -1,21 +1,47 @@
-# [neo]vim configuration for web developers
-> django, php, reactjs, sass/css
+# [neo]vim configuration for developers
 
 Configuration to speed up development
 
-## Installation
+## Dependencies
 
-### Markdown
+#### Javascript
+
+Create this file on your working dir **.tern-project**
+
+    {
+      "ecmaVersion": 6,
+      "libs": [
+        "browser"
+      ],
+      "plugins": {
+        "complete_strings": {
+          "maxLength": 15
+        },
+        "doc_comment": {
+          "fullDocs": true,
+          "strong": true
+        },
+        "node": {}
+      }
+    }
+
+#### C#
+    $ sudo apt-get install mono-complete
+
+#### Markdown
     $ sudo npm i -g instant-markdown-d
 
 ### Linters
+
 #### Python
     $ sudo pip install flake8
 
-#### CSS SASS LESS
-    $ sudo npm i -g stylelint
-    $ npm i stylelint-scss
-    $ npm i stylelint-config-standard
+#### Javascript
+
+#### CSS SASS
+    $ sudo npm i -g stylelint         # global
+    $ npm i stylelint-scss            # local
+    $ npm i stylelint-config-standard # local
 
 Create this file in your working dir **.stylelintrc.json**
 

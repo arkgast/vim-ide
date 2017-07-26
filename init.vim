@@ -4,7 +4,7 @@ let &runtimepath.=',~/.vim/plugged/ale'
 let filetypesWithTag = ['html', 'htmldjango', 'php', 'javascript.jsx', 'smarty', 'xml', 'xhtml']
 
 call plug#begin('~/.vim/plugged')
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --omnisharp-completer' }
 Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -26,6 +26,7 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'gko/vim-coloresque', { 'for': ['css', 'scss', 'sass'] }
 Plug 'alampros/vim-styled-jsx', { 'for': 'javascript.jsx' }
 Plug 'jparise/vim-graphql', { 'for': 'javascript.jsx' }
+Plug 'OrangeT/vim-csharp'
 call plug#end()
 
 filetype plugin indent on
@@ -42,6 +43,7 @@ set shiftwidth=2
 set foldtext=CustomFoldText()
 set foldmethod=indent
 set foldnestmax=3
+set foldlevel=2
 set relativenumber
 set nowrap
 set hlsearch
@@ -64,6 +66,8 @@ exec "set listchars=tab:»·,nbsp:_,trail:·,eol:¬"
 let mapleader = ","
 call matchadd('ColorColumn', '\%81v', 100)
 highlight Normal ctermbg=none
+
+autocmd FileType python,cs,java setlocal tabstop=4 shiftwidth=4
 
 " Custom mappings
 noremap ;l :
@@ -91,11 +95,12 @@ let g:ycm_allow_changing_updatetime = 0
 let g:ycm_complete_in_comments = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_goto_buffer_command = 'vertical-split'
-let g:ycm_semantic_triggers = {
-  \   'javascript,python': ['.'],
-  \   'ruby': ['.', '::'],
-  \   'php': ['->', '::']
-  \ }
+let g:ycm_error_symbol='✗'
+let g:ycm_warning_symbol='⚠'
+nnoremap <leader>kk :YcmCompleter GoTo<CR>
+nnoremap <leader>kj :YcmCompleter GetDoc<CR>
+nnoremap <leader>kf :YcmCompleter FixIt<CR>
+nnoremap <leader>kr :YcmCompleter ReloadSolution<CR>
 
 " ale - linter
 let g:ale_sign_column_always = 1
