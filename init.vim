@@ -27,6 +27,7 @@ Plug 'gko/vim-coloresque', { 'for': ['css', 'scss', 'sass'] }
 Plug 'alampros/vim-styled-jsx', { 'for': 'javascript.jsx' }
 Plug 'jparise/vim-graphql', { 'for': 'javascript.jsx' }
 Plug 'OrangeT/vim-csharp', { 'for': 'cs' }
+Plug 'HerringtonDarkholme/yats.vim'
 Plug 'alpertuna/vim-header'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
