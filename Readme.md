@@ -4,6 +4,7 @@ Configuration to speed up development
 
 ## Dependencies
 
+### Autocompletion (Intellisence)
 #### Javascript
 
 Create this file on your working dir **.tern-project**
@@ -37,6 +38,10 @@ Create this file on your working dir **.tern-project**
     $ sudo pip install flake8
 
 #### Javascript
+    $ yarn add eslint eslint-config-standard eslint-plugin-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node
+
+    # To lint jsx syntax
+    $ yarn add eslint-config-standard-jsx
 
 #### CSS SASS
     $ sudo npm i -g stylelint         # global

@@ -26,10 +26,13 @@ Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'gko/vim-coloresque', { 'for': ['css', 'scss', 'sass'] }
 Plug 'alampros/vim-styled-jsx', { 'for': 'javascript.jsx' }
 Plug 'jparise/vim-graphql', { 'for': 'javascript.jsx' }
-Plug 'OrangeT/vim-csharp'
+Plug 'OrangeT/vim-csharp', { 'for': 'cs' }
 Plug 'alpertuna/vim-header'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'jiangmiao/auto-pairs'
+Plug 'mileszs/ack.vim'
+Plug 'chaoren/vim-wordmotion'
 call plug#end()
 
 filetype plugin indent on
@@ -71,6 +74,7 @@ call matchadd('ColorColumn', '\%81v', 100)
 highlight Normal ctermbg=none
 
 autocmd FileType python,cs,java setlocal tabstop=4 shiftwidth=4
+autocmd Filetype gitcommit setlocal spell textwidth=72
 
 " Custom mappings
 noremap ;l :
