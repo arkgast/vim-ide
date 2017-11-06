@@ -12,7 +12,6 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'arkgast/nerdtree-execute', { 'on': 'NERDTreeToggle', 'branch': 'standard_linux_opener' }
 Plug 'morhetz/gruvbox'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'jreybert/vimagit'
 Plug 'mhinz/vim-signify'
 Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript.jsx' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript.jsx' }
@@ -27,13 +26,14 @@ Plug 'gko/vim-coloresque', { 'for': ['css', 'scss', 'sass'] }
 Plug 'alampros/vim-styled-jsx', { 'for': 'javascript.jsx' }
 Plug 'jparise/vim-graphql', { 'for': 'javascript.jsx' }
 Plug 'OrangeT/vim-csharp', { 'for': 'cs' }
-Plug 'HerringtonDarkholme/yats.vim'
+Plug 'HerringtonDarkholme/yats.vim', { 'for': 'ts' }
 Plug 'alpertuna/vim-header'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mileszs/ack.vim'
 Plug 'chaoren/vim-wordmotion'
+Plug 'tpope/vim-fugitive'
 call plug#end()
 
 filetype plugin indent on
