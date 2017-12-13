@@ -49,7 +49,7 @@ set softtabstop=2
 set shiftwidth=2
 set foldtext=CustomFoldText()
 set foldmethod=indent
-set foldnestmax=3
+set foldnestmax=10
 set foldlevel=2
 set relativenumber
 set nowrap
