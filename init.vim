@@ -34,6 +34,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'mileszs/ack.vim'
 Plug 'chaoren/vim-wordmotion'
 Plug 'tpope/vim-fugitive'
+Plug 'vim-scripts/TaskList.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -135,6 +136,7 @@ let g:EclimLogLevel = 'trace'
 let g:airline_theme = 'badwolf'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tab_type = 0
 
 " nerdtree
 map <C-n> :NERDTreeToggle<CR>
