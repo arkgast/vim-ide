@@ -6,3 +6,6 @@ plugged/
 # Eclim
 eclim/
 plugin/
+
+# FILES
+.netrwhist

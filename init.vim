@@ -4,8 +4,9 @@ let &runtimepath.=',~/.vim/plugged/ale'
 let filetypesWithTag = ['html', 'htmldjango', 'php', 'javascript.jsx', 'smarty', 'xml', 'xhtml']
 
 call plug#begin('~/.vim/plugged')
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --omnisharp-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-completer' }
 Plug 'w0rp/ale'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -24,6 +25,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'gko/vim-coloresque', { 'for': ['css', 'scss', 'sass'] }
 Plug 'alampros/vim-styled-jsx', { 'for': 'javascript.jsx' }
+Plug 'ianks/vim-tsx', { 'for': 'typescriptreact' }
 Plug 'jparise/vim-graphql', { 'for': 'javascript.jsx' }
 Plug 'OrangeT/vim-csharp', { 'for': 'cs' }
 Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }
