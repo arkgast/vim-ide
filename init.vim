@@ -14,7 +14,7 @@ Plug 'arkgast/nerdtree-execute', { 'on': 'NERDTreeToggle', 'branch': 'standard_l
 Plug 'morhetz/gruvbox'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mhinz/vim-signify'
-Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript.jsx' }
+Plug 'heavenshell/vim-jsdoc', { 'for': ['javascript.jsx', 'typescript'] }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript.jsx' }
 Plug 'mxw/vim-jsx', { 'for': 'javascript.jsx' }
 Plug 'mattn/emmet-vim', { 'for': filetypesWithTag }
