@@ -1,7 +1,7 @@
 set nocompatible
 filetype off
 let &runtimepath.=',~/.vim/plugged/ale'
-let filetypesWithTag = ['html', 'htmldjango', 'php', 'javascript.jsx', 'smarty', 'xml', 'xhtml']
+let filetypesWithTag = ['html', 'htmldjango', 'php', 'javascript.jsx', 'typescript.tsx', 'smarty', 'xml', 'xhtml']
 
 call plug#begin('~/.vim/plugged')
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-completer' }
@@ -14,8 +14,8 @@ Plug 'arkgast/nerdtree-execute', { 'on': 'NERDTreeToggle', 'branch': 'standard_l
 Plug 'morhetz/gruvbox'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mhinz/vim-signify'
-Plug 'heavenshell/vim-jsdoc', { 'for': ['javascript.jsx', 'typescript'] }
-Plug 'pangloss/vim-javascript', { 'for': 'javascript.jsx' }
+Plug 'heavenshell/vim-jsdoc', { 'for': ['javascript.jsx', 'typescript', 'typescript.tsx'] }
+Plug 'pangloss/vim-javascript', { 'for': ['javascript.jsx'] }
 Plug 'mxw/vim-jsx', { 'for': 'javascript.jsx' }
 Plug 'mattn/emmet-vim', { 'for': filetypesWithTag }
 Plug 'Valloric/MatchTagAlways', { 'for': filetypesWithTag }
@@ -25,10 +25,10 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'gko/vim-coloresque', { 'for': ['css', 'scss', 'sass'] }
 Plug 'alampros/vim-styled-jsx', { 'for': 'javascript.jsx' }
-Plug 'ianks/vim-tsx', { 'for': 'typescriptreact' }
+Plug 'ianks/vim-tsx', { 'for': 'typescript.tsx' }
 Plug 'jparise/vim-graphql', { 'for': 'javascript.jsx' }
 Plug 'OrangeT/vim-csharp', { 'for': 'cs' }
-Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }
+Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'typescript.tsx'] }
 Plug 'alpertuna/vim-header'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
