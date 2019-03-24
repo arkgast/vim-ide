@@ -1,7 +1,7 @@
 set nocompatible
 filetype off
 let &runtimepath.=',~/.vim/plugged/ale'
-let filetypesWithTag = ['html', 'htmldjango', 'php', 'javascript.jsx', 'typescript.tsx', 'smarty', 'xml', 'xhtml']
+let filetypesWithTag = ['html', 'htmldjango', 'php', 'javascript.jsx', 'typescript.tsx', 'smarty', 'xml', 'xhtml', 'jinja.html']
 
 call plug#begin('~/.vim/plugged')
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-completer' }
@@ -37,6 +37,9 @@ Plug 'mileszs/ack.vim'
 Plug 'chaoren/vim-wordmotion'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-scripts/TaskList.vim'
+Plug 'Quramy/tsuquyomi'
+Plug 'tomlion/vim-solidity'
+Plug 'Glench/Vim-Jinja2-Syntax'
 call plug#end()
 
 filetype plugin indent on
@@ -115,11 +118,13 @@ nnoremap <leader>kr :YcmCompleter ReloadSolution<CR>
 
 " ale - linter
 let g:ale_sign_column_always = 1
+let g:ale_linters_explicit = 1
 let g:ale_sign_error='✗'
 let g:ale_sign_warning='⚠'
 let g:ale_echo_msg_error_str = '✗'
 let g:ale_echo_msg_warning_str = '⚠'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_python_flake8_args = '--ignore=E501'
 let g:ale_linters = {
   \   'javascript': ['eslint'],
   \   'python': ['flake8'],
@@ -127,18 +132,18 @@ let g:ale_linters = {
   \   'css': ['stylelint'],
   \   'sass': ['stylelint']
   \ }
-let g:ale_python_flake8_args = '--ignore=E501'
+let g:ale_fixers = {
+  \ 'javascript': ['prettier', 'prettier-standard'],
+  \ 'typescript': ['prettier'],
+  \ }
+let g:ale_fix_on_save = 1
 
-" eclim
-let g:EclimCompletionMethod = 'omnifunc'
-let g:EclimJavascriptValidate = 0
-let g:EclimLogLevel = 'trace'
+" Tsuquyomi
+let g:tsuquyomi_disable_default_mappings = 1
 
 " airline status/tabline
 let g:airline_theme = 'badwolf'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline_powerline_fonts = 0
 
 " nerdtree
 map <C-n> :NERDTreeToggle<CR>
