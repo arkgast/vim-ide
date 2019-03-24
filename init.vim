@@ -30,6 +30,7 @@ Plug 'jparise/vim-graphql', { 'for': 'javascript.jsx' }
 Plug 'OrangeT/vim-csharp', { 'for': 'cs' }
 Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'typescript.tsx'] }
 Plug 'alpertuna/vim-header'
+Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'jiangmiao/auto-pairs'
@@ -241,6 +242,14 @@ endfunction
 
 autocmd VimEnter * call VimInit()
 autocmd bufenter * call VimBuffer()
+
+" Put this in your .vimrc
+augroup import_cost_auto_run
+  autocmd!
+  autocmd InsertLeave *.js,*.jsx,*.ts,*.tsx ImportCost
+  autocmd CursorHold *.js,*.jsx,*.ts,*.tsx ImportCost
+  " autocmd BufEnter *.js,*.jsx,*.ts,*.tsx ImportCost
+augroup END
 
 " Goyo
 function! s:goyo_enter()
