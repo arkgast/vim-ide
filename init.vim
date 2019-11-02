@@ -4,7 +4,7 @@ let &runtimepath.=',~/.vim/plugged/ale'
 let filetypesWithTag = ['html', 'htmldjango', 'php', 'javascript.jsx', 'typescript.tsx', 'smarty', 'xml', 'xhtml', 'jinja.html']
 
 call plug#begin('~/.vim/plugged')
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer --clang-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --ts-completer --java-completer --go-completer --clang-completer' }
 Plug 'w0rp/ale'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
@@ -128,6 +128,7 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_python_flake8_args = '--ignore=E501'
 let g:ale_linters = {
   \   'javascript': ['eslint'],
+  \   'typescript': ['eslint'],
   \   'python': ['flake8'],
   \   'php': ['php'],
   \   'css': ['stylelint'],
