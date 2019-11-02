@@ -27,18 +27,13 @@ Plug 'gko/vim-coloresque', { 'for': ['css', 'scss', 'sass'] }
 Plug 'alampros/vim-styled-jsx', { 'for': 'javascript.jsx' }
 Plug 'ianks/vim-tsx', { 'for': 'typescript.tsx' }
 Plug 'jparise/vim-graphql', { 'for': 'javascript.jsx' }
-Plug 'OrangeT/vim-csharp', { 'for': 'cs' }
 Plug 'HerringtonDarkholme/yats.vim', { 'for': ['typescript', 'typescript.tsx'] }
-Plug 'alpertuna/vim-header'
-Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mileszs/ack.vim'
 Plug 'chaoren/vim-wordmotion'
 Plug 'tpope/vim-fugitive'
-Plug 'vim-scripts/TaskList.vim'
-Plug 'Quramy/tsuquyomi'
 Plug 'tomlion/vim-solidity'
 Plug 'Glench/Vim-Jinja2-Syntax'
 call plug#end()
@@ -140,9 +135,6 @@ let g:ale_fixers = {
   \ }
 let g:ale_fix_on_save = 1
 
-" Tsuquyomi
-let g:tsuquyomi_disable_default_mappings = 1
-
 " airline status/tabline
 let g:airline_theme = 'badwolf'
 let g:airline_powerline_fonts = 0
@@ -196,16 +188,6 @@ let g:mta_filetypes = {
   \ 'php': 1
   \ }
 
-" vim-header
-let g:header_field_filename = 0
-let g:header_field_author = 'Arnold Gandarillas Castillo'
-let g:header_field_author_email = 'arkgast@gmail.com'
-let g:header_auto_add_header = 0
-map <C-h>h :AddHeader<CR>
-map <C-h>a :AddApacheLicense<CR>
-map <C-h>m :AddMITLicense<CR>
-map <C-h>g :AddGNULicense<CR>
-
 " ultisnips
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
@@ -243,14 +225,6 @@ endfunction
 
 autocmd VimEnter * call VimInit()
 autocmd bufenter * call VimBuffer()
-
-" Put this in your .vimrc
-augroup import_cost_auto_run
-  autocmd!
-  autocmd InsertLeave *.js,*.jsx,*.ts,*.tsx ImportCost
-  autocmd CursorHold *.js,*.jsx,*.ts,*.tsx ImportCost
-  " autocmd BufEnter *.js,*.jsx,*.ts,*.tsx ImportCost
-augroup END
 
 " Goyo
 function! s:goyo_enter()
