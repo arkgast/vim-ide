@@ -34,6 +34,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'mileszs/ack.vim'
 Plug 'chaoren/vim-wordmotion'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
 Plug 'tomlion/vim-solidity'
 Plug 'Glench/Vim-Jinja2-Syntax'
 call plug#end()
