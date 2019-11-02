@@ -37,6 +37,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tomlion/vim-solidity'
 Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'takac/vim-hardtime'
 call plug#end()
 
 filetype plugin indent on
@@ -176,6 +177,11 @@ let g:user_emmet_settings = {
   \     'extends': 'jsx'
   \   }
   \ }
+
+" Hardtime
+let g:hardtime_default_on = 1
+let g:hardtime_timeout = 2000
+let g:hardtime_showmsg = 1
 
 " MatchAlways
 nnoremap <leader>% :MtaJumpToOtherTag<cr>
