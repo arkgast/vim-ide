@@ -124,7 +124,7 @@ let g:ale_echo_msg_warning_str = '⚠'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_python_flake8_args = '--ignore=E501'
 let g:ale_linters = {
-  \   'javascript': ['eslint'],
+  \   'javascript.jsx': ['eslint', 'standard'],
   \   'typescript': ['eslint'],
   \   'python': ['flake8'],
   \   'php': ['php'],
@@ -132,10 +132,12 @@ let g:ale_linters = {
   \   'sass': ['stylelint']
   \ }
 let g:ale_fixers = {
-  \ 'javascript': ['prettier', 'prettier-standard'],
+  \ 'javascript.jsx': ['prettier', 'prettier-standard'],
   \ 'typescript': ['prettier'],
   \ }
+let g:ale_lint_on_save = 1
 let g:ale_fix_on_save = 1
+let g:ale_lint_on_enter = 0
 
 " airline status/tabline
 let g:airline_theme = 'badwolf'
