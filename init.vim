@@ -38,6 +38,7 @@ Plug 'tpope/vim-surround'
 Plug 'tomlion/vim-solidity'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'takac/vim-hardtime'
+Plug 'will133/vim-dirdiff'
 call plug#end()
 
 filetype plugin indent on
