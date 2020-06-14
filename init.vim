@@ -4,7 +4,7 @@ let &runtimepath.=',~/.vim/plugged/ale'
 let filetypesWithTag = ['html', 'htmldjango', 'php', 'javascript.jsx', 'typescript.tsx', 'smarty', 'xml', 'xhtml', 'jinja.html']
 
 call plug#begin('~/.vim/plugged')
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --ts-completer --java-completer --go-completer --clang-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --ts-completer --java-completer --go-completer --clang-completer --rust-completer' }
 Plug 'w0rp/ale'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
@@ -36,6 +36,7 @@ Plug 'chaoren/vim-wordmotion'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tomlion/vim-solidity'
+Plug 'rust-lang/rust.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'takac/vim-hardtime'
 Plug 'will133/vim-dirdiff'
@@ -103,6 +104,9 @@ inoremap <C-Up> <Esc>:m .-2<CR>==gi
 vnoremap <C-Down> :m '>+1<CR>gv=gv
 vnoremap <C-Up> :m '<-2<CR>gv=gv
 
+vmap <M-c> "*y <ESC>
+nmap <M-c> "+y <ESC>
+
 " YouCompleteMe
 let g:ycm_allow_changing_updatetime = 0
 let g:ycm_complete_in_comments = 1
@@ -110,10 +114,10 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_goto_buffer_command = 'vertical-split'
 let g:ycm_error_symbol='✗'
 let g:ycm_warning_symbol='⚠'
-nnoremap <leader>kk :YcmCompleter GoTo<CR>
-nnoremap <leader>kj :YcmCompleter GetDoc<CR>
-nnoremap <leader>kf :YcmCompleter FixIt<CR>
-nnoremap <leader>kr :YcmCompleter ReloadSolution<CR>
+nnoremap <leader>gd :YcmCompleter GoTo<CR>
+nnoremap <leader>go :YcmCompleter GetDoc<CR>
+nnoremap <leader>fi :YcmCompleter FixIt<CR>
+nnoremap <leader>rs :YcmCompleter ReloadSolution<CR>
 
 " ale - linter
 let g:ale_sign_column_always = 1
@@ -125,7 +129,8 @@ let g:ale_echo_msg_warning_str = '⚠'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_python_flake8_args = '--ignore=E501'
 let g:ale_linters = {
-  \   'javascript.jsx': ['eslint', 'standard'],
+  \   'javascript.jsx': ['eslint'],
+  \   'rust': ['rustfmt'],
   \   'typescript': ['eslint'],
   \   'python': ['flake8'],
   \   'php': ['php'],
@@ -133,12 +138,13 @@ let g:ale_linters = {
   \   'sass': ['stylelint']
   \ }
 let g:ale_fixers = {
-  \ 'javascript.jsx': ['prettier', 'prettier-standard'],
+  \ 'javascript.jsx': ['prettier'],
   \ 'typescript': ['prettier'],
   \ }
 let g:ale_lint_on_save = 1
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_enter = 0
+let g:ale_set_balloons = 0
 
 " airline status/tabline
 let g:airline_theme = 'badwolf'
