@@ -3,6 +3,8 @@
 autoload/
 plugged/
 
+undodir/
+
 # Eclim
 eclim/
 plugin/
