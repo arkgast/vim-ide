@@ -1,5 +1,5 @@
 call plug#begin('~/.vim/plugged')
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --ts-completer --rust-completer --java-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --ts-completer --rust-completer --java-completer --clang-completer' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
@@ -18,6 +18,10 @@ Plug 'chaoren/vim-wordmotion'
 Plug 'takac/vim-hardtime'
 Plug 'mbbill/undotree'
 Plug 'SirVer/ultisnips'
+" Plug 'HerringtonDarkholme/yats.vim'
+Plug 'yuezk/vim-js'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'mattn/emmet-vim'
 Plug 'rust-lang/rust.vim'
 call plug#end()
 
@@ -122,7 +126,7 @@ let NERDTreeMouseMode=2
 
 " CtrlP
 let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|dist|build|Pods|\.class$\/)|(\.(git|hg|svn))$'
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|dist|build$|Pods|\.class$\/)|(\.(git|hg|svn))$'
 
 " NERDCommenter
 let g:NERDSpaceDelims = 1
