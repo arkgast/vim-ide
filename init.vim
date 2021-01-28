@@ -23,6 +23,7 @@ Plug 'yuezk/vim-js'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'mattn/emmet-vim'
 Plug 'rust-lang/rust.vim'
+Plug 'evanleck/vim-svelte', {'branch': 'main'}
 call plug#end()
 
 syntax on
