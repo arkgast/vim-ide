@@ -23,6 +23,7 @@ Plug 'yuezk/vim-js'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'mattn/emmet-vim'
 Plug 'rust-lang/rust.vim'
+Plug 'tomlion/vim-solidity'
 Plug 'chrisbra/csv.vim'
 Plug 'evanleck/vim-svelte', {'branch': 'main'}
 Plug 'junegunn/goyo.vim'
@@ -85,6 +86,7 @@ nnoremap <silent> <leader>gr :YcmCompleter GoToReferences<CR>
 nnoremap <silent> <leader>gi :YcmCompleter GoToImplementation<CR>
 nnoremap <silent> <leader>yf :YcmCompleter FixIt<CR>
 nnoremap <silent> <leader>yd :YcmCompleter GetDoc<CR>
+nnoremap <silent> <leader>yr :YcmCompleter RefactorRename <C-R>=Abolish.Coercions.s(expand("<cword>"))<CR>
 nmap <leader>yh <plug>(YCMHover)
 
 let g:ycm_complete_in_comments = 1
