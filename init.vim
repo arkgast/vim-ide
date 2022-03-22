@@ -13,6 +13,18 @@ Plug 'ctrlpvim/ctrlp.vim'
 " Theme
 Plug 'morhetz/gruvbox'
 Plug 'mbbill/undotree'
+
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'mhinz/vim-signify'
+
+" Utils
+Plug 'ledesmablt/vim-run'
+Plug 'chaoren/vim-wordmotion'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'jiangmiao/auto-pairs'
+Plug 'szw/vim-maximizer'
 Plug 'mattn/emmet-vim'
 
 " Languages
@@ -62,17 +74,17 @@ nnoremap <C-j> :wincmd j<CR>
 nnoremap <C-k> :wincmd k<CR>
 nnoremap <C-l> :wincmd l<CR>
 nnoremap <leader>u :UndotreeToggle<CR>
-nnoremap <leader>ps :Ack<SPACE>
 nnoremap <leader>dp :diffput<SPACE>
 nnoremap <leader>dg :diffget<SPACE>
+nnoremap <leader>ps :Ack<SPACE>
+nnoremap <leader>m :MaximizerToggle<CR>
 
 " YCM
-nnoremap <silent> <leader>gd :YcmCompleter GoTo<CR>
-nnoremap <silent> <leader>gr :YcmCompleter GoToReferences<CR>
-nnoremap <silent> <leader>gi :YcmCompleter GoToImplementation<CR>
-nnoremap <silent> <leader>yf :YcmCompleter FixIt<CR>
-nnoremap <silent> <leader>yd :YcmCompleter GetDoc<CR>
-nnoremap <silent> <leader>yr :YcmCompleter RefactorRename <C-R>=Abolish.Coercions.s(expand("<cword>"))<CR>
+nnoremap <silent> <leader>gt :YcmCompleter GoTo<CR>
+nnoremap <silent> <leader>fi :YcmCompleter FixIt<CR>
+nnoremap <silent> <leader>gd :YcmCompleter GetDoc<CR>
+nnoremap <silent> <leader>oi :YcmCompleter OrganizeImports<CR>
+nnoremap <silent> <leader>rn :YcmCompleter RefactorRename <C-R>=Abolish.Coercions.s(expand("<cword>"))<CR>
 nmap <leader>yh <plug>(YCMHover)
 
 let g:ycm_complete_in_comments = 1
