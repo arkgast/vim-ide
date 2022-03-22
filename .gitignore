@@ -5,9 +5,5 @@ plugged/
 
 undodir/
 
-# Eclim
-eclim/
-plugin/
-
 # FILES
 .netrwhist

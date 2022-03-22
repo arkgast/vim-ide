@@ -1,36 +1,25 @@
 call plug#begin('~/.vim/plugged')
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --ts-completer --rust-completer --java-completer --clang-completer' }
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Autocomplete and syntax hightlight
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --ts-completer --rust-completer' }
 Plug 'w0rp/ale'
-Plug 'ctrlpvim/ctrlp.vim'
+
+" Nerdtree
+Plug 'preservim/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'arkgast/nerdtree-execute', { 'on': 'NERDTreeToggle', 'branch': 'standard_linux_opener' }
+Plug 'PhilRunninger/nerdtree-buffer-ops'
+
+Plug 'ctrlpvim/ctrlp.vim'
+
+" Theme
 Plug 'morhetz/gruvbox'
-Plug 'tpope/vim-fugitive'
-Plug 'mhinz/vim-signify'
-Plug 'tpope/vim-surround'
-Plug 'jiangmiao/auto-pairs'
-Plug 'mileszs/ack.vim'
-Plug 'preservim/nerdcommenter'
-Plug 'chaoren/vim-wordmotion'
-Plug 'takac/vim-hardtime'
 Plug 'mbbill/undotree'
-Plug 'SirVer/ultisnips'
-" Plug 'HerringtonDarkholme/yats.vim'
-Plug 'yuezk/vim-js'
-Plug 'maxmellon/vim-jsx-pretty'
 Plug 'mattn/emmet-vim'
+
+" Languages
 Plug 'rust-lang/rust.vim'
 Plug 'tomlion/vim-solidity'
 Plug 'chrisbra/csv.vim'
-Plug 'evanleck/vim-svelte', {'branch': 'main'}
-Plug 'junegunn/goyo.vim'
 call plug#end()
-
-syntax on
-filetype plugin indent on
 
 colorscheme gruvbox
 set background=dark
@@ -62,9 +51,6 @@ exec "set listchars=tab:»·,nbsp:_,trail:·,eol:¬"
 call matchadd('ColorColumn', '\%81v', 100)
 
 let mapleader = " "
-let g:netrw_browse_split = 2
-let g:netrw_banner = 0
-let g:netrw_winsize = 25
 
 noremap ;l :
 inoremap jk <ESC>
@@ -120,27 +106,21 @@ let g:ale_fix_on_save = 1
 let g:ale_lint_on_enter = 1
 let g:ale_open_list = 0
 
-" nerdtree
-map <C-n> :NERDTreeToggle<CR>
-nmap <leader>n :NERDTreeFind <CR>
-autocmd StdinReadPre * let s:std_in=1
+" NERDTree
+nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeFind<CR>
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
-let NERDTreeIgnore=["\.pyc$", "\.class$", "node_modules", "Pods"]
-let NERDTreeMouseMode=2
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" Open the existing NERDTree on each new tab.
+autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
 
 " CtrlP
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|dist|build$|Pods|\.class$\/)|(\.(git|hg|svn))$'
-
-" NERDCommenter
-let g:NERDSpaceDelims = 1
-
-" ultisnips
-let g:UltiSnipsExpandTrigger="<C-S-j>"
-let g:UltiSnipsJumpForwardTrigger="<C-S-j>"
-let g:UltiSnipsJumpBackwardTrigger="<C-S-k>"
-let g:UltiSnipsEditSplit="vertical"
 
 " Fold
 function! CustomFoldText()
