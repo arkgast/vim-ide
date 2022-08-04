@@ -18,6 +18,10 @@ Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 
+" Snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
 " Utils
 Plug 'ledesmablt/vim-run'
 Plug 'chaoren/vim-wordmotion'
@@ -25,12 +29,13 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
 Plug 'szw/vim-maximizer'
+Plug 'mileszs/ack.vim'
 Plug 'mattn/emmet-vim'
 
 " Languages
 Plug 'rust-lang/rust.vim'
 Plug 'tomlion/vim-solidity'
-Plug 'chrisbra/csv.vim'
+" Plug 'chrisbra/csv.vim'
 call plug#end()
 
 colorscheme gruvbox
@@ -77,6 +82,7 @@ nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>dp :diffput<SPACE>
 nnoremap <leader>dg :diffget<SPACE>
 nnoremap <leader>ps :Ack<SPACE>
+nnoremap <leader>g :Git<CR>
 nnoremap <leader>m :MaximizerToggle<CR>
 
 " YCM
@@ -84,13 +90,15 @@ nnoremap <silent> <leader>gt :YcmCompleter GoTo<CR>
 nnoremap <silent> <leader>fi :YcmCompleter FixIt<CR>
 nnoremap <silent> <leader>gd :YcmCompleter GetDoc<CR>
 nnoremap <silent> <leader>oi :YcmCompleter OrganizeImports<CR>
-nnoremap <silent> <leader>rn :YcmCompleter RefactorRename <C-R>=Abolish.Coercions.s(expand("<cword>"))<CR>
+" nnoremap <silent> <leader>rn :YcmCompleter RefactorRename <C-R>=Abolish.Coercions.s(expand("<cword>"))<CR>
+nnoremap <leader>rn :YcmCompleter RefactorRename<SPACE>
 nmap <leader>yh <plug>(YCMHover)
 
-let g:ycm_complete_in_comments = 1
+let g:ycm_auto_hover = ''
 let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_goto_buffer_command = 'vertical-split'
+let g:ycm_complete_in_comments = 1
 let g:ycm_error_symbol='✗'
+let g:ycm_goto_buffer_command = 'vertical-split'
 let g:ycm_warning_symbol='⚠'
 
 " ale - linter
@@ -110,7 +118,7 @@ let g:ale_linters = {
   \   'rust': ['rustfmt'],
   \ }
 let g:ale_fixers = {
-  \ 'javascript': ['prettier', 'prettier-standard'],
+  \ 'javascript': ['prettier', 'prettier-standard', 'standard'],
   \ 'typescript': ['prettier'],
   \ }
 let g:ale_lint_on_save = 1
@@ -121,6 +129,7 @@ let g:ale_open_list = 0
 " NERDTree
 nnoremap <C-n> :NERDTreeToggle<CR>
 nnoremap <leader>n :NERDTreeFind<CR>
+let g:NERDTreeIgnore=['^node_modules$', '^build$', '^dist$']
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 " Exit Vim if NERDTree is the only window remaining in the only tab.
@@ -133,6 +142,13 @@ autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
 " CtrlP
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|dist|build$|Pods|\.class$\/)|(\.(git|hg|svn))$'
+
+" Ultisnip
+let g:UltiSnipsExpandTrigger="<C-j>"
+let g:UltiSnipsEditSplit="vertical"
+
+" Ack
+nnoremap <Leader>ps :Ack!<Space>
 
 " Fold
 function! CustomFoldText()
