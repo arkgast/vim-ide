@@ -1,9 +1,9 @@
 require('packer').startup(function(use)
   -- package manager
-	use 'wbthomason/packer.nvim'
+  use 'wbthomason/packer.nvim'
 
   -- theme
-	use 'gruvbox-community/gruvbox'
+  use 'gruvbox-community/gruvbox'
 
   -- completion
   use 'neovim/nvim-lspconfig'
@@ -12,23 +12,25 @@ require('packer').startup(function(use)
   use 'saadparwaiz1/cmp_luasnip'
   use 'L3MON4D3/LuaSnip'
 
-	use {
-		'w0rp/ale',
-		ft = {'sh', 'zsh', 'javascript', 'typescript', 'lua'},
-		cmd = 'ALEEnable',
-		config = 'vim.cmd[[ALEEnable]]'
-	}
+  use {
+    'w0rp/ale',
+    ft = {'sh', 'zsh', 'javascript', 'typescript', 'lua'},
+    cmd = 'ALEEnable',
+    config = 'vim.cmd[[ALEEnable]]'
+  }
 
   -- finder
-	use {
-		'nvim-treesitter/nvim-treesitter',
-		run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
-	}
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function() 
+      require('nvim-treesitter.install').update({ with_sync = true }) 
+    end,
+  }
 
-	use {
-		'nvim-telescope/telescope.nvim', tag = '0.1.x',
-		requires = { { 'nvim-lua/plenary.nvim' } }
-	}
+  use {
+    'nvim-telescope/telescope.nvim', tag = '0.1.x',
+    requires = { { 'nvim-lua/plenary.nvim' } }
+  }
 
   -- tree
   use {
@@ -36,6 +38,19 @@ require('packer').startup(function(use)
     requires = {
       "kyazdani42/nvim-web-devicons",
     },
+    config = function()
+      require("nvim-tree").setup {
+        disable_netrw = true,
+        hijack_netrw = true,
+        view = {
+          number = true,
+          relativenumber = true,
+        },
+        filters = {
+          custom = { ".git" },
+        },
+      }
+    end
   }
 
   -- startup screen
@@ -46,8 +61,21 @@ require('packer').startup(function(use)
     end
   }
 
+  -- git
+  use {
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup()
+    end
+  }
+
   -- utils
-  use "Pocco81/true-zen.nvim"
+  use {
+    'Pocco81/true-zen.nvim',
+    config = function()
+      require("true-zen").setup {}
+    end
+  }
 
   use {
     'numToStr/Comment.nvim',
@@ -57,7 +85,7 @@ require('packer').startup(function(use)
   }
 
   use 'chaoren/vim-wordmotion'
-  
+
   use 'tpope/vim-surround'
 
   use {
@@ -66,15 +94,13 @@ require('packer').startup(function(use)
   }
 
   use {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-      require('gitsigns').setup()
-    end
-  }
-
-  use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    config = function()
+      require('lualine').setup({
+        options = { theme = 'gruvbox' },
+      })
+    end
   }
 
 end)
