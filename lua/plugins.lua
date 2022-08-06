@@ -5,6 +5,16 @@ require('packer').startup(function(use)
   -- theme
   use 'gruvbox-community/gruvbox'
 
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    config = function()
+      require('lualine').setup({
+        options = { theme = 'gruvbox' },
+      })
+    end
+  }
+
   -- completion
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-cmp'
@@ -22,8 +32,8 @@ require('packer').startup(function(use)
   -- finder
   use {
     'nvim-treesitter/nvim-treesitter',
-    run = function() 
-      require('nvim-treesitter.install').update({ with_sync = true }) 
+    run = function()
+      require('nvim-treesitter.install').update({ with_sync = true })
     end,
   }
 
@@ -32,14 +42,14 @@ require('packer').startup(function(use)
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
 
-  -- tree
+  -- nvim-tree
   use {
-    "kyazdani42/nvim-tree.lua",
+    'kyazdani42/nvim-tree.lua',
     requires = {
-      "kyazdani42/nvim-web-devicons",
+      'kyazdani42/nvim-web-devicons',
     },
     config = function()
-      require("nvim-tree").setup {
+      require('nvim-tree').setup {
         disable_netrw = true,
         hijack_netrw = true,
         view = {
@@ -47,7 +57,7 @@ require('packer').startup(function(use)
           relativenumber = true,
         },
         filters = {
-          custom = { ".git" },
+          custom = { '.git' },
         },
       }
     end
@@ -73,7 +83,7 @@ require('packer').startup(function(use)
   use {
     'Pocco81/true-zen.nvim',
     config = function()
-      require("true-zen").setup {}
+      require('true-zen').setup {}
     end
   }
 
@@ -89,18 +99,9 @@ require('packer').startup(function(use)
   use 'tpope/vim-surround'
 
   use {
-    "windwp/nvim-autopairs",
-    config = function() require("nvim-autopairs").setup {} end
-  }
-
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    'windwp/nvim-autopairs',
     config = function()
-      require('lualine').setup({
-        options = { theme = 'gruvbox' },
-      })
+      require('nvim-autopairs').setup {}
     end
   }
-
 end)
