@@ -9,13 +9,11 @@ require('packer').startup(function(use)
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = function()
-      require('lualine').setup({
-        options = { theme = 'gruvbox' },
-      })
+      require('plugins.lualine')
     end
   }
 
-  -- completion
+  -- code completion
   use 'neovim/nvim-lspconfig'
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-nvim-lsp'
@@ -29,37 +27,29 @@ require('packer').startup(function(use)
     config = 'vim.cmd[[ALEEnable]]'
   }
 
-  -- finder
+  -- fuzzy finder
   use {
     'nvim-treesitter/nvim-treesitter',
     run = function()
       require('nvim-treesitter.install').update({ with_sync = true })
-    end,
+    end
   }
 
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.x',
-    requires = { { 'nvim-lua/plenary.nvim' } }
+    requires = {
+      'nvim-lua/plenary.nvim'
+    }
   }
 
   -- nvim-tree
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {
-      'kyazdani42/nvim-web-devicons',
+      'kyazdani42/nvim-web-devicons'
     },
     config = function()
-      require('nvim-tree').setup {
-        disable_netrw = true,
-        hijack_netrw = true,
-        view = {
-          number = true,
-          relativenumber = true,
-        },
-        filters = {
-          custom = { '.git' },
-        },
-      }
+      require('plugins.nvim-tree')
     end
   }
 
@@ -67,7 +57,7 @@ require('packer').startup(function(use)
   use {
     'goolord/alpha-nvim',
     config = function ()
-      require'alpha'.setup(require'alpha.themes.dashboard'.config)
+      require('alpha').setup(require('alpha.themes.dashboard').config)
     end
   }
 
@@ -75,7 +65,7 @@ require('packer').startup(function(use)
   use {
     'lewis6991/gitsigns.nvim',
     config = function()
-      require('gitsigns').setup()
+      require('plugins.gitsigns')
     end
   }
 
@@ -83,7 +73,7 @@ require('packer').startup(function(use)
   use {
     'Pocco81/true-zen.nvim',
     config = function()
-      require('true-zen').setup {}
+      require('true-zen').setup()
     end
   }
 
@@ -96,12 +86,17 @@ require('packer').startup(function(use)
 
   use 'chaoren/vim-wordmotion'
 
-  use 'tpope/vim-surround'
+  use {
+    'tpope/vim-surround',
+    requires = {
+      'tpope/vim-repeat',
+    }
+  }
 
   use {
     'windwp/nvim-autopairs',
     config = function()
-      require('nvim-autopairs').setup {}
+      require('nvim-autopairs').setup()
     end
   }
 end)
