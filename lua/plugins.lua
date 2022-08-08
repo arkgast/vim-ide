@@ -21,10 +21,10 @@ require('packer').startup(function(use)
   use 'L3MON4D3/LuaSnip'
 
   use {
-    'w0rp/ale',
-    ft = {'sh', 'zsh', 'javascript', 'typescript', 'lua'},
-    cmd = 'ALEEnable',
-    config = 'vim.cmd[[ALEEnable]]'
+    'jose-elias-alvarez/null-ls.nvim',
+    config = function()
+      require('plugins.nls')
+    end
   }
 
   -- fuzzy finder
@@ -56,7 +56,7 @@ require('packer').startup(function(use)
   -- startup screen
   use {
     'goolord/alpha-nvim',
-    config = function ()
+    config = function()
       require('alpha').setup(require('alpha.themes.dashboard').config)
     end
   }
