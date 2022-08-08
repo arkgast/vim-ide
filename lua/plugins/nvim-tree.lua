@@ -1,4 +1,4 @@
-require('nvim-tree').setup {
+require("nvim-tree").setup({
   disable_netrw = true,
   hijack_netrw = true,
   hijack_cursor = true,
@@ -6,9 +6,9 @@ require('nvim-tree').setup {
     number = true,
     relativenumber = true,
     width = 35,
-    side = 'left',
+    side = "left",
   },
   filters = {
-    custom = { '^.git$' },
-  }
-}
+    custom = { "^.git$" },
+  },
+})

@@ -1,84 +1,114 @@
--- Add additional capabilities supported by nvim-cmp
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+local opts = { noremap = true, silent = true }
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "<leader>ll", vim.diagnostic.setloclist, opts)
 
-local on_attach = function(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+local function lsp_keymaps(bufnr)
+  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wl', function()
+  local bufopts = { noremap = true, silent = true, buffer = bufnr }
+  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set("n", "<space>wl", function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, bufopts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+  vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
+  vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+  vim.keymap.set("n", "<space>f", vim.lsp.buf.formatting, bufopts)
+end
+
+local lsp_formatting = function(bufnr)
+  vim.lsp.buf.format({
+    filter = function(client)
+      return client.name == "null-ls"
+    end,
+    bufnr = bufnr,
+    async = true,
+  })
+end
+
+-- if you want to set up formatting on save, you can use this as a callback
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
+-- add to your shared on_attach callback
+local on_attach = function(client, bufnr)
+  if client.supports_method("textDocument/formatting") then
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = augroup,
+      buffer = bufnr,
+      callback = function()
+        lsp_formatting(bufnr)
+      end,
+    })
+  end
+
+  lsp_keymaps(bufnr)
 end
 
 local lsp_flags = {
   debounce_text_changes = 150,
 }
 
-require'lspconfig'.tsserver.setup {
+-- Add additional capabilities supported by nvim-cmp
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+
+require("lspconfig").tsserver.setup({
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,
-}
+})
 
-require'lspconfig'.rust_analyzer.setup {
+require("lspconfig").rust_analyzer.setup({
   on_attach = on_attach,
   flags = lsp_flags,
   capabilities = capabilities,
-}
+})
 
-require'lspconfig'.sumneko_lua.setup {
+require("lspconfig").sumneko_lua.setup({
+  on_attach = on_attach,
+  flags = lsp_flags,
+  capabilities = capabilities,
   settings = {
     Lua = {
       diagnostics = {
-        globals = { 'vim', 'os' },
+        globals = { "vim", "os" },
       },
     },
-    capabilities = capabilities,
   },
-}
+})
 
 -- luasnip setup
-local luasnip = require 'luasnip'
+local luasnip = require("luasnip")
 
 -- nvim-cmp setup
-local cmp = require 'cmp'
-cmp.setup {
+local cmp = require("cmp")
+cmp.setup({
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end,
   },
   mapping = cmp.mapping.preset.insert({
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm {
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<CR>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
-    },
-    ['<Tab>'] = cmp.mapping(function(fallback)
+    }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -86,8 +116,8 @@ cmp.setup {
       else
         fallback()
       end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
@@ -95,10 +125,10 @@ cmp.setup {
       else
         fallback()
       end
-    end, { 'i', 's' }),
+    end, { "i", "s" }),
   }),
   sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
   },
-}
+})
