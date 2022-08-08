@@ -10,7 +10,6 @@ vim.api.nvim_set_keymap('n', '<Leader>s', ':write<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-s>', '<C-w>vnew', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-t>', ':tabnew<CR>', { noremap = true })
 
-
 -- move between buffers
 vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-j>', '<C-w>j', { noremap = true })
@@ -20,6 +19,9 @@ vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { noremap = true })
 -- git merge
 vim.api.nvim_set_keymap('n', '<leader>dp', ':diffput<SPACE>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>dg', ':diffget<SPACE>', { noremap = true })
+
+-- mundo
+vim.api.nvim_set_keymap('n', '<leader>u', ':MundoToggle<CR>', { noremap = true })
 
 -- true-zen
 vim.api.nvim_set_keymap('n', '<leader>m', ':TZFocus<CR>', {})

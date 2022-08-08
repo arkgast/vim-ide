@@ -84,6 +84,8 @@ require('packer').startup(function(use)
     end
   }
 
+  use 'simnalamburt/vim-mundo'
+
   use 'chaoren/vim-wordmotion'
 
   use {

@@ -15,6 +15,10 @@ vim.o.backup = false
 vim.o.swapfile = false
 vim.o.writebackup = false
 
+-- undo
+vim.o.undofile = true
+vim.o.undodir = os.getenv('HOME') .. '/.config/nvim/undodir'
+
 -- edit
 vim.o.audoread = true
 vim.o.cursorline = true
