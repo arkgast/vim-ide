@@ -1,34 +1,38 @@
+local map = vim.keymap.set
+local api = vim.api
+local lsp = vim.lsp
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-vim.keymap.set("n", "<leader>ll", vim.diagnostic.setloclist, opts)
+map("n", "[d", vim.diagnostic.goto_prev, opts)
+map("n", "]d", vim.diagnostic.goto_next, opts)
+map("n", "<leader>ll", vim.diagnostic.setloclist, opts)
 
 local function lsp_keymaps(bufnr)
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
-  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set("n", "<space>wl", function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  map("n", "gD", lsp.buf.declaration, bufopts)
+  map("n", "gd", lsp.buf.definition, bufopts)
+  map("n", "K", lsp.buf.hover, bufopts)
+  map("n", "gi", lsp.buf.implementation, bufopts)
+  map("n", "<C-k>", lsp.buf.signature_help, bufopts)
+  map("n", "<space>wa", lsp.buf.add_workspace_folder, bufopts)
+  map("n", "<space>wr", lsp.buf.remove_workspace_folder, bufopts)
+  map("n", "<space>wl", function()
+    print(vim.inspect(lsp.buf.list_workspace_folders()))
   end, bufopts)
-  vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, bufopts)
-  vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-  vim.keymap.set("n", "<space>f", vim.lsp.buf.formatting, bufopts)
+  map("n", "<space>D", lsp.buf.type_definition, bufopts)
+  map("n", "<space>rn", lsp.buf.rename, bufopts)
+  map("n", "<space>ca", lsp.buf.code_action, bufopts)
+  map("n", "gr", lsp.buf.references, bufopts)
+  map("n", "<space>f", lsp.buf.formatting, bufopts)
 end
 
 local lsp_formatting = function(bufnr)
-  vim.lsp.buf.format({
+  lsp.buf.format({
     filter = function(client)
       return client.name == "null-ls"
     end,
@@ -38,13 +42,13 @@ local lsp_formatting = function(bufnr)
 end
 
 -- if you want to set up formatting on save, you can use this as a callback
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+local augroup = api.nvim_create_augroup("LspFormatting", {})
 
 -- add to your shared on_attach callback
 local on_attach = function(client, bufnr)
   if client.supports_method("textDocument/formatting") then
-    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-    vim.api.nvim_create_autocmd("BufWritePre", {
+    api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    api.nvim_create_autocmd("BufWritePre", {
       group = augroup,
       buffer = bufnr,
       callback = function()
@@ -61,7 +65,7 @@ local lsp_flags = {
 }
 
 -- Add additional capabilities supported by nvim-cmp
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 require("lspconfig").tsserver.setup({
