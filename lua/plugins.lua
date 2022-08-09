@@ -41,6 +41,14 @@ require("packer").startup(function(use)
     requires = {
       "nvim-lua/plenary.nvim",
     },
+    config = function()
+      require("plugins.telescope")
+    end,
+  })
+
+  use({
+    "nvim-telescope/telescope-frecency.nvim",
+    requires = { "tami5/sqlite.lua" },
   })
 
   -- nvim-tree

@@ -29,8 +29,8 @@ map("n", "<leader>u", ":MundoToggle<CR>", { noremap = true })
 map("n", "<leader>m", ":TZFocus<CR>", {})
 
 -- telescope
-map("n", "<leader>ff", ":Telescope fd<CR>", {})
-map("n", "<leader>fw", ":Telescope live_grep<CR>", {})
+map("n", "<C-p>", ":Telescope fd<CR>", {})
+map("n", "<C-f>", ":Telescope live_grep<CR>", {})
 
 -- nvim-tree
 map("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true })

@@ -25,6 +25,8 @@ o.writebackup = false
 -- undo
 o.undofile = true
 o.undodir = os.getenv("HOME") .. "/.config/nvim/undodir"
+o.undolevels = 50
+o.undoreload = 500
 
 -- edit
 o.audoread = true
@@ -32,7 +34,6 @@ o.cursorline = true
 o.hlsearch = true
 o.number = true
 o.relativenumber = true
-o.spell = true
 o.wrap = false
 o.list = true
 o.listchars = "tab:»·,nbsp:_,trail:·,eol:¬"
