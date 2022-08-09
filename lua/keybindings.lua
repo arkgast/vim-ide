@@ -16,7 +16,9 @@ map("n", "<C-j>", "<C-w>j", { noremap = true })
 map("n", "<C-k>", "<C-w>k", { noremap = true })
 map("n", "<C-l>", "<C-w>l", { noremap = true })
 
--- git merge
+-- git
+map("n", "<Leader>g", ":Neogit kind=tab<CR>", { noremap = true })
+
 map("n", "<leader>dp", ":diffput<SPACE>", { noremap = true })
 map("n", "<leader>dg", ":diffget<SPACE>", { noremap = true })
 
