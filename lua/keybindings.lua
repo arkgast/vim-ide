@@ -4,7 +4,8 @@ map("i", "jk", "<ESC>", { noremap = true })
 map("n", ";", ":", { noremap = true })
 map("v", ";", ":", { noremap = true })
 
-map("n", "<Leader>s", ":write<CR>", { noremap = true })
+map("n", "<Leader>w", ":write<CR>", { noremap = true })
+map("n", "<Leader>q", ":quit<CR>", { noremap = true })
 
 map("n", "<C-s>", "<C-w>vnew", { noremap = true })
 map("n", "<C-t>", ":tabnew<CR>", { noremap = true })
@@ -26,8 +27,8 @@ map("n", "<leader>u", ":MundoToggle<CR>", { noremap = true })
 map("n", "<leader>m", ":TZFocus<CR>", {})
 
 -- telescope
-map("n", "<leader>p", ":Telescope fd<CR>", {})
-map("n", "<leader>w", ":Telescope live_grep<CR>", {})
+map("n", "<leader>ff", ":Telescope fd<CR>", {})
+map("n", "<leader>fw", ":Telescope live_grep<CR>", {})
 
 -- nvim-tree
 map("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true })
