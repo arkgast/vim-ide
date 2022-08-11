@@ -71,16 +71,7 @@ require("packer").startup(function(use)
   })
 
   -- git
-  use({
-    "TimUntersberger/neogit",
-    requires = {
-      "nvim-lua/plenary.nvim",
-      "sindrets/diffview.nvim",
-    },
-    config = function()
-      require("plugins.neogit")
-    end,
-  })
+  use({ "tpope/vim-fugitive" })
 
   use({
     "lewis6991/gitsigns.nvim",

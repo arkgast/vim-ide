@@ -25,7 +25,7 @@ dashboard.section.buttons.val = {
   dashboard.button("r", " Recently opened files", ":Telescope oldfiles<CR>"),
   dashboard.button("w", " Find word", ":Telescope live_grep<CR>"),
   dashboard.button("s", " Sync packages", ":PackerSync<CR>"),
-  dashboard.button("g", " Git", ":Neogit kind=tab<CR>"),
+  dashboard.button("g", " Git", ":Git<CR>"),
   dashboard.button("q", "⚔ Quit", ":q<CR>"),
 }
 
