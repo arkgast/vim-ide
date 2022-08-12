@@ -13,6 +13,8 @@ cmd([[autocmd FileType python,cs,java,rust setlocal tabstop=4 shiftwidth=4]])
 o.autoindent = true
 o.backspace = 2
 o.expandtab = true
+o.smartindent = true
+o.smarttab = true
 o.shiftwidth = 2
 o.softtabstop = 2
 o.tabstop = 2
@@ -31,12 +33,16 @@ o.undoreload = 500
 -- edit
 o.audoread = true
 o.cursorline = true
-o.hlsearch = true
 o.number = true
 o.relativenumber = true
 o.wrap = false
 o.list = true
 o.listchars = "tab:»·,nbsp:_,trail:·,eol:¬"
+
+-- search
+o.hlsearch = true
+o.ignorecase = true
+o.smartcase = true
 
 -- fold
 o.foldmethod = "indent"
