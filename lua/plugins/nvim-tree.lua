@@ -7,6 +7,16 @@ require("nvim-tree").setup({
     relativenumber = true,
     width = 35,
     side = "left",
+    mappings = {
+      list = {
+        { key = "C", action = "copy" },
+        { key = "P", action = "paste" },
+        { key = "c", action = "close_node" },
+        { key = "p", action = "parent_node" },
+        { key = "<C-i>", action = "toggle_file_info" },
+        { key = "<C-k>", action = "" },
+      },
+    },
   },
   filters = {
     custom = { "^.git$" },
