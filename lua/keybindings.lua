@@ -19,7 +19,8 @@ map("n", "<C-k>", "<C-w>k", { noremap = true })
 map("n", "<C-l>", "<C-w>l", { noremap = true })
 
 -- git
-map("n", "<Leader>g", ":Git<CR>", { noremap = true })
+map("n", "<leader>g", ":Git<CR>", { noremap = true })
+map("n", "<leader>d", ":Gvdiffsplit", { noremap = true })
 
 map("n", "<leader>dp", ":diffput<SPACE>", { noremap = true })
 map("n", "<leader>dg", ":diffget<SPACE>", { noremap = true })
