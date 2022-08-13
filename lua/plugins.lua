@@ -14,18 +14,49 @@ require("packer").startup(function(use)
   })
 
   -- code completion
-  use("neovim/nvim-lspconfig")
-  use("hrsh7th/nvim-cmp")
-  use("hrsh7th/cmp-nvim-lsp")
-  use("saadparwaiz1/cmp_luasnip")
-  use("L3MON4D3/LuaSnip")
-
   use({
-    "jose-elias-alvarez/null-ls.nvim",
+    "neovim/nvim-lspconfig",
+    requires = {
+      'hrsh7th/cmp-nvim-lsp'
+    },
     config = function()
-      require("plugins.nls")
-    end,
+      require('plugins.nvim-lspconfig')
+    end
   })
+
+  use ({
+    'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
+    config = function()
+      require('plugins.nvim-cmp')
+    end,
+    -- requires = {
+    --   {
+    --     "saadparwaiz1/cmp_luasnip",
+    --     event = "InsertEnter",
+    --     -- config = function()
+    --     -- end,
+    --     requires = {
+    --       {
+    --         'rafamadriz/friendly-snippets',
+    --         event = 'CursorHold',
+    --       },
+    --     }
+    --   },
+    --   { "L3MON4D3/LuaSnip", after = "nvim-cmp" }
+    -- }
+  })
+
+
+  -- completion picktograms
+  use("onsails/lspkind.nvim")
+
+  -- use({
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   config = function()
+  --     require("plugins.nls")
+  --   end,
+  -- })
 
   -- fuzzy finder
   use({
