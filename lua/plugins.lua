@@ -16,9 +16,6 @@ require("packer").startup(function(use)
   -- code completion
   use({
     "neovim/nvim-lspconfig",
-    requires = {
-      'hrsh7th/cmp-nvim-lsp'
-    },
     config = function()
       require('plugins.nvim-lspconfig')
     end
@@ -26,26 +23,15 @@ require("packer").startup(function(use)
 
   use ({
     'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
     config = function()
       require('plugins.nvim-cmp')
     end,
-    -- requires = {
-    --   {
-    --     "saadparwaiz1/cmp_luasnip",
-    --     event = "InsertEnter",
-    --     -- config = function()
-    --     -- end,
-    --     requires = {
-    --       {
-    --         'rafamadriz/friendly-snippets',
-    --         event = 'CursorHold',
-    --       },
-    --     }
-    --   },
-    --   { "L3MON4D3/LuaSnip", after = "nvim-cmp" }
-    -- }
   })
+
+  use("hrsh7th/cmp-nvim-lsp")
+  use("saadparwaiz1/cmp_luasnip")
+  use("L3MON4D3/LuaSnip")
+  use("rafamadriz/friendly-snippets")
 
 
   -- completion picktograms
