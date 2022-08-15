@@ -23,22 +23,22 @@ require("packer").startup(function(use)
 
   use ({
     'hrsh7th/nvim-cmp',
+    requires = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
+      "hrsh7th/cmp-nvim-lsp-document-symbol",
+      "saadparwaiz1/cmp_luasnip",
+      "L3MON4D3/LuaSnip",
+      "rafamadriz/friendly-snippets",
+      "onsails/lspkind.nvim",
+    },
     config = function()
       require('plugins.nvim-cmp')
     end,
   })
-
-  use("hrsh7th/cmp-nvim-lsp")
-  use("hrsh7th/cmp-buffer")
-  use("hrsh7th/cmp-path")
-  use("hrsh7th/cmp-cmdline")
-  use("hrsh7th/cmp-nvim-lsp-signature-help")
-  use("hrsh7th/cmp-nvim-lsp-document-symbol")
-  use("saadparwaiz1/cmp_luasnip")
-  use("L3MON4D3/LuaSnip")
-  use("rafamadriz/friendly-snippets")
-
-  use("onsails/lspkind.nvim")
 
   -- use({
   --   "jose-elias-alvarez/null-ls.nvim",
@@ -108,6 +108,14 @@ require("packer").startup(function(use)
     end,
   })
 
+  use({
+    "lewis6991/impatient.nvim",
+    config = function ()
+      require("impatient").enable_profile()
+    end
+  })
+
+  -- editing
   use({
     "numToStr/Comment.nvim",
     config = function()

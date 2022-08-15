@@ -43,6 +43,7 @@ o.showmode = false
 o.hlsearch = true
 o.ignorecase = true
 o.smartcase = true
+o.scrolloff = 999
 
 -- fold
 o.foldmethod = "indent"
