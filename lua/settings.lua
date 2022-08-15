@@ -11,7 +11,6 @@ cmd([[autocmd FileType python,cs,java,rust setlocal tabstop=4 shiftwidth=4]])
 
 -- identation
 o.autoindent = true
-o.backspace = 2
 o.expandtab = true
 o.smartindent = true
 o.smarttab = true
@@ -38,6 +37,7 @@ o.relativenumber = true
 o.wrap = false
 o.list = true
 o.listchars = "tab:»·,nbsp:_,trail:·,eol:¬"
+o.showmode = false
 
 -- search
 o.hlsearch = true
