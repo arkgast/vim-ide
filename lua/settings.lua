@@ -43,12 +43,12 @@ o.showmode = false
 o.hlsearch = true
 o.ignorecase = true
 o.smartcase = true
-o.scrolloff = 999
+o.scrolloff = 4
 
 -- fold
 o.foldmethod = "indent"
 o.foldnestmax = 10
-o.foldlevelstart = 2
+o.foldlevelstart = 1
 
 -- copilot
 g.copilot_no_tab_map = true
