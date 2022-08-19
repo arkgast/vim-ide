@@ -17,12 +17,12 @@ require("packer").startup(function(use)
   use({
     "neovim/nvim-lspconfig",
     config = function()
-      require('plugins.nvim-lspconfig')
-    end
+      require("plugins.nvim-lspconfig")
+    end,
   })
 
-  use ({
-    'hrsh7th/nvim-cmp',
+  use({
+    "hrsh7th/nvim-cmp",
     requires = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
@@ -36,16 +36,16 @@ require("packer").startup(function(use)
       "onsails/lspkind.nvim",
     },
     config = function()
-      require('plugins.nvim-cmp')
+      require("plugins.nvim-cmp")
     end,
   })
 
-  -- use({
-  --   "jose-elias-alvarez/null-ls.nvim",
-  --   config = function()
-  --     require("plugins.nls")
-  --   end,
-  -- })
+  use({
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+      require("plugins.nls")
+    end,
+  })
 
   -- fuzzy finder
   use({
@@ -110,9 +110,9 @@ require("packer").startup(function(use)
 
   use({
     "lewis6991/impatient.nvim",
-    config = function ()
+    config = function()
       require("impatient").enable_profile()
-    end
+    end,
   })
 
   -- editing
