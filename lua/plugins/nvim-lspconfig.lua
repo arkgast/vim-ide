@@ -12,7 +12,7 @@ map("n", "]d", vim.diagnostic.goto_next, opts)
 
 -- settings
 vim.diagnostic.config({
-  virtual_text = false,
+  -- virtual_text = false,
 })
 
 -- functions
@@ -75,11 +75,11 @@ local on_attach = function(client, bufnr)
   map("n", "gD", lsp.buf.declaration, bufopts)
   map("n", "gd", lsp.buf.definition, bufopts)
   map("n", "gi", lsp.buf.implementation, bufopts)
+  map("n", "gr", ":Telescope lsp_references<CR>", bufopts)
   map("n", "<C-i>", lsp.buf.signature_help, bufopts)
   map("n", "<leader>i", lsp.buf.hover, bufopts)
   map("n", "<leader>f", lsp.buf.formatting, bufopts)
   map("n", "<leader>rn", lsp.buf.rename, bufopts)
-  map("n", "<leader>r", ":Telescope lsp_references<CR>", bufopts)
   map("n", "<leader>oi", ":OrganizeImports<CR>", bufopts)
 
   null_ls_on_attach(client, bufnr)
@@ -99,12 +99,22 @@ lspconfig.tsserver.setup({
   },
 })
 
+lspconfig.csharp_ls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
+
 lspconfig.solc.setup({
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
 lspconfig.sumneko_lua.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
+
+lspconfig.rust_analyzer.setup({
   on_attach = on_attach,
   capabilities = capabilities,
 })
