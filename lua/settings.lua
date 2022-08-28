@@ -1,3 +1,4 @@
+local api = vim.api
 local cmd = vim.cmd
 local g = vim.g
 local o = vim.o
@@ -5,9 +6,19 @@ local o = vim.o
 -- map leader key to SPACE
 g.mapleader = " "
 
+-- colorscheme
 o.background = "dark"
 cmd([[colorscheme gruvbox]])
-cmd([[autocmd FileType python,cs,java,rust setlocal tabstop=4 shiftwidth=4]])
+
+-- autocmd
+cmd([[autocmd FileType cs,java,python,rust setlocal shiftwidth=4 softtabstop=4 tabstop=4 ]])
+
+api.nvim_create_autocmd("CursorHold", {
+  group = api.nvim_create_augroup("Diagnostic", {}),
+  callback = function()
+    api.nvim_command("silent! lua vim.diagnostic.open_float(nil, { focusable = false })")
+  end,
+})
 
 -- identation
 o.autoindent = true
@@ -39,6 +50,15 @@ o.list = true
 o.listchars = "tab:»·,nbsp:_,trail:·,eol:¬"
 o.showmode = false
 
+-- completion
+o.updatetime = 100
+o.completeopt = "menuone"
+o.shortmess = o.shortmess .. "c"
+
+-- splitting
+o.splitbelow = true
+o.splitright = true
+
 -- search
 o.hlsearch = true
 o.ignorecase = true
@@ -59,8 +79,13 @@ g.copilot_filetypes = {
   ["lua"] = true,
   ["rust"] = true,
   ["c"] = true,
-  ["c#"] = true,
+  ["cs"] = true,
   ["c++"] = true,
   ["go"] = true,
   ["python"] = true,
 }
+
+-- diagnostic
+vim.diagnostic.config({
+  virtual_text = false,
+})
