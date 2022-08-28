@@ -47,6 +47,22 @@ require("packer").startup(function(use)
     end,
   })
 
+  use({
+    "simrat39/rust-tools.nvim",
+    config = function()
+      require("plugins.rust-tools")
+    end,
+  })
+
+  use({
+    "saecki/crates.nvim",
+    event = { "BufRead Cargo.toml" },
+    requires = { { "nvim-lua/plenary.nvim" } },
+    config = function()
+      require("plugins.crates")
+    end,
+  })
+
   -- fuzzy finder
   use({
     "nvim-treesitter/nvim-treesitter",

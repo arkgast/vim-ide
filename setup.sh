@@ -13,10 +13,21 @@ brew install ripgrep
 brew install fd
 
 # languages support
+## Typescript
 npm i -g typescript typescript-language-server
+
+## Solidity
 npm install -g solidity-language-server
+
+# Lua
 brew install lua-language-server
+
+# Rust
 brew install rust-analyzer
+rustup component add rustfmt
+rustup component add clippy
+
+# CSharp
 dotnet tool install --global csharp-ls
 
 # checkhealth
