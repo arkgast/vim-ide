@@ -63,14 +63,18 @@ require("packer").startup(function(use)
     end,
   })
 
-  -- fuzzy finder
+  -- treesitter
   use({
     "nvim-treesitter/nvim-treesitter",
     run = function()
       require("nvim-treesitter.install").update({ with_sync = true })
     end,
+    config = function()
+      require("plugins.treesitter")
+    end,
   })
 
+  -- fuzzy finder
   use({
     "nvim-telescope/telescope.nvim",
     tag = "0.1.x",
