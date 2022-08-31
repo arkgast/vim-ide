@@ -43,7 +43,7 @@ map("n", "<leader>m", ":TZFocus<CR>", opts)
 map("n", "<C-p>", ":Telescope fd<CR>", opts)
 map("n", "<C-m>", ":Telescope oldfiles<CR>", opts)
 map("n", "<C-f>", ":Telescope live_grep<CR>", opts)
-map("n", "<C-e>", ":Telescope lsp_references<CR>", opts)
+map("n", "<C-w>", ":Telescope lsp_references<CR>", opts)
 
 -- nvim-tree
 map("n", "<C-n>", ":NvimTreeToggle<CR>", opts)

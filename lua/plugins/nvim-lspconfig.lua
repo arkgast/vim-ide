@@ -23,7 +23,7 @@ local async_formatting = function(bufnr)
   lsp.buf_request(bufnr, "textDocument/formatting", lsp.util.make_formatting_params({}), function(err, res, ctx)
     if err then
       local err_msg = type(err) == "string" and err or err.message
-      -- you can modify the log message / level (or ignore it completely)
+      -- you can change the log message / level (or ignore it)
       notify("formatting: " .. err_msg, log.levels.WARN)
       return
     end
@@ -101,6 +101,23 @@ lspconfig.solc.setup({
 lspconfig.sumneko_lua.setup({
   on_attach = on_attach,
   capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        version = "LuaJIT",
+        path = vim.split(package.path, ";"),
+      },
+      diagnostics = {
+        globals = { "vim" },
+      },
+      workspace = {
+        library = {
+          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+        },
+      },
+    },
+  },
 })
 
 lspconfig.rust_analyzer.setup({
