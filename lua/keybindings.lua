@@ -41,7 +41,7 @@ map("n", "<leader>m", ":TZFocus<CR>", opts)
 
 -- telescope
 map("n", "<C-p>", ":Telescope fd<CR>", opts)
-map("n", "<C-m>", ":Telescope oldfiles<CR>", opts)
+map("n", "<CR>", ":Telescope frecency<CR>", opts)
 map("n", "<C-f>", ":Telescope live_grep<CR>", opts)
 map("n", "<C-w>", ":Telescope lsp_references<CR>", opts)
 

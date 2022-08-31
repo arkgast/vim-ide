@@ -57,7 +57,9 @@ require("packer").startup(function(use)
   use({
     "saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
-    requires = { { "nvim-lua/plenary.nvim" } },
+    requires = {
+      "nvim-lua/plenary.nvim",
+    },
     config = function()
       require("plugins.crates")
     end,
@@ -84,6 +86,11 @@ require("packer").startup(function(use)
     config = function()
       require("plugins.telescope")
     end,
+  })
+
+  use({
+    "nvim-telescope/telescope-fzf-native.nvim",
+    run = "make",
   })
 
   use({
