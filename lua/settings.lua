@@ -66,7 +66,7 @@ o.smartcase = true
 o.scrolloff = 4
 
 -- fold
--- o.foldmethod = "indent"
+o.foldmethod = "indent"
 o.foldnestmax = 10
 o.foldlevelstart = 1
 

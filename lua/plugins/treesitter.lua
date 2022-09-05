@@ -1,14 +1,5 @@
 local configs = require("nvim-treesitter.configs")
 
--- use treesitter for folding
-vim.api.nvim_create_autocmd({ "BufEnter", "BufAdd", "BufNew", "BufNewFile", "BufWinEnter" }, {
-  group = vim.api.nvim_create_augroup("TS_FOLD", {}),
-  callback = function()
-    vim.opt.foldmethod = "expr"
-    vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-  end,
-})
-
 configs.setup({
   ensure_installed = { "rust", "lua", "solidity", "javascript", "typescript" },
   highlight = {

@@ -174,4 +174,14 @@ require("packer").startup(function(use)
       require("nvim-autopairs").setup()
     end,
   })
+
+  use({
+    "Shatur/neovim-session-manager",
+    config = function()
+      require("session_manager").setup({
+        autoload_mode = "Disabled",
+        autosave_last_session = false,
+      })
+    end,
+  })
 end)
