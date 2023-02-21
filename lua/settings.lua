@@ -69,22 +69,6 @@ o.foldmethod = "indent"
 o.foldnestmax = 10
 o.foldlevelstart = 1
 
--- copilot
-g.copilot_no_tab_map = true
-g.copilot_filetypes = {
-  ["*"] = false,
-  ["c"] = true,
-  ["c++"] = true,
-  ["cs"] = true,
-  ["go"] = true,
-  ["javascript"] = true,
-  ["lua"] = true,
-  ["python"] = true,
-  ["rust"] = true,
-  ["solidity"] = true,
-  ["typescript"] = true,
-}
-
 -- diagnostic
 vim.diagnostic.config({
   virtual_text = false,

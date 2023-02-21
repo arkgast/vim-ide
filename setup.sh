@@ -1,10 +1,8 @@
-mkdir -p ~/.local/share/nvim/site/pack/packer/start
+# mkdir -p ~/.local/share/nvim/site/pack/packer/start
 
-cd ~/.local/share/nvim/site/pack/packer/start
+# cd ~/.local/share/nvim/site/pack/packer/start
 
 git clone --depth 1 https://github.com/wbthomason/packer.nvim packer.nvim
-
-git clone https://github.com/github/copilot.vim.git copilot.vim
 
 cd -
 

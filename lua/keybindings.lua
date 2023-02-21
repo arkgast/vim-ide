@@ -53,6 +53,3 @@ map("n", "<C-s>d", ":SessionManager delete_session<CR>", opts)
 -- nvim-tree
 map("n", "<C-n>", ":NvimTreeToggle<CR>", opts)
 map("n", "<leader>n", ":NvimTreeFindFile<CR>", opts)
-
--- copilot
-map("i", "<C-c>a", 'copilot#Accept("<CR>")', { silent = true, expr = true })
