@@ -11,7 +11,7 @@ o.background = "dark"
 cmd([[colorscheme gruvbox]])
 
 -- autocmd
-cmd([[autocmd FileType cs,java,python,rust setlocal shiftwidth=4 softtabstop=4 tabstop=4 ]])
+cmd([[autocmd FileType cs,java,solidity,python,rust setlocal shiftwidth=4 softtabstop=4 tabstop=4 ]])
 
 api.nvim_create_autocmd("CursorHold", {
   group = api.nvim_create_augroup("Diagnostic", {}),
@@ -56,7 +56,6 @@ o.completeopt = "menuone"
 o.shortmess = o.shortmess .. "c"
 
 -- splitting
-o.splitbelow = true
 o.splitright = true
 
 -- search
@@ -74,15 +73,16 @@ o.foldlevelstart = 1
 g.copilot_no_tab_map = true
 g.copilot_filetypes = {
   ["*"] = false,
-  ["javascript"] = true,
-  ["typescript"] = true,
-  ["lua"] = true,
-  ["rust"] = true,
   ["c"] = true,
-  ["cs"] = true,
   ["c++"] = true,
+  ["cs"] = true,
   ["go"] = true,
+  ["javascript"] = true,
+  ["lua"] = true,
   ["python"] = true,
+  ["rust"] = true,
+  ["solidity"] = true,
+  ["typescript"] = true,
 }
 
 -- diagnostic

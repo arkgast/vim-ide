@@ -7,7 +7,7 @@ map("i", "jk", "<ESC>", { noremap = true })
 map("n", ";", ":", { noremap = true })
 map("v", ";", ":", { noremap = true })
 
-map("n", "<Leader>w", ":write<CR>", { noremap = true })
+map("n", "<Leader>w", ":silent write<CR>", { silent = true, noremap = true })
 map("n", "<Leader>q", ":quit<CR>", { noremap = true })
 map("n", "<Leader>x", ":xit<CR>", { noremap = true })
 
@@ -41,9 +41,9 @@ map("n", "<leader>m", ":TZFocus<CR>", opts)
 
 -- telescope
 map("n", "<C-p>", ":Telescope fd<CR>", opts)
-map("n", "<C-[>", ":Telescope frecency<CR>", opts)
+map("n", "<leader>p", ":Telescope frecency<CR>", opts)
 map("n", "<C-f>", ":Telescope live_grep<CR>", opts)
-map("n", "<C-R>", ":Telescope lsp_references<CR>", opts)
+map("n", "<leader>r", ":Telescope lsp_references<CR>", opts)
 
 -- session manager
 map("n", "<C-s>l", ":SessionManager load_last_session<CR>", opts)
@@ -55,4 +55,4 @@ map("n", "<C-n>", ":NvimTreeToggle<CR>", opts)
 map("n", "<leader>n", ":NvimTreeFindFile<CR>", opts)
 
 -- copilot
-map("i", "<C-,>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+map("i", "<C-c>a", 'copilot#Accept("<CR>")', { silent = true, expr = true })
