@@ -75,7 +75,7 @@ local on_attach = function(client, bufnr)
 end
 
 local capabilities = lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 lspconfig.tsserver.setup({
   on_attach = on_attach,
@@ -98,7 +98,7 @@ lspconfig.solc.setup({
   capabilities = capabilities,
 })
 
-lspconfig.sumneko_lua.setup({
+lspconfig.lua_ls.setup({
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
