@@ -33,6 +33,10 @@ rustup component add clippy
 # CSharp
 dotnet tool install --global csharp-ls
 
+# Python
+
+npm i -g pyright
+
 # JSON
 npm i -g fixjson
 npm install jsonlint -g

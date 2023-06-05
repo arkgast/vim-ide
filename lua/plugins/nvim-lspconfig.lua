@@ -77,6 +77,7 @@ end
 local capabilities = lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
+-- typescript
 lspconfig.tsserver.setup({
   on_attach = on_attach,
   capabilities = capabilities,
@@ -88,16 +89,19 @@ lspconfig.tsserver.setup({
   },
 })
 
+-- c#
 lspconfig.csharp_ls.setup({
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
+-- solidity
 lspconfig.solc.setup({
   on_attach = on_attach,
   capabilities = capabilities,
 })
 
+-- lua
 lspconfig.lua_ls.setup({
   on_attach = on_attach,
   capabilities = capabilities,
@@ -120,6 +124,7 @@ lspconfig.lua_ls.setup({
   },
 })
 
+-- rust
 lspconfig.rust_analyzer.setup({
   on_attach = on_attach,
   capabilities = capabilities,
@@ -130,4 +135,10 @@ lspconfig.rust_analyzer.setup({
       },
     },
   },
+})
+
+-- python
+lspconfig.pyright.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
 })
