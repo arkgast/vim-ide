@@ -55,4 +55,6 @@ map("n", "<C-n>", ":NvimTreeToggle<CR>", opts)
 map("n", "<leader>n", ":NvimTreeFindFile<CR>", opts)
 
 -- copilot
-map("i", "<C-,>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+map("i", "<C-c>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+-- map("i", "<C-j>", 'copilot#Next("<CR>")', { expr = true })
+-- map("i", "<C-k>", 'copilot#Prev("<CR>")', { expr = true })
