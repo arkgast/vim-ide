@@ -65,6 +65,9 @@ require("packer").startup(function(use)
     end,
   })
 
+  -- emmet
+  use("mattn/emmet-vim")
+
   -- treesitter
   use({
     "nvim-treesitter/nvim-treesitter",
