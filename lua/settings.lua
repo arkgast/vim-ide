@@ -3,6 +3,9 @@ local cmd = vim.cmd
 local g = vim.g
 local o = vim.o
 
+-- options
+vim.opt.termguicolors = true
+
 -- map leader key to SPACE
 g.mapleader = " "
 

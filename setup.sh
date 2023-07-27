@@ -34,7 +34,6 @@ rustup component add clippy
 dotnet tool install --global csharp-ls
 
 # Python
-
 npm i -g pyright
 
 # JSON
