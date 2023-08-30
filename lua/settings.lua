@@ -79,6 +79,7 @@ g.copilot_filetypes = {
   ["*"] = false,
   ["javascript"] = true,
   ["typescript"] = true,
+  ["typescriptreact"] = true,
   ["lua"] = true,
   ["rust"] = true,
   ["c"] = true,
