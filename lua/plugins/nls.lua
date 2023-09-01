@@ -8,8 +8,8 @@ local hover = nls.builtins.hover
 nls.setup({
   debug = false,
   sources = {
-    fmt.eslint.with({ filetypes = { "javascript", "typescript" } }),
-    fmt.prettier.with({ filetypes = { "javascript", "typescript" } }),
+    fmt.eslint.with({ filetypes = { "javascript", "typescript", "typescriptreact" } }),
+    fmt.prettier.with({ filetypes = { "javascript", "typescript", "typescriptreact" } }),
     fmt.fixjson.with({ extra_args = { "--write", "--indent", "2" } }),
     fmt.stylua.with({ extra_args = { "--indent-type=Spaces", "--indent-width=2" } }),
 
