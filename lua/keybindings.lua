@@ -15,10 +15,10 @@ map("n", "<C-s>", "<C-w>vnew", opts)
 map("n", "<C-t>", ":tabnew<CR>", opts)
 
 -- move between buffers
-map("n", "<C-h>", "<C-w>h", opts)
-map("n", "<C-j>", "<C-w>j", opts)
-map("n", "<C-k>", "<C-w>k", opts)
-map("n", "<C-l>", "<C-w>l", opts)
+map("n", "<C-h>", ":TmuxNavigateLeft<CR>", opts)
+map("n", "<C-j>", ":TmuxNavigateDown<CR>", opts)
+map("n", "<C-k>", ":TmuxNavigateUp<CR>", opts)
+map("n", "<C-l>", ":TmuxNavigateRight<CR>", opts)
 
 -- git
 map("n", "<leader>g", ":Git<CR>", opts)
