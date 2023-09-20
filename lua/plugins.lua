@@ -68,6 +68,9 @@ require("packer").startup(function(use)
   -- emmet
   use("mattn/emmet-vim")
 
+  -- copilot
+  use("github/copilot.vim")
+
   -- treesitter
   use({
     "nvim-treesitter/nvim-treesitter",
