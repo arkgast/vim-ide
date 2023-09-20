@@ -1,16 +1,19 @@
+# Install package manager
 mkdir -p ~/.local/share/nvim/site/pack/packer/start
-
 cd ~/.local/share/nvim/site/pack/packer/start
-
 git clone --depth 1 https://github.com/wbthomason/packer.nvim packer.nvim
-
-git clone https://github.com/github/copilot.vim.git copilot.vim
-
 cd -
+
+# Terminal rust programs
+brew install neovim
+brew install lua
+
 
 # install dependency tools
 brew install ripgrep
 brew install fd
+brew install exa # ls
+brew install bat # cat
 
 # languages support
 ## Typescript
@@ -60,6 +63,5 @@ pip3 install yamllint
 npm install -g @commitlint/{config-conventional,cli}
 npm install -g commitlint-format-json
 
-# Terminal rust programs
-brew install exa # ls
-brew install bat # cat
+# Mundo plugin dependency
+pip3 install pynvim
