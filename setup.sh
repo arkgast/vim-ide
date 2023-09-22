@@ -39,6 +39,11 @@ dotnet tool install --global csharp-ls
 # Python
 npm i -g pyright
 
+# Go
+go install golang.org/x/tools/gopls@latest
+## Install dependencies $GOPATH is configured in ~/.zshrc
+mkdir /opt/go
+
 # JSON
 npm i -g fixjson
 npm install jsonlint -g
