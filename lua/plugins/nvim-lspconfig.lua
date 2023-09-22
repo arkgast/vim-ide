@@ -4,37 +4,6 @@ local map = vim.keymap.set
 local api = vim.api
 local lsp = vim.lsp
 
--- config
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
--- Use LspAttach autocommand to only map the following keys
--- after the language server attaches to the current buffer
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-  callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-    -- Buffer local mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local opts = { buffer = ev.buf }
-    map('n', 'gD', lsp.buf.declaration, opts)
-    map('n', 'gd', lsp.buf.definition, opts)
-    map("n", "gi", lsp.buf.implementation, opts)
-    map("n", 'gr', vim.lsp.buf.references, opts)
-    map('n', 'gt', vim.lsp.buf.type_definition, opts)
-    map("n", "ga", lsp.buf.code_action)
-    map("n", "<leader>oi", ":OrganizeImports<CR>", opts)
-    map("n", "<leader>rn", lsp.buf.rename, opts)
-    map("n", "<leader>q", lsp.diagnostic.set_loclist, opts)
-    map('n', '<leader>i', vim.lsp.buf.hover, opts)
-    map('n', '<C-i>', vim.lsp.buf.signature_help, opts)
-    vim.keymap.set('n', '<leader>=', function()
-      vim.lsp.buf.format { async = true }
-    end, opts)
-  end,
-})
-
 -- functions
 -- typescript
 local function ts_imports()
@@ -61,6 +30,36 @@ local function go_imports(timeout_ms)
   end
   vim.lsp.buf.format({async = false})
 end
+
+-- config
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+-- Use LspAttach autocommand to only map the following keys
+-- after the language server attaches to the current buffer
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf }
+    map('n', 'gD', lsp.buf.declaration, opts)
+    map('n', 'gd', lsp.buf.definition, opts)
+    map("n", "gi", lsp.buf.implementation, opts)
+    map("n", 'gr', vim.lsp.buf.references, opts)
+    map('n', 'gt', vim.lsp.buf.type_definition, opts)
+    map("n", "ga", lsp.buf.code_action)
+    map("n", "<leader>oi", ":OrganizeImports<CR>", opts)
+    map("n", "<leader>rn", lsp.buf.rename, opts)
+    map('n', '<leader>i', vim.lsp.buf.hover, opts)
+    map('n', '<C-i>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<leader>=', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
 
 -- Language servers setup
 -- typescript
