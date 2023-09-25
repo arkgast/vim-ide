@@ -40,6 +40,7 @@ require("packer").startup(function(use)
     end,
   })
 
+  -- rust
   use({
     "simrat39/rust-tools.nvim",
     config = function()
@@ -62,7 +63,19 @@ require("packer").startup(function(use)
   use({
     "stevearc/conform.nvim",
     config = function()
-      require("plugins.conforms")
+      require("plugins.conform")
+    end,
+  })
+
+  -- diagnostics
+  use({
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons"
+    },
+    config = function()
+      require("plugins.trouble")
     end,
   })
 
