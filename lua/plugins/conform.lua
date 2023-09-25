@@ -38,5 +38,6 @@ conform.setup({
     json = { { "prettierd", "prettier" } },
     css = { { "prettierd", "prettier" } },
     yaml = { "yamlfmt" },
+    -- ["*"] = { "codespell" },
   },
 })
