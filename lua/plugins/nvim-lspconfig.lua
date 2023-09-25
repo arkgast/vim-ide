@@ -49,7 +49,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('n', 'gd', lsp.buf.definition, opts)
     map("n", "gi", lsp.buf.implementation, opts)
     map("n", 'gr', vim.lsp.buf.references, opts)
-    map('n', 'gt', vim.lsp.buf.type_definition, opts)
+    -- map('n', 'gt', vim.lsp.buf.type_definition, opts)
     map("n", "ga", lsp.buf.code_action)
     map("n", "<leader>oi", ":OrganizeImports<CR>", opts)
     map("n", "<leader>rn", lsp.buf.rename, opts)
@@ -107,7 +107,6 @@ lspconfig.gopls.setup({
 
 -- python
 lspconfig.pyright.setup({
-  on_attach = on_attach,
   capabilities = capabilities,
 })
 
@@ -123,7 +122,6 @@ lspconfig.csharp_ls.setup({
 
 -- lua
 lspconfig.lua_ls.setup({
-  on_attach = on_attach,
   capabilities = capabilities,
   settings = {
     Lua = {
