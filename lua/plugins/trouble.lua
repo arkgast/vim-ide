@@ -1,5 +1,7 @@
 local trouble = require("trouble")
 
+local map = vim.keymap.set
+
 trouble.setup({
 	position = "bottom", -- position of the list can be: bottom, top, left, right
 	height = 10, -- height of the trouble list when position is top or bottom
@@ -56,22 +58,27 @@ trouble.setup({
 	use_diagnostic_signs = false, -- enabling this will use the signs defined in your lsp client
 })
 
--- Lua
-vim.keymap.set("n", "<leader>xx", function()
-	require("trouble").open()
+-- Keybindings
+map("n", "<leader>xx", function()
+	trouble.open()
 end)
-vim.keymap.set("n", "<leader>xw", function()
-	require("trouble").open("workspace_diagnostics")
+
+map("n", "<leader>xw", function()
+	trouble.open("workspace_diagnostics")
 end)
-vim.keymap.set("n", "<leader>xd", function()
-	require("trouble").open("document_diagnostics")
+
+map("n", "<leader>xd", function()
+	trouble.open("document_diagnostics")
 end)
-vim.keymap.set("n", "<leader>xq", function()
-	require("trouble").open("quickfix")
+
+map("n", "<leader>xq", function()
+	trouble.open("quickfix")
 end)
-vim.keymap.set("n", "<leader>xl", function()
-	require("trouble").open("loclist")
+
+map("n", "<leader>xl", function()
+	trouble.open("loclist")
 end)
--- vim.keymap.set("n", "gR", function()
--- 	require("trouble").open("lsp_references")
--- end)
+
+map("n", "gR", function()
+	trouble.open("lsp_references")
+end)
