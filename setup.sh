@@ -8,7 +8,6 @@ cd -
 brew install neovim
 brew install lua
 
-
 # install dependency tools
 brew install ripgrep
 brew install fd
@@ -18,6 +17,7 @@ brew install bat # cat
 # languages support
 ## Typescript
 npm i -g typescript typescript-language-server
+npm install -g @fsouza/prettierd
 
 ## Solidity
 npm install -g solidity-language-server
@@ -38,15 +38,21 @@ dotnet tool install --global csharp-ls
 
 # Python
 npm i -g pyright
+pip3 install black
 
 # Go
 go install golang.org/x/tools/gopls@latest
+
 ## Install dependencies $GOPATH is configured in ~/.zshrc
+## export GOPATH=/opt/go
 mkdir /opt/go
 
 # JSON
 npm i -g fixjson
 npm install jsonlint -g
+
+# YAML
+go install github.com/google/yamlfmt/cmd/yamlfmt@latest
 
 # checkhealth
 pip3 install neovim
@@ -62,7 +68,6 @@ brew install --cask font-dejavu-sans-mono-nerd-font
 npm i -g write-good
 
 pip3 install codespell
-
 pip3 install yamllint
 
 npm install -g @commitlint/{config-conventional,cli}
