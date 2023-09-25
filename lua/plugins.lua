@@ -41,13 +41,6 @@ require("packer").startup(function(use)
   })
 
   use({
-    "jose-elias-alvarez/null-ls.nvim",
-    config = function()
-      require("plugins.nls")
-    end,
-  })
-
-  use({
     "simrat39/rust-tools.nvim",
     config = function()
       require("plugins.rust-tools")
@@ -62,6 +55,14 @@ require("packer").startup(function(use)
     },
     config = function()
       require("plugins.crates")
+    end,
+  })
+
+  -- autoformat
+  use({
+    "stevearc/conform.nvim",
+    config = function()
+      require("plugins.conforms")
     end,
   })
 
