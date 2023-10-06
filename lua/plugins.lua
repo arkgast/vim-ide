@@ -92,6 +92,12 @@ require("packer").startup(function(use)
 	})
 
 	-- diagnostics
+	use({
+		"mfussenegger/nvim-lint",
+		config = function()
+			require("plugins.nvim-lint")
+		end,
+	})
 
 	use({
 		"folke/trouble.nvim",
