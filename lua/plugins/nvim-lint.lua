@@ -1,14 +1,14 @@
 local lint = require("lint")
 
 lint.linters_by_ft = {
-	javascript = { "eslint_d", "eslint" },
-	javascriptreact = { "eslint_d", "eslint" },
-	typescript = { "eslint_d", "eslint" },
-	typescriptreact = { "eslint_d", "eslint" },
-	python = { "pyright" },
-	rust = { "clippy" },
-	lua = { "luacheck" },
-	go = { "golangci-lint" },
+  javascript = { "eslint_d", "eslint" },
+  javascriptreact = { "eslint_d", "eslint" },
+  typescript = { "eslint_d", "eslint" },
+  typescriptreact = { "eslint_d", "eslint" },
+  python = { "pyright" },
+  rust = { "clippy" },
+  lua = { "luacheck" },
+  go = { "golangci-lint" },
 }
 
 -- vim.api.nvim_create_autocmd({ "BufWritePost" }, {

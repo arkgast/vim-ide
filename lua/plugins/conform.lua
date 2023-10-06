@@ -1,4 +1,4 @@
-local conform = require('conform')
+local conform = require("conform")
 
 local slow_format_filetypes = {}
 
