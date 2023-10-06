@@ -1,7 +1,7 @@
 local api = vim.api
 local cmd = vim.cmd
 local g = vim.g
-local o = vim.o
+local o = vim.opt
 
 -- options
 vim.opt.termguicolors = true
@@ -44,7 +44,7 @@ o.undolevels = 50
 o.undoreload = 500
 
 -- edit
-o.audoread = true
+o.autoread = true
 o.cursorline = true
 o.number = true
 o.relativenumber = true
@@ -56,7 +56,7 @@ o.showmode = false
 -- completion
 o.updatetime = 100
 o.completeopt = "menuone"
-o.shortmess = o.shortmess .. "c"
+-- o.shortmess = o.shortmess .. "c"
 
 -- splitting
 o.splitbelow = true
@@ -93,5 +93,5 @@ g.copilot_filetypes = {
 
 -- diagnostic
 vim.diagnostic.config({
-  virtual_text = false,
+  virtual_text = true,
 })
