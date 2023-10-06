@@ -41,7 +41,10 @@ npm i -g pyright
 pip3 install black
 
 # Go
+## Language Server
 go install golang.org/x/tools/gopls@latest
+## Linter
+go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.54.2
 
 ## Install dependencies $GOPATH is configured in ~/.zshrc
 ## export GOPATH=/opt/go
