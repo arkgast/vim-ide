@@ -22,9 +22,9 @@ dashboard.section.header.val = {
 dashboard.section.buttons.val = {
   dashboard.button("e", " New file", ":ene <BAR>startinsert<CR>"),
   dashboard.button("f", " Find file", ":Telescope find_files<CR>"),
-  dashboard.button("r", " Recently opened files", ":Telescope oldfiles<CR>"),
-  dashboard.button("w", " Find word", ":Telescope live_grep<CR>"),
-  dashboard.button("s", " Sync packages", ":PackerSync<CR>"),
+  dashboard.button("r", " Recently opened files", ":Telescope oldfiles<CR>"),
+  dashboard.button("w", " Find word", ":Telescope live_grep<CR>"),
+  dashboard.button("s", " Lazy", ":Lazy<CR>"),
   dashboard.button("g", " Git", ":Git<CR>"),
   dashboard.button("q", "⚔ Quit", ":q<CR>"),
 }

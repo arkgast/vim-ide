@@ -4,7 +4,7 @@ local g = vim.g
 local o = vim.opt
 
 -- options
-vim.opt.termguicolors = true
+o.termguicolors = true
 
 -- map leader key to SPACE
 g.mapleader = " "
@@ -93,5 +93,5 @@ g.copilot_filetypes = {
 
 -- diagnostic
 vim.diagnostic.config({
-  virtual_text = true,
+  virtual_text = false,
 })
