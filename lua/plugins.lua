@@ -1,7 +1,23 @@
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
 require("lazy").setup({
   -- theme
   {
     "gruvbox-community/gruvbox",
+    config = function()
+      vim.cmd([[colorscheme gruvbox]])
+    end,
   },
   {
     "nvim-tree/nvim-web-devicons",
@@ -88,19 +104,21 @@ require("lazy").setup({
 
   -- debug
   {
+    "mxsdev/nvim-dap-vscode-js",
+    dependencies = { "mfussenegger/nvim-dap" },
+  },
+  {
+    "microsoft/vscode-js-debug",
+    build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
+    config = function()
+      require("plugins.js-debug")
+    end,
+  },
+  {
     "rcarriga/nvim-dap-ui",
     requires = { "mfussenegger/nvim-dap" },
     config = function()
       require("plugins.nvim-dap-ui")
-    end,
-  },
-
-  {
-    "microsoft/vscode-js-debug",
-    opt = true,
-    run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
-    config = function()
-      require("plugins.js-debug")
     end,
   },
 
@@ -113,7 +131,7 @@ require("lazy").setup({
   -- treesitter
   {
     "nvim-treesitter/nvim-treesitter",
-    run = function()
+    build = function()
       require("nvim-treesitter.install").update({ with_sync = true })
     end,
     config = function()
@@ -122,7 +140,6 @@ require("lazy").setup({
   },
 
   -- fuzzy finder
-  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.3",
@@ -132,6 +149,10 @@ require("lazy").setup({
     config = function()
       require("plugins.telescope")
     end,
+  },
+  {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    build = "make",
   },
   {
     "nvim-telescope/telescope-frecency.nvim",

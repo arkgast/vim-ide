@@ -11,7 +11,6 @@ g.mapleader = " "
 
 -- colorscheme
 o.background = "dark"
-cmd([[colorscheme gruvbox]])
 
 -- autocmd
 cmd([[autocmd FileType cs,java,python,rust setlocal shiftwidth=4 softtabstop=4 tabstop=4 ]])
