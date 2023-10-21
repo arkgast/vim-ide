@@ -115,6 +115,10 @@ lspconfig.solc.setup({
   capabilities = capabilities,
 })
 
+lspconfig.clangd.setup({
+  capabilities = capabilities,
+})
+
 -- c#
 lspconfig.csharp_ls.setup({
   capabilities = capabilities,

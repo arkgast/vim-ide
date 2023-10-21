@@ -50,9 +50,12 @@ go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.54.2
 ## export GOPATH=/opt/go
 mkdir /opt/go
 
-# JSON
-npm i -g fixjson
-npm install jsonlint -g
+# C/C++
+brew install llvm
+
+## Make this part of env
+## cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1
+## ln -s ~/myproject-build/compile_commands.json ~/myproject/
 
 # YAML
 go install github.com/google/yamlfmt/cmd/yamlfmt@latest
