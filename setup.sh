@@ -57,6 +57,9 @@ brew install llvm
 ## cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1
 ## ln -s ~/myproject-build/compile_commands.json ~/myproject/
 
+# Tailwind
+npm install -g @tailwindcss/language-server
+
 # YAML
 go install github.com/google/yamlfmt/cmd/yamlfmt@latest
 

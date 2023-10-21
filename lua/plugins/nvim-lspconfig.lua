@@ -73,6 +73,11 @@ lspconfig.tsserver.setup({
   },
 })
 
+lspconfig.tailwindcss.setup({
+  capabilities = capabilities,
+  filetypes = { "html", "css", "scss", "javascriptreact", "typescriptreact" },
+})
+
 -- rust
 lspconfig.rust_analyzer.setup({
   capabilities = capabilities,
