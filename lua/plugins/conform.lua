@@ -35,7 +35,7 @@ conform.setup({
     javascript = { { "prettierd", "prettier" } },
     typescript = { { "prettierd", "prettier" } },
     typescriptreact = { { "prettierd", "prettier" } },
-    json = { { "prettierd", "prettier" } },
+    json = { "fixjson" },
     css = { { "prettierd", "prettier" } },
     yaml = { "yamlfmt" },
     -- ["*"] = { "codespell" },

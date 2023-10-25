@@ -19,6 +19,9 @@ brew install bat # cat
 npm i -g typescript typescript-language-server
 npm install -g @fsouza/prettierd
 
+## JSON
+npm i -g fixjson
+
 ## Solidity
 npm install -g solidity-language-server
 
