@@ -13,7 +13,7 @@ g.mapleader = " "
 o.background = "dark"
 
 -- autocmd
-cmd([[autocmd FileType cs,java,python,rust setlocal shiftwidth=4 softtabstop=4 tabstop=4 ]])
+cmd([[autocmd FileType cs,java,python,rust,php setlocal shiftwidth=4 softtabstop=4 tabstop=4 ]])
 
 api.nvim_create_autocmd("CursorHold", {
   group = api.nvim_create_augroup("Diagnostic", {}),
@@ -87,6 +87,7 @@ g.copilot_filetypes = {
   ["c++"] = true,
   ["go"] = true,
   ["python"] = true,
+  ["php"] = true,
   ["yaml"] = true,
 }
 
