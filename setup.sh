@@ -23,7 +23,7 @@ npm install -g @fsouza/prettierd
 npm i -g fixjson
 
 ## Solidity
-npm install -g solidity-language-server
+npm install @nomicfoundation/solidity-language-server -g
 
 # Lua
 brew install lua-language-server

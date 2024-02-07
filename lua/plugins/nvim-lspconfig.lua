@@ -116,7 +116,8 @@ lspconfig.pyright.setup({
 })
 
 -- solidity
-lspconfig.solc.setup({
+lspconfig.solidity.setup({
+  cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
   capabilities = capabilities,
 })
 
