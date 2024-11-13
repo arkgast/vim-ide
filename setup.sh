@@ -49,6 +49,16 @@ go install golang.org/x/tools/gopls@latest
 ## Linter
 go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.54.2
 
+## Protobuf
+
+### Plugins
+go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+
+### Language server
+go install github.com/bufbuild/buf-language-server/cmd/bufls@latest
+
+
 ## Install dependencies $GOPATH is configured in ~/.zshrc
 ## export GOPATH=/opt/go
 mkdir /opt/go
