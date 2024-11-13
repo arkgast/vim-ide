@@ -71,6 +71,15 @@ lspconfig.tsserver.setup({
       description = "Organize TS Imports",
     },
   },
+  single_file_support = false,
+  root_dir = lspconfig.util.root_pattern("package.lock", "yarn.lock"),
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+})
+
+lspconfig.denols.setup({
+  capabilities = capabilities,
+  root_dir = lspconfig.util.root_pattern("deno.lock", "deno.jsonc"),
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 })
 
 lspconfig.tailwindcss.setup({
@@ -88,6 +97,7 @@ lspconfig.rust_analyzer.setup({
       },
     },
   },
+  filetypes = { "rust" },
 })
 
 -- go

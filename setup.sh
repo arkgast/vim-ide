@@ -32,7 +32,7 @@ luarocks install luacheck
 luarocks install lanes
 
 # Rust
-brew install rust-analyzer
+rustup component add rust-analyzer
 rustup component add rustfmt
 rustup component add clippy
 

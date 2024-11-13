@@ -33,8 +33,8 @@ conform.setup({
     rust = { "rustfmt" },
     python = { "black" },
     javascript = { { "prettierd", "prettier" } },
-    typescript = { { "prettierd", "prettier" } },
-    typescriptreact = { { "prettierd", "prettier" } },
+    typescript = { { "prettierd", "prettier", "deno" } },
+    typescriptreact = { { "prettierd", "prettier", "deno" } },
     json = { "fixjson" },
     css = { { "prettierd", "prettier" } },
     yaml = { "yamlfmt" },
@@ -44,6 +44,11 @@ conform.setup({
   formatters = {
     forge = {
       command = "forge",
+      args = { "fmt", "--raw", "-" },
+      stdin = true,
+    },
+    deno = {
+      command = "deno",
       args = { "fmt", "--raw", "-" },
       stdin = true,
     },
