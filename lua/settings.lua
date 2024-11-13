@@ -13,7 +13,7 @@ g.mapleader = " "
 o.background = "dark"
 
 -- autocmd
-cmd([[autocmd FileType cs,java,python,rust,php setlocal shiftwidth=4 softtabstop=4 tabstop=4 ]])
+cmd([[autocmd FileType solidity,cs,java,python,rust,php setlocal shiftwidth=4 softtabstop=4 tabstop=4 ]])
 
 api.nvim_create_autocmd("CursorHold", {
   group = api.nvim_create_augroup("Diagnostic", {}),
@@ -70,26 +70,7 @@ o.scrolloff = 4
 -- fold
 o.foldmethod = "indent"
 o.foldnestmax = 10
-o.foldlevelstart = 1
-
--- copilot
-g.copilot_no_tab_map = true
-g.copilot_filetypes = {
-  ["*"] = false,
-  ["javascript"] = true,
-  ["typescript"] = true,
-  ["typescriptreact"] = true,
-  ["gitcommit"] = true,
-  ["lua"] = true,
-  ["rust"] = true,
-  ["c"] = true,
-  ["cs"] = true,
-  ["c++"] = true,
-  ["go"] = true,
-  ["python"] = true,
-  ["php"] = true,
-  ["yaml"] = true,
-}
+o.foldlevelstart = 5
 
 -- diagnostic
 vim.diagnostic.config({
