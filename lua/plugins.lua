@@ -36,6 +36,11 @@ require("lazy").setup({
 
   -- code completion
   {
+    "L3MON4D3/LuaSnip",
+    version = "2.*",
+    build = "make install_jsregexp",
+  },
+  {
     "neovim/nvim-lspconfig",
     config = function()
       require("plugins.nvim-lspconfig")
@@ -51,12 +56,25 @@ require("lazy").setup({
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-nvim-lsp-document-symbol",
       "saadparwaiz1/cmp_luasnip",
-      "L3MON4D3/LuaSnip",
       "rafamadriz/friendly-snippets",
       "onsails/lspkind.nvim",
     },
+    requires = {
+      "L3MON4D3/LuaSnip",
+    },
     config = function()
       require("plugins.nvim-cmp")
+    end,
+  },
+
+  -- c/c++
+  {
+    "p00f/clangd_extensions.nvim",
+    config = function()
+      require("clangd_extensions").setup({
+        inline = true,
+        only_current_line = true,
+      })
     end,
   },
 
@@ -117,6 +135,7 @@ require("lazy").setup({
   {
     "rcarriga/nvim-dap-ui",
     requires = { "mfussenegger/nvim-dap" },
+    dependencies = { "nvim-neotest/nvim-nio" },
     config = function()
       require("plugins.nvim-dap-ui")
     end,
@@ -124,9 +143,6 @@ require("lazy").setup({
 
   -- emmet
   "mattn/emmet-vim",
-
-  -- copilot
-  "github/copilot.vim",
 
   -- treesitter
   {
