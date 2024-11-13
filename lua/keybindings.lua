@@ -13,6 +13,8 @@ map("n", "<Leader>x", ":xit<CR>", { noremap = true })
 
 map("n", "<C-s>", "<C-w>vnew", opts)
 map("n", "<C-t>", ":tabnew<CR>", opts)
+map("n", "tt", ":tabnext<CR>", opts)
+map("n", "tT", ":tabprevious<CR>", opts)
 
 -- move between buffers
 map("n", "<C-h>", ":TmuxNavigateLeft<CR>", opts)
@@ -41,7 +43,7 @@ map("n", "<leader>m", ":TZFocus<CR>", opts)
 
 -- telescope
 map("n", "<C-p>", ":Telescope fd<CR>", opts)
-map("n", "<C-[>", ":Telescope frecency<CR>", opts)
+-- map("n", "<C-P>", ":Telescope frecency<CR>", opts)
 map("n", "<C-f>", ":Telescope live_grep<CR>", opts)
 map("n", "<C-R>", ":Telescope lsp_references<CR>", opts)
 
@@ -53,8 +55,3 @@ map("n", "<C-s>d", ":SessionManager delete_session<CR>", opts)
 -- nvim-tree
 map("n", "<C-n>", ":NvimTreeToggle<CR>", opts)
 map("n", "<leader>n", ":NvimTreeFindFile<CR>", opts)
-
--- copilot
-map("i", "<C-c>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
--- map("i", "<C-j>", 'copilot#Next("<CR>")', { expr = true })
--- map("i", "<C-k>", 'copilot#Prev("<CR>")', { expr = true })
