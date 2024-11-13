@@ -38,6 +38,14 @@ conform.setup({
     json = { "fixjson" },
     css = { { "prettierd", "prettier" } },
     yaml = { "yamlfmt" },
+    solidity = { "forge" },
     -- ["*"] = { "codespell" },
+  },
+  formatters = {
+    forge = {
+      command = "forge",
+      args = { "fmt", "--raw", "-" },
+      stdin = true,
+    },
   },
 })
