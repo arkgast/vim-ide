@@ -2,6 +2,8 @@ local luasnip = require("luasnip")
 local cmp = require("cmp")
 local lspkind = require("lspkind")
 
+require("luasnip.loaders.from_vscode").lazy_load()
+
 local function next_item(fallback)
   if cmp.visible() then
     cmp.select_next_item()
@@ -24,14 +26,19 @@ end
 
 local function confirm_option(fallback)
   if cmp.visible() then
-    cmp.confirm({ select = true })
+    local selected_entry = cmp.get_selected_entry()
+    if selected_entry and selected_entry.source.name == "luasnip" then
+      luasnip.expand_or_jump()
+    else
+      cmp.confirm({ select = true })
+    end
   else
     fallback()
   end
 end
 
 cmp.setup({
-  mapping = {
+  mapping = cmp.mapping.preset.insert({
     ["<Tab>"] = cmp.mapping(next_item, { "i", "s" }),
     ["<C-j>"] = cmp.mapping(next_item, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(prev_item, { "i", "s" }),
@@ -41,11 +48,12 @@ cmp.setup({
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.abort(),
-  },
+  }),
   formatting = {
     format = lspkind.cmp_format({
-      mode = "symbol",
+      mode = "symbol_text",
       maxwidth = 50,
+      ellipsis_char = "...",
     }),
   },
   snippet = {
@@ -53,10 +61,19 @@ cmp.setup({
       luasnip.lsp_expand(args.body)
     end,
   },
-  sources = {
+  sources = cmp.config.sources({
     { name = "nvim_lsp", max_item_count = 10 },
-    { name = "nvim_lsp_signature_help" },
     { name = "luasnip", max_item_count = 10 },
+    { name = "nvim_lsp_signature_help" },
+    { name = "buffer", max_item_count = 5 },
+    { name = "path", max_item_count = 5 },
+  }),
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
+  experimental = {
+    ghost_text = true,
   },
 })
 
