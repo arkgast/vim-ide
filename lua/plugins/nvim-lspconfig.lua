@@ -48,13 +48,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "gD", lsp.buf.declaration, opts)
     map("n", "gd", lsp.buf.definition, opts)
     map("n", "gi", lsp.buf.implementation, opts)
-    map("n", "gr", vim.lsp.buf.references, opts)
-    -- map('n', 'gt', vim.lsp.buf.type_definition, opts)
+    map("n", "gr", lsp.buf.references, opts)
+    map("n", "gt", lsp.buf.type_definition, opts)
     map("n", "ga", lsp.buf.code_action)
     map("n", "<leader>oi", ":OrganizeImports<CR>", opts)
     map("n", "<leader>rn", lsp.buf.rename, opts)
-    map("n", "<leader>i", vim.lsp.buf.hover, opts)
-    map("n", "<C-i>", vim.lsp.buf.signature_help, opts)
+    map("n", "<leader>i", lsp.buf.hover, opts)
+    map("n", "<C-i>", lsp.buf.signature_help, opts)
     vim.keymap.set("n", "<leader>=", function()
       vim.lsp.buf.format({ async = true })
     end, opts)
@@ -118,9 +118,28 @@ lspconfig.pyright.setup({
 -- solidity
 lspconfig.solidity.setup({
   cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
+  root_dir = lspconfig.util.root_pattern(".git", "hardhat.config.*", "foundry.toml"),
+  single_file_support = true,
   capabilities = capabilities,
+  settings = {
+    solidity = {
+      includePath = {
+        "node_modules",
+        "lib",
+        "contracts",
+        "test",
+        "script",
+        "src",
+      },
+      compilerOptimization = {
+        enabled = true,
+        runs = 200,
+      },
+    },
+  },
 })
 
+-- clangd
 lspconfig.clangd.setup({
   capabilities = capabilities,
 })
@@ -137,16 +156,16 @@ lspconfig.lua_ls.setup({
     Lua = {
       runtime = {
         version = "LuaJIT",
-        path = vim.split(package.path, ";"),
       },
       diagnostics = {
         globals = { "vim" },
       },
       workspace = {
-        library = {
-          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-        },
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false,
+      },
+      telemetry = {
+        enable = false,
       },
     },
   },
