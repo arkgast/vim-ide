@@ -15,22 +15,25 @@ lint.linters_by_ft = {
 vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter" }, {
   pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" },
   callback = function()
-    local lint = require("lint")
-    local file = vim.fn.findfile("deno.lock", ".;")
-
-    -- If deno.lock exists, only use deno linter
-    if file ~= "" then
+    local denoFile = vim.fn.findfile("deno.lock", ".;")
+    if denoFile ~= "" then
       pcall(function()
         lint.try_lint("deno")
       end)
-    else
-      -- Not a Deno project, try eslint
-      pcall(function()
+    end
+
+    local packageFile = vim.fn.findfile("package.json", ".;")
+    local yarnFile = vim.fn.findfile("yarn.json", ".;")
+    if packageFile ~= "" or yarnFile ~= "" then
+      local success = pcall(function()
         lint.try_lint("eslint")
       end)
-      pcall(function()
-        lint.try_lint("eslint_d")
-      end)
+
+      if not success then
+        pcall(function()
+          lint.try_lint("eslint_d")
+        end)
+      end
     end
   end,
 })
