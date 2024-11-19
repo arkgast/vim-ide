@@ -72,7 +72,7 @@ lspconfig.tsserver.setup({
     },
   },
   single_file_support = false,
-  root_dir = lspconfig.util.root_pattern("package.lock", "yarn.lock"),
+  root_dir = lspconfig.util.root_pattern("package-lock.json", "yarn-lock.json"),
   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 })
 
@@ -118,17 +118,19 @@ lspconfig.gopls.setup({
       description = "Organize Go Imports",
     },
   },
+  filetypes = { "go" },
 })
 
 -- python
 lspconfig.pyright.setup({
   capabilities = capabilities,
+  filetypes = { "python" },
 })
 
 -- solidity
 lspconfig.solidity.setup({
   cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
-  root_dir = lspconfig.util.root_pattern(".git", "hardhat.config.*", "foundry.toml"),
+  root_dir = lspconfig.util.root_pattern("hardhat.config.*", "foundry.toml"),
   single_file_support = true,
   capabilities = capabilities,
   settings = {
@@ -147,6 +149,7 @@ lspconfig.solidity.setup({
       },
     },
   },
+  filetypes = { "solidity" },
 })
 
 -- clangd
