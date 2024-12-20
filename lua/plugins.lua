@@ -257,4 +257,7 @@ require("lazy").setup({
 
   -- tmux
   "christoomey/vim-tmux-navigator",
+
+  -- discord
+  "andweeb/presence.nvim",
 })
