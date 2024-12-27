@@ -246,6 +246,15 @@ require("lazy").setup({
   },
 
   {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("plugins.copilot")
+    end,
+  },
+
+  {
     "Shatur/neovim-session-manager",
     config = function()
       require("session_manager").setup({
