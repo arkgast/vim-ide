@@ -1,9 +1,3 @@
-# Install package manager
-mkdir -p ~/.local/share/nvim/site/pack/packer/start
-cd ~/.local/share/nvim/site/pack/packer/start
-git clone --depth 1 https://github.com/wbthomason/packer.nvim packer.nvim
-cd -
-
 # Terminal rust programs
 brew install neovim
 brew install lua

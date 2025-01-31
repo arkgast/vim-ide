@@ -63,7 +63,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- Language servers setup
 -- typescript
-lspconfig.tsserver.setup({
+lspconfig.ts_ls.setup({
   capabilities = capabilities,
   commands = {
     OrganizeImports = {
@@ -147,6 +147,10 @@ lspconfig.solidity.setup({
         enabled = true,
         runs = 200,
       },
+      codeLens = {
+        enabled = true,
+      },
+      autocompile = true,
     },
   },
   filetypes = { "solidity" },
