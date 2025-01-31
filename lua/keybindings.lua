@@ -29,6 +29,9 @@ map("n", "<leader>d", ":Gvdiffsplit<CR>", opts)
 map("n", "<leader>dp", ":diffput<SPACE>", opts)
 map("n", "<leader>dg", ":diffget<SPACE>", opts)
 
+-- copilot
+map("n", "<leader>ct", "<cmd>ToggleCopilot<cr>", opts)
+
 -- diagnostics
 map("n", "<leader>e", dgs.open_float, opts)
 map("n", "<leader>l", dgs.setloclist, opts)

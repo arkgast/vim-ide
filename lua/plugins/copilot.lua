@@ -40,3 +40,16 @@ require("copilot").setup({
   copilot_node_command = "node", -- Node.js version must be > 18.x
   server_opts_overrides = {},
 })
+
+local copilot_enabled = false
+
+vim.cmd("Copilot disable")
+vim.api.nvim_create_user_command("ToggleCopilot", function()
+  if copilot_enabled then
+    vim.cmd("Copilot disable")
+    copilot_enabled = false
+  else
+    vim.cmd("Copilot enable")
+    copilot_enabled = true
+  end
+end, {})
