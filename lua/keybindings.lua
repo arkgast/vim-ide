@@ -24,8 +24,6 @@ map("n", "<C-l>", ":TmuxNavigateRight<CR>", opts)
 
 -- git
 map("n", "<leader>g", ":Git<CR>", opts)
-map("n", "<leader>d", ":Gvdiffsplit<CR>", opts)
-
 map("n", "<leader>dp", ":diffput<SPACE>", opts)
 map("n", "<leader>dg", ":diffget<SPACE>", opts)
 

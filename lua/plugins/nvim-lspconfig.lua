@@ -72,7 +72,7 @@ lspconfig.ts_ls.setup({
     },
   },
   single_file_support = false,
-  root_dir = lspconfig.util.root_pattern("package-lock.json", "yarn-lock.json"),
+  root_dir = lspconfig.util.root_pattern("package-lock.json", "yarn.lock"),
   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 })
 
