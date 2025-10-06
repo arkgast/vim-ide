@@ -4,6 +4,21 @@ cd ~/.local/share/nvim/site/pack/packer/start
 git clone --depth 1 https://github.com/wbthomason/packer.nvim packer.nvim
 cd -
 
+# mongo tools - https://www.mongodb.com/docs/database-tools/installation/installation-macos/
+brew tap mongodb/brew
+brew install mongodb-database-tools
+brew upgrade mongodb-database-tools
+
+# install volta, cmake
+# install rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# install ohmyposh
+brew install jandedobbeleer/oh-my-posh/oh-my-posh
+
+# install zoxide -> cd
+cargo install zoxide --locked
+
 # Terminal rust programs
 brew install neovim
 brew install lua
@@ -11,7 +26,8 @@ brew install lua
 # install dependency tools
 brew install ripgrep
 brew install fd
-brew install exa # ls
+brew install fzf
+brew install eza # ls
 brew install bat # cat
 
 # languages support
