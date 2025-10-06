@@ -78,13 +78,7 @@ require("lazy").setup({
     end,
   },
 
-  -- rust
-  {
-    "simrat39/rust-tools.nvim",
-    config = function()
-      require("plugins.rust-tools")
-    end,
-  },
+  -- rust (rust-tools is deprecated, using direct rust-analyzer config instead)
   {
     "saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
