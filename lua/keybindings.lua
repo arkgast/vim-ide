@@ -43,7 +43,6 @@ map("n", "<leader>m", ":TZFocus<CR>", opts)
 
 -- telescope
 map("n", "<C-p>", ":Telescope fd<CR>", opts)
--- map("n", "<C-P>", ":Telescope frecency<CR>", opts)
 map("n", "<C-f>", ":Telescope live_grep<CR>", opts)
 map("n", "<C-R>", ":Telescope lsp_references<CR>", opts)
 
@@ -55,3 +54,14 @@ map("n", "<C-s>d", ":SessionManager delete_session<CR>", opts)
 -- nvim-tree
 map("n", "<C-n>", ":NvimTreeToggle<CR>", opts)
 map("n", "<leader>n", ":NvimTreeFindFile<CR>", opts)
+
+-- gitsigns
+map("n", "<leader>hs", ":Gitsigns stage_hunk<CR>", opts)
+map("n", "<leader>hS", ":Gitsigns stage_buffer<CR>", opts)
+map("n", "<leader>hu", ":Gitsigns undo_stage_hunk<CR>", opts)
+map("n", "<leader>hR", ":Gitsigns reset_hunk<CR>", opts)
+map("n", "<leader>hn", ":Gitsigns next_hunk<CR>", opts)
+map("n", "<leader>hN", ":Gitsigns prev_hunk<CR>", opts)
+map("n", "<leader>hp", ":Gitsigns preview_hunk<CR>", opts)
+map("n", "<leader>hi", ":Gitsigns preview_hunk_inline<CR>", opts)
+map("n", "<leader>hr", ":Gitsigns refresh<CR>", opts)
