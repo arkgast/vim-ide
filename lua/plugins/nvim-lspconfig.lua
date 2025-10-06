@@ -1,5 +1,3 @@
-local lspconfig = require("lspconfig")
-
 local map = vim.keymap.set
 local api = vim.api
 local lsp = vim.lsp
@@ -63,8 +61,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- Language servers setup
 -- typescript
-lspconfig.ts_ls.setup({
+vim.lsp.config.ts_ls = {
   capabilities = capabilities,
+  cmd = { "typescript-language-server", "--stdio" },
   commands = {
     OrganizeImports = {
       ts_imports,
@@ -72,24 +71,27 @@ lspconfig.ts_ls.setup({
     },
   },
   single_file_support = false,
-  root_dir = lspconfig.util.root_pattern("package-lock.json", "yarn-lock.json"),
+  root_markers = { "package-lock.json", "yarn-lock.json" },
   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-})
+}
 
-lspconfig.denols.setup({
+vim.lsp.config.denols = {
   capabilities = capabilities,
-  root_dir = lspconfig.util.root_pattern("deno.lock", "deno.jsonc"),
+  cmd = { "deno", "lsp" },
+  root_markers = { "deno.lock", "deno.jsonc" },
   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-})
+}
 
-lspconfig.tailwindcss.setup({
+vim.lsp.config.tailwindcss = {
   capabilities = capabilities,
+  cmd = { "tailwindcss-language-server", "--stdio" },
   filetypes = { "html", "css", "scss", "javascriptreact", "typescriptreact" },
-})
+}
 
 -- rust
-lspconfig.rust_analyzer.setup({
+vim.lsp.config.rust_analyzer = {
   capabilities = capabilities,
+  cmd = { "rust-analyzer" },
   settings = {
     ["rust-analyzer"] = {
       checkOnSave = {
@@ -98,11 +100,12 @@ lspconfig.rust_analyzer.setup({
     },
   },
   filetypes = { "rust" },
-})
+}
 
 -- go
-lspconfig.gopls.setup({
+vim.lsp.config.gopls = {
   capabilities = capabilities,
+  cmd = { "gopls" },
   settings = {
     gopls = {
       analyses = {
@@ -119,23 +122,24 @@ lspconfig.gopls.setup({
     },
   },
   filetypes = { "go" },
-})
+}
 
 -- python
-lspconfig.pyright.setup({
+vim.lsp.config.pyright = {
   capabilities = capabilities,
+  cmd = { "pyright-langserver", "--stdio" },
   filetypes = { "python" },
   settings = {
     python = {
       pythonPath = vim.fn.expand('./.venv/bin/python') -- Dynamic path relative to the project root
     }
   }
-})
+}
 
 -- solidity
-lspconfig.solidity.setup({
+vim.lsp.config.solidity = {
   cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
-  root_dir = lspconfig.util.root_pattern("hardhat.config.*", "foundry.toml"),
+  root_markers = { "hardhat.config.js", "hardhat.config.ts", "foundry.toml" },
   single_file_support = true,
   capabilities = capabilities,
   settings = {
@@ -155,21 +159,24 @@ lspconfig.solidity.setup({
     },
   },
   filetypes = { "solidity" },
-})
+}
 
 -- clangd
-lspconfig.clangd.setup({
+vim.lsp.config.clangd = {
   capabilities = capabilities,
-})
+  cmd = { "clangd" },
+}
 
 -- c#
-lspconfig.csharp_ls.setup({
+vim.lsp.config.csharp_ls = {
   capabilities = capabilities,
-})
+  cmd = { "csharp-ls" },
+}
 
 -- lua
-lspconfig.lua_ls.setup({
+vim.lsp.config.lua_ls = {
   capabilities = capabilities,
+  cmd = { "lua-language-server" },
   settings = {
     Lua = {
       runtime = {
@@ -187,4 +194,7 @@ lspconfig.lua_ls.setup({
       },
     },
   },
-})
+}
+
+-- Enable all configured language servers
+vim.lsp.enable({ 'ts_ls', 'denols', 'tailwindcss', 'rust_analyzer', 'gopls', 'pyright', 'solidity', 'clangd', 'csharp_ls', 'lua_ls' })
