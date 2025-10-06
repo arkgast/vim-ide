@@ -70,21 +70,21 @@ vim.lsp.config.ts_ls = {
       description = "Organize TS Imports",
     },
   },
-  single_file_support = false,
-  root_markers = { "package-lock.json", "yarn-lock.json" },
+  root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 }
 
 vim.lsp.config.denols = {
   capabilities = capabilities,
   cmd = { "deno", "lsp" },
-  root_markers = { "deno.lock", "deno.jsonc" },
+  root_markers = { "deno.json", "deno.jsonc", "deno.lock" },
   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
 }
 
 vim.lsp.config.tailwindcss = {
   capabilities = capabilities,
   cmd = { "tailwindcss-language-server", "--stdio" },
+  root_markers = { "tailwind.config.js", "tailwind.config.ts", "tailwind.config.cjs", ".git" },
   filetypes = { "html", "css", "scss", "javascriptreact", "typescriptreact" },
 }
 
@@ -92,10 +92,14 @@ vim.lsp.config.tailwindcss = {
 vim.lsp.config.rust_analyzer = {
   capabilities = capabilities,
   cmd = { "rust-analyzer" },
+  root_markers = { "Cargo.toml", "rust-project.json", ".git" },
   settings = {
     ["rust-analyzer"] = {
       checkOnSave = {
         command = "clippy",
+      },
+      cargo = {
+        allFeatures = true,
       },
     },
   },
@@ -106,6 +110,7 @@ vim.lsp.config.rust_analyzer = {
 vim.lsp.config.gopls = {
   capabilities = capabilities,
   cmd = { "gopls" },
+  root_markers = { "go.mod", "go.work", ".git" },
   settings = {
     gopls = {
       analyses = {
@@ -121,27 +126,31 @@ vim.lsp.config.gopls = {
       description = "Organize Go Imports",
     },
   },
-  filetypes = { "go" },
+  filetypes = { "go", "gomod", "gowork", "gotmpl" },
 }
 
 -- python
 vim.lsp.config.pyright = {
   capabilities = capabilities,
   cmd = { "pyright-langserver", "--stdio" },
+  root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "pyrightconfig.json", ".git" },
   filetypes = { "python" },
   settings = {
     python = {
-      pythonPath = vim.fn.expand('./.venv/bin/python') -- Dynamic path relative to the project root
-    }
-  }
+      analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = "workspace",
+      },
+    },
+  },
 }
 
 -- solidity
 vim.lsp.config.solidity = {
-  cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
-  root_markers = { "hardhat.config.js", "hardhat.config.ts", "foundry.toml" },
-  single_file_support = true,
   capabilities = capabilities,
+  cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
+  root_markers = { "hardhat.config.js", "hardhat.config.ts", "foundry.toml", ".git" },
   settings = {
     solidity = {
       includePath = {
@@ -165,18 +174,32 @@ vim.lsp.config.solidity = {
 vim.lsp.config.clangd = {
   capabilities = capabilities,
   cmd = { "clangd" },
+  root_markers = { "compile_commands.json", "compile_flags.txt", ".clangd", ".git" },
+  filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
 }
 
 -- c#
 vim.lsp.config.csharp_ls = {
   capabilities = capabilities,
   cmd = { "csharp-ls" },
+  root_markers = { "*.sln", "*.csproj", ".git" },
+  filetypes = { "cs" },
 }
 
 -- lua
 vim.lsp.config.lua_ls = {
   capabilities = capabilities,
   cmd = { "lua-language-server" },
+  root_markers = {
+    ".luarc.json",
+    ".luarc.jsonc",
+    ".luacheckrc",
+    ".stylua.toml",
+    "stylua.toml",
+    "selene.toml",
+    "selene.yml",
+    ".git",
+  },
   settings = {
     Lua = {
       runtime = {
@@ -192,9 +215,24 @@ vim.lsp.config.lua_ls = {
       telemetry = {
         enable = false,
       },
+      format = {
+        enable = false, -- Use stylua via conform.nvim instead
+      },
     },
   },
+  filetypes = { "lua" },
 }
 
 -- Enable all configured language servers
-vim.lsp.enable({ 'ts_ls', 'denols', 'tailwindcss', 'rust_analyzer', 'gopls', 'pyright', 'solidity', 'clangd', 'csharp_ls', 'lua_ls' })
+vim.lsp.enable({
+  "ts_ls",
+  "denols",
+  "tailwindcss",
+  "rust_analyzer",
+  "gopls",
+  "pyright",
+  "solidity",
+  "clangd",
+  "csharp_ls",
+  "lua_ls",
+})

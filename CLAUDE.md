@@ -27,11 +27,16 @@ The codebase uses lazy.nvim for plugin management. Plugins are declared in `lua/
 LSP setup is centralized in `lua/plugins/nvim-lspconfig.lua` using the new Neovim 0.11+ `vim.lsp.config` API. Key patterns:
 
 - **New API**: Uses `vim.lsp.config.server_name = {}` instead of `require('lspconfig').server_name.setup({})`
-- **Root markers**: Uses `root_markers` array instead of `lspconfig.util.root_pattern()`
-- **Multi-runtime JavaScript/TypeScript**: Uses root markers to distinguish between ts_ls (Node.js projects with package-lock.json/yarn-lock.json) and denols (Deno projects with deno.lock/deno.jsonc)
+- **Root markers**: Uses `root_markers` array with `.git` as fallback for better project detection
+- **Multi-runtime JavaScript/TypeScript**: Uses root markers to distinguish between:
+  - `ts_ls`: Detects `package.json`, `tsconfig.json`, `jsconfig.json`
+  - `denols`: Detects `deno.json`, `deno.jsonc`, `deno.lock`
 - **Custom commands**: TypeScript and Go have custom `:OrganizeImports` commands
-- **Python virtual environments**: Pyright is configured to use `./.venv/bin/python` relative to project root
+- **Python**: Improved Pyright configuration with better root detection and analysis settings
+- **Rust**: Enhanced rust-analyzer with `cargo.allFeatures` enabled
+- **Go**: Extended filetypes to include `gomod`, `gowork`, `gotmpl`
 - **Solidity**: Configured for both Hardhat and Foundry projects
+- **C/C++**: clangd configured to detect `compile_commands.json`, `compile_flags.txt`
 - **Server activation**: All servers are enabled via `vim.lsp.enable()` call at the end of the file
 
 ### Formatting & Linting
