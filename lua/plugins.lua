@@ -158,7 +158,7 @@ require("lazy").setup({
   -- fuzzy finder
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.3",
+    tag = "0.1.8",
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -169,10 +169,6 @@ require("lazy").setup({
   {
     "nvim-telescope/telescope-fzf-native.nvim",
     build = "make",
-  },
-  {
-    "nvim-telescope/telescope-frecency.nvim",
-    dependencies = { "tami5/sqlite.lua" },
   },
 
   -- nvim-tree
@@ -219,6 +215,19 @@ require("lazy").setup({
     end,
   },
 
+  -- ai
+  {
+    "yetone/avante.nvim",
+    build = "make",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    config = function()
+      require("plugins.avante")
+    end,
+  },
+
   -- editing
   {
     "numToStr/Comment.nvim",
@@ -242,16 +251,6 @@ require("lazy").setup({
     "windwp/nvim-autopairs",
     config = function()
       require("nvim-autopairs").setup()
-    end,
-  },
-
-  {
-    "Shatur/neovim-session-manager",
-    config = function()
-      require("session_manager").setup({
-        autoload_mode = "Disabled",
-        autosave_last_session = false,
-      })
     end,
   },
 
