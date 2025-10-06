@@ -2,7 +2,6 @@ local telescope = require("telescope")
 
 local actions = require("telescope.actions")
 
-telescope.load_extension("frecency")
 telescope.load_extension("fzf")
 
 telescope.setup({
@@ -16,9 +15,9 @@ telescope.setup({
         ["<C-u>"] = actions.preview_scrolling_up,
         ["<C-d>"] = actions.preview_scrolling_down,
         ["<C-x>"] = actions.select_horizontal, -- split horizontally
-        ["<C-v>"] = actions.select_vertical, -- split vertically
-        ["<C-l>"] = actions.complete_tag, -- complete tag
-        ["<C-/>"] = actions.which_key, -- which key help
+        ["<C-v>"] = actions.select_vertical,   -- split vertically
+        ["<C-l>"] = actions.complete_tag,      -- complete tag
+        ["<C-/>"] = actions.which_key,         -- which key help
       },
     },
     layout_strategy = "vertical",
@@ -43,26 +42,6 @@ telescope.setup({
       override_generic_sorter = false,
       override_file_sorter = true,
       case_mode = "smart_case",
-    },
-    frecency = {
-      db_root = os.getenv("HOME") .. "/.config/nvim/frencency_db",
-      show_scores = true,
-      ignore_patterns = {
-        "*.git/*",
-        -- javascript
-        "node_modules/*",
-        -- java
-        "target/*",
-        -- csharp
-        "obj/*",
-        "bin/*",
-        -- nvim
-        "undodir/*",
-      },
-      workspaces = {
-        ["minka"] = os.getenv("HOME") .. "/Projects/Minka/minka_",
-        ["config"] = os.getenv("HOME") .. "/Projects/Vim/vim-ide",
-      },
-    },
+    }
   },
 })

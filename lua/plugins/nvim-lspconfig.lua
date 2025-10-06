@@ -125,6 +125,11 @@ lspconfig.gopls.setup({
 lspconfig.pyright.setup({
   capabilities = capabilities,
   filetypes = { "python" },
+  settings = {
+    python = {
+      pythonPath = vim.fn.expand('./.venv/bin/python') -- Dynamic path relative to the project root
+    }
+  }
 })
 
 -- solidity
