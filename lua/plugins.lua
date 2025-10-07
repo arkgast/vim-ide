@@ -58,8 +58,6 @@ require("lazy").setup({
       "saadparwaiz1/cmp_luasnip",
       "rafamadriz/friendly-snippets",
       "onsails/lspkind.nvim",
-    },
-    requires = {
       "L3MON4D3/LuaSnip",
     },
     config = function()
@@ -137,8 +135,7 @@ require("lazy").setup({
   },
   {
     "rcarriga/nvim-dap-ui",
-    requires = { "mfussenegger/nvim-dap" },
-    dependencies = { "nvim-neotest/nvim-nio" },
+    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
     config = function()
       require("plugins.nvim-dap-ui")
     end,
@@ -153,6 +150,18 @@ require("lazy").setup({
     build = function()
       require("nvim-treesitter.install").update({ with_sync = true })
     end,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      "nvim-treesitter/nvim-treesitter-refactor",
+      "nvim-treesitter/nvim-treesitter-context",
+      {
+        "HiPhish/rainbow-delimiters.nvim",
+        config = function()
+          require("plugins.rainbow-delimiters")
+        end,
+      },
+      "windwp/nvim-ts-autotag",
+    },
     config = function()
       require("plugins.treesitter")
     end,
@@ -245,7 +254,7 @@ require("lazy").setup({
 
   {
     "tpope/vim-surround",
-    requires = {
+    dependencies = {
       "tpope/vim-repeat",
     },
   },

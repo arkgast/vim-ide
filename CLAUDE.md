@@ -46,6 +46,13 @@ LSP setup is centralized in `lua/plugins/nvim-lspconfig.lua` using the new Neovi
 
 ### Key Features
 
+- **Treesitter**: Comprehensive syntax tree parsing with:
+  - Advanced text objects (select, swap, move functions/classes/parameters/etc.)
+  - Smart refactoring (highlight definitions, smart rename, navigation)
+  - Context awareness (shows current function/class at top of window)
+  - Rainbow delimiters for nested code visualization
+  - Auto-tagging for HTML/JSX files
+  - Treesitter-based folding
 - **Debugging**: DAP setup with vscode-js-debug for JavaScript/TypeScript
 - **AI Integration**: Avante plugin configured with Ollama (qwen2.5-coder:14b model at localhost:11434)
 - **Git**: Integration via vim-fugitive and gitsigns with extensive keybindings for staging, diffing, and hunk navigation
@@ -83,6 +90,49 @@ When adding/modifying language servers in `lua/plugins/nvim-lspconfig.lua`:
 - **Undo persistence**: Stored in `~/.config/nvim/undodir`
 - **Tab width**: Default 2 spaces (4 for Solidity, C#, Java, Python, Rust, PHP)
 - **Python dependency management**: Uses `uv` for running black formatter
+
+## Treesitter Keybindings
+
+### Text Object Selection (Visual/Operator-pending mode)
+- `af`/`if`: Select outer/inner function
+- `ac`/`ic`: Select outer/inner class
+- `ai`/`ii`: Select outer/inner conditional
+- `al`/`il`: Select outer/inner loop
+- `aa`/`ia`: Select outer/inner parameter
+- `ab`/`ib`: Select outer/inner block
+- `aF`/`iF`: Select outer/inner call
+- `a/`/`i/`: Select outer/inner comment
+
+### Text Object Movement
+- `]f`/`[f`: Next/previous function start
+- `]c`/`[c`: Next/previous class start
+- `]a`/`[a`: Next/previous parameter
+- `]i`/`[i`: Next/previous conditional
+- `]l`/`[l`: Next/previous loop
+- `]s`/`[s`: Next/previous scope
+- Capital letters (e.g., `]F`, `[F`) jump to end instead of start
+
+### Text Object Swapping
+- `<leader>sp`: Swap parameter with next
+- `<leader>sP`: Swap parameter with previous
+- `<leader>sf`: Swap function with next
+- `<leader>sF`: Swap function with previous
+
+### Refactoring
+- `grr`: Smart rename (treesitter scope-aware)
+- `gnd`: Go to definition (treesitter)
+- `gnD`: List all definitions
+- `gO`: List definitions as TOC
+- `]r`/`[r`: Next/previous reference
+
+### Peeking Definitions
+- `<leader>pf`: Peek function definition
+- `<leader>pc`: Peek class definition
+
+### Incremental Selection
+- `<CR>`: Init/expand selection
+- `<S-CR>`: Expand scope
+- `<BS>`: Shrink selection
 
 ## Rust Cargo.toml Keybindings (crates.nvim)
 
