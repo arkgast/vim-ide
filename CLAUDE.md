@@ -38,6 +38,8 @@ LSP setup is centralized in `lua/plugins/nvim-lspconfig.lua` using the new Neovi
 - **Solidity**: Configured for both Hardhat and Foundry projects
 - **C/C++**: clangd configured to detect `compile_commands.json`, `compile_flags.txt`
 - **Server activation**: All servers are enabled via `vim.lsp.enable()` call at the end of the file
+- **Inlay Hints**: Configured for all supported language servers (TypeScript, Deno, Go, Python, C/C++, Lua) with automatic enabling on LspAttach
+- **Codelens**: Configured for Go and Lua language servers with auto-refresh on buffer enter, cursor hold, and insert leave events
 
 ### Formatting & Linting
 
@@ -133,6 +135,55 @@ When adding/modifying language servers in `lua/plugins/nvim-lspconfig.lua`:
 - `<CR>`: Init/expand selection
 - `<S-CR>`: Expand scope
 - `<BS>`: Shrink selection
+
+## LSP Keybindings
+
+### Core LSP Actions
+- `gD`: Go to declaration
+- `gd`: Go to definition
+- `gi`: Go to implementation
+- `gr`: Show references
+- `gt`: Go to type definition
+- `ga`: Show code actions
+- `<leader>oi`: Organize imports (TypeScript/JavaScript/Go/Python)
+- `<leader>rn`: Rename symbol
+- `<leader>i`: Show hover information
+- `<C-i>`: Show signature help
+- `<leader>=`: Format buffer (async)
+- `<leader>e`: Open diagnostic float
+- `<leader>l`: Set diagnostic loclist
+- `[d`: Go to previous diagnostic
+- `]d`: Go to next diagnostic
+
+### Inlay Hints
+- `<leader>th`: Toggle inlay hints for current buffer
+
+**Note**: Inlay hints can enabled for all buffers when a language server that supports them attaches. Supported servers include:
+- **TypeScript/JavaScript (ts_ls)**: Parameter names, types, return types, enum values, property types, variable types
+- **Deno (denols)**: Parameter names, types, return types, enum values, property types, variable types
+- **Go (gopls)**: Variable types, literal field names, literal types, constant values, type parameters, parameter names, range variable types
+- **Python (pyright)**: Variable types, return types, call argument names, parameter types
+- **C/C++ (clangd)**: Designators, parameter names, deduced types
+- **Lua (lua_ls)**: Parameter names, parameter types, variable types, semicolons, array indices
+
+### Codelens
+- `<leader>cl`: Run codelens action under cursor
+- `<leader>cL`: Refresh codelens
+
+**Note**: Codelens are automatically refreshed on buffer enter, cursor hold, and insert leave events. Supported servers:
+- **Go (gopls)**: Generate, regenerate cgo, tidy, upgrade dependency, vendor, gc details
+- **Lua (lua_ls)**: Various Lua-specific code lenses
+
+### Organize Imports
+- `<leader>oi`: Organize imports (keybinding)
+- `:OrganizeImports`: Organize imports (command)
+
+**Supported Languages**:
+- **TypeScript/JavaScript (ts_ls)**: Uses `_typescript.organizeImports` command to sort and remove unused imports
+- **Go (gopls)**: Uses `source.organizeImports` code action to organize imports with goimports logic
+- **Python (pyright)**: Uses `pyright.organizeimports` command to organize Python imports
+
+The organize imports function automatically detects the current buffer's filetype and calls the appropriate language server command.
 
 ## Rust Cargo.toml Keybindings (crates.nvim)
 

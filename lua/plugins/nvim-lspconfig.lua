@@ -2,9 +2,9 @@ local map = vim.keymap.set
 local api = vim.api
 local lsp = vim.lsp
 
--- functions
--- typescript
-local function ts_imports()
+-- Organize imports functions for different language servers
+-- TypeScript/JavaScript: Uses ts_ls execute command
+local function ts_organize_imports()
   local params = {
     command = "_typescript.organizeImports",
     arguments = { api.nvim_buf_get_name(0) },
@@ -13,20 +13,47 @@ local function ts_imports()
   lsp.buf.execute_command(params)
 end
 
--- go
-local function go_imports(timeout_ms)
-  local params = vim.lsp.util.make_range_params()
+-- Go: Uses gopls code action for source.organizeImports
+local function go_organize_imports()
+  local params = lsp.util.make_range_params()
   params.context = { only = { "source.organizeImports" } }
-  local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
-  for cid, res in pairs(result or {}) do
-    for _, r in pairs(res.result or {}) do
-      if r.edit then
-        local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
-        vim.lsp.util.apply_workspace_edit(r.edit, enc)
+  local result = lsp.buf_request_sync(0, "textDocument/codeAction", params, 1000)
+  if not result or vim.tbl_isempty(result) then
+    return
+  end
+  for _, res in pairs(result) do
+    for _, action in pairs(res.result or {}) do
+      if action.edit then
+        local client = lsp.get_active_clients({ bufnr = 0 })[1]
+        if client then
+          lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
+        end
       end
     end
   end
-  vim.lsp.buf.format({ async = false })
+end
+
+-- Python: Uses Pyright's organize imports command
+local function py_organize_imports()
+  local params = {
+    command = "pyright.organizeimports",
+    arguments = { vim.uri_from_bufnr(0) },
+  }
+  lsp.buf.execute_command(params)
+end
+
+-- Universal organize imports function that detects filetype
+local function organize_imports()
+  local ft = vim.bo.filetype
+  if ft == "typescript" or ft == "typescriptreact" or ft == "javascript" or ft == "javascriptreact" then
+    ts_organize_imports()
+  elseif ft == "go" then
+    go_organize_imports()
+  elseif ft == "python" then
+    py_organize_imports()
+  else
+    vim.notify("Organize imports not supported for filetype: " .. ft, vim.log.levels.WARN)
+  end
 end
 
 -- config
@@ -37,25 +64,54 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
   callback = function(ev)
+    local bufnr = ev.buf
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
     -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+    vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
+
+    -- Enable inlay hints if supported
+    -- if client and client.supports_method("textDocument/inlayHint") then
+    --   vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    -- end
+
+    -- Enable codelens if supported
+    if client and client.supports_method("textDocument/codeLens") then
+      vim.lsp.codelens.refresh()
+      -- Auto-refresh codelens on these events
+      vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+        buffer = bufnr,
+        callback = vim.lsp.codelens.refresh,
+      })
+    end
 
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local opts = { buffer = ev.buf }
+    local opts = { buffer = bufnr }
     map("n", "gD", lsp.buf.declaration, opts)
     map("n", "gd", lsp.buf.definition, opts)
     map("n", "gi", lsp.buf.implementation, opts)
     map("n", "gr", lsp.buf.references, opts)
     map("n", "gt", lsp.buf.type_definition, opts)
     map("n", "ga", lsp.buf.code_action)
-    map("n", "<leader>oi", ":OrganizeImports<CR>", opts)
+    map("n", "<leader>oi", organize_imports, opts)
     map("n", "<leader>rn", lsp.buf.rename, opts)
     map("n", "<leader>i", lsp.buf.hover, opts)
     map("n", "<C-i>", lsp.buf.signature_help, opts)
     vim.keymap.set("n", "<leader>=", function()
       vim.lsp.buf.format({ async = true })
     end, opts)
+
+    -- Inlay hints toggle
+    map("n", "<leader>th", function()
+      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
+    end, opts)
+
+    -- Codelens actions
+    if client and client.supports_method("textDocument/codeLens") then
+      map("n", "<leader>cl", vim.lsp.codelens.run, opts)
+      map("n", "<leader>cL", vim.lsp.codelens.refresh, opts)
+    end
   end,
 })
 
@@ -66,12 +122,38 @@ vim.lsp.config.ts_ls = {
   cmd = { "typescript-language-server", "--stdio" },
   commands = {
     OrganizeImports = {
-      ts_imports,
-      description = "Organize TS Imports",
+      ts_organize_imports,
+      description = "Organize TypeScript/JavaScript Imports",
     },
   },
   root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  settings = {
+    typescript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all'
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayEnumMemberValueHints = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+      },
+    },
+    javascript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayEnumMemberValueHints = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+      },
+    },
+  },
 }
 
 vim.lsp.config.denols = {
@@ -79,6 +161,21 @@ vim.lsp.config.denols = {
   cmd = { "deno", "lsp" },
   root_markers = { "deno.json", "deno.jsonc", "deno.lock" },
   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  settings = {
+    deno = {
+      enable = true,
+      lint = true,
+      unstable = true,
+      inlayHints = {
+        parameterNames = { enabled = "all" }, -- 'none' | 'literals' | 'all'
+        parameterTypes = { enabled = true },
+        variableTypes = { enabled = true },
+        propertyDeclarationTypes = { enabled = true },
+        functionLikeReturnTypes = { enabled = true },
+        enumMemberValues = { enabled = true },
+      },
+    },
+  },
 }
 
 vim.lsp.config.tailwindcss = {
@@ -100,11 +197,28 @@ vim.lsp.config.gopls = {
       },
       staticcheck = true,
       gofumpt = true,
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
+      },
+      codelenses = {
+        gc_details = true,
+        generate = true,
+        regenerate_cgo = true,
+        tidy = true,
+        upgrade_dependency = true,
+        vendor = true,
+      },
     },
   },
   commands = {
     OrganizeImports = {
-      go_imports,
+      go_organize_imports,
       description = "Organize Go Imports",
     },
   },
@@ -116,6 +230,12 @@ vim.lsp.config.pyright = {
   capabilities = capabilities,
   cmd = { "pyright-langserver", "--stdio" },
   root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "pyrightconfig.json", ".git" },
+  commands = {
+    OrganizeImports = {
+      py_organize_imports,
+      description = "Organize Python Imports",
+    },
+  },
   filetypes = { "python" },
   settings = {
     python = {
@@ -123,6 +243,14 @@ vim.lsp.config.pyright = {
         autoSearchPaths = true,
         useLibraryCodeForTypes = true,
         diagnosticMode = "workspace",
+      },
+    },
+    pyright = {
+      inlayHints = {
+        variableTypes = true,
+        functionReturnTypes = true,
+        callArgumentNames = true,
+        parameterTypes = true,
       },
     },
   },
@@ -158,6 +286,16 @@ vim.lsp.config.clangd = {
   cmd = { "clangd" },
   root_markers = { "compile_commands.json", "compile_flags.txt", ".clangd", ".git" },
   filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
+  settings = {
+    clangd = {
+      InlayHints = {
+        Designators = true,
+        Enabled = true,
+        ParameterNames = true,
+        DeducedTypes = true,
+      },
+    },
+  },
 }
 
 -- c#
@@ -200,6 +338,17 @@ vim.lsp.config.lua_ls = {
       format = {
         enable = false, -- Use stylua via conform.nvim instead
       },
+      hint = {
+        enable = true,
+        setType = true,
+        paramType = true,
+        paramName = "All", -- 'All' | 'Literal' | 'Disable'
+        semicolon = "All",
+        arrayIndex = "Auto", -- 'Auto' | 'Enable' | 'Disable'
+      },
+      codeLens = {
+        enable = true,
+      },
     },
   },
   filetypes = { "lua" },
@@ -217,4 +366,9 @@ vim.lsp.enable({
   "clangd",
   "csharp_ls",
   "lua_ls",
+})
+
+-- Create global OrganizeImports command
+vim.api.nvim_create_user_command("OrganizeImports", organize_imports, {
+  desc = "Organize imports for current buffer (TypeScript/JavaScript/Go/Python)",
 })
