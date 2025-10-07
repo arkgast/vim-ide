@@ -78,11 +78,10 @@ require("lazy").setup({
     end,
   },
 
-  -- rust (rust-tools is deprecated, using direct rust-analyzer config instead)
   {
     "saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
-    requires = {
+    dependencies = {
       "nvim-lua/plenary.nvim",
     },
     config = function()
