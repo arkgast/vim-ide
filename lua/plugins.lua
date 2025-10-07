@@ -79,6 +79,16 @@ require("lazy").setup({
   },
 
   {
+    "mrcjkb/rustaceanvim",
+    version = "^5",
+    lazy = false, -- Load at startup for Rust files
+    ft = { "rust" },
+    config = function()
+      require("plugins.rustaceanvim")
+    end,
+  },
+
+  {
     "saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
     dependencies = {

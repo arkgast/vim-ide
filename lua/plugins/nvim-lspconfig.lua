@@ -88,24 +88,6 @@ vim.lsp.config.tailwindcss = {
   filetypes = { "html", "css", "scss", "javascriptreact", "typescriptreact" },
 }
 
--- rust
-vim.lsp.config.rust_analyzer = {
-  capabilities = capabilities,
-  cmd = { "rust-analyzer" },
-  root_markers = { "Cargo.toml", "rust-project.json", ".git" },
-  settings = {
-    ["rust-analyzer"] = {
-      checkOnSave = {
-        command = "clippy",
-      },
-      cargo = {
-        allFeatures = true,
-      },
-    },
-  },
-  filetypes = { "rust" },
-}
-
 -- go
 vim.lsp.config.gopls = {
   capabilities = capabilities,
@@ -224,11 +206,11 @@ vim.lsp.config.lua_ls = {
 }
 
 -- Enable all configured language servers
+-- Note: rust_analyzer is configured via rustaceanvim plugin
 vim.lsp.enable({
   "ts_ls",
   "denols",
   "tailwindcss",
-  "rust_analyzer",
   "gopls",
   "pyright",
   "solidity",

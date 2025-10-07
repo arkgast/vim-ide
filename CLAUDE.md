@@ -83,3 +83,72 @@ When adding/modifying language servers in `lua/plugins/nvim-lspconfig.lua`:
 - **Undo persistence**: Stored in `~/.config/nvim/undodir`
 - **Tab width**: Default 2 spaces (4 for Solidity, C#, Java, Python, Rust, PHP)
 - **Python dependency management**: Uses `uv` for running black formatter
+
+## Rust Cargo.toml Keybindings (crates.nvim)
+
+**Note**: crates.nvim now uses an in-process LSP server for all functionality (completion, hover, code actions). The deprecated null_ls and cmp source integrations have been removed.
+
+When editing `Cargo.toml` files, the following keybindings are available:
+
+### Show Information
+- `K`: Show crate popup with info
+- `gd`: Show versions popup
+- `<leader>ct`: Toggle crates.nvim
+- `<leader>cr`: Reload crates information
+
+### Version Popups
+- `<leader>cv`: Show versions popup
+- `<leader>cf`: Show features popup
+- `<leader>cd`: Show dependencies popup
+
+### Update Crates
+- `<leader>cu`: Update crate under cursor (normal) / selected crates (visual)
+- `<leader>ca`: Update all crates
+- `<leader>cU`: Upgrade crate under cursor (normal) / selected crates (visual)
+- `<leader>cA`: Upgrade all crates
+
+### External Links
+- `<leader>cH`: Open homepage
+- `<leader>cR`: Open repository
+- `<leader>cD`: Open documentation
+- `<leader>cC`: Open crates.io
+
+### Crate Manipulation
+- `<leader>ce`: Expand plain crate to inline table
+- `<leader>cE`: Extract crate into table
+
+**Note**: Update keeps version requirements (e.g., `^1.0` → `^1.2`), while upgrade changes to latest version (e.g., `^1.0` → `^2.0`).
+
+## Rust Development (rustaceanvim)
+
+rustaceanvim is the modern successor to rust-tools.nvim with enhanced rust-analyzer integration.
+
+### Rust-Specific Actions
+- `<leader>ra`: Show code actions (grouped intelligently)
+- `<leader>rd`: Show debuggables (debug targets)
+- `<leader>rr`: Show runnables (run targets)
+- `<leader>rt`: Show testables (test targets)
+- `<leader>re`: Explain error under cursor
+- `<leader>rc`: Open Cargo.toml
+- `<leader>rp`: Go to parent module
+- `<leader>rm`: Expand macro under cursor
+- `<leader>rh`: Hover actions
+- `J`: Join lines (Rust-aware)
+
+### Features
+- **Inlay Hints**: Shows type hints, parameter names, and chaining hints inline
+- **Clippy Integration**: Runs clippy with `--all` and `-W clippy::all` flags
+- **Proc Macros**: Full procedural macro support
+- **Experimental Diagnostics**: Enhanced error detection
+- **DAP Integration**: Debugging via codelldb (install via Mason)
+- **Grouped Code Actions**: Intelligent grouping of rust-analyzer actions
+- **Macro Expansion**: View expanded macros in popup
+- **Error Explanations**: Detailed rustc error explanations
+
+### Configuration
+rust-analyzer is configured via rustaceanvim (not nvim-lspconfig):
+- Clippy as default checker
+- All cargo features enabled
+- Proc macro support enabled
+- Inlay hints customized for readability
+- Experimental diagnostics enabled
