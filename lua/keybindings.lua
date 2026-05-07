@@ -46,10 +46,10 @@ map("n", "<C-p>", ":Telescope fd<CR>", opts)
 map("n", "<C-f>", ":Telescope live_grep<CR>", opts)
 map("n", "<C-R>", ":Telescope lsp_references<CR>", opts)
 
--- session manager
-map("n", "<C-s>l", ":SessionManager load_last_session<CR>", opts)
-map("n", "<C-s>s", ":SessionManager save_current_session<CR>", opts)
-map("n", "<C-s>d", ":SessionManager delete_session<CR>", opts)
+-- session manager (uppercase S to avoid clash with treesitter swap mappings on <leader>s)
+map("n", "<leader>Sl", ":SessionManager load_last_session<CR>", opts)
+map("n", "<leader>Ss", ":SessionManager save_current_session<CR>", opts)
+map("n", "<leader>Sd", ":SessionManager delete_session<CR>", opts)
 
 -- nvim-tree
 map("n", "<C-n>", ":NvimTreeToggle<CR>", opts)

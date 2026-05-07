@@ -52,6 +52,8 @@ rustup component add rust-analyzer
 rustup component add rustfmt
 rustup component add clippy
 
+cargo install cargo-watch
+
 # CSharp
 dotnet tool install --global csharp-ls
 
@@ -88,6 +90,9 @@ brew install llvm
 
 # Tailwind
 npm install -g @tailwindcss/language-server
+
+# Nginx
+pip3 install nginxfmt
 
 # YAML
 go install github.com/google/yamlfmt/cmd/yamlfmt@latest

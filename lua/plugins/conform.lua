@@ -41,12 +41,13 @@ conform.setup({
     css = { "prettierd", "prettier", stop_after_first = true },
     yaml = { "yq" },
     solidity = { "forge" },
+    nginx = { "nginxfmt" },
     -- ["*"] = { "codespell" },
   },
   formatters = {
     black = {
       command = "uv",
-      args = { "run", "black", "-" }
+      args = { "run", "black", "-" },
     },
     forge = {
       command = "forge",
@@ -56,6 +57,11 @@ conform.setup({
     deno = {
       command = "deno",
       args = { "fmt", "-" },
+      stdin = true,
+    },
+    nginxfmt = {
+      command = "nginxfmt",
+      args = { "-" },
       stdin = true,
     },
   },

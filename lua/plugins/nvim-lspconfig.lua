@@ -2,6 +2,9 @@ local map = vim.keymap.set
 local api = vim.api
 local lsp = vim.lsp
 
+local deno_markers = { "deno.json", "deno.jsonc", "deno.lock" }
+local ts_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" }
+
 -- Organize imports functions for different language servers
 -- TypeScript/JavaScript: Uses ts_ls execute command
 local function ts_organize_imports()
@@ -70,10 +73,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- Enable completion triggered by <c-x><c-o>
     vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-    -- Enable inlay hints if supported
-    -- if client and client.supports_method("textDocument/inlayHint") then
-    --   vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-    -- end
+    -- Inlay hints: initialize disabled; toggle per-buffer with <leader>th
+    if client and client.supports_method("textDocument/inlayHint") then
+      vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
+    end
 
     -- Enable codelens if supported
     if client and client.supports_method("textDocument/codeLens") then
@@ -126,7 +129,17 @@ vim.lsp.config.ts_ls = {
       description = "Organize TypeScript/JavaScript Imports",
     },
   },
-  root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
+  root_dir = function(bufnr, on_dir)
+    local fname = vim.api.nvim_buf_get_name(bufnr)
+    if vim.fs.root(fname, deno_markers) then
+      return
+    end
+    local r = vim.fs.root(fname, ts_markers)
+    if r then
+      on_dir(r)
+    end
+  end,
+  workspace_required = true,
   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
   settings = {
     typescript = {
@@ -159,13 +172,19 @@ vim.lsp.config.ts_ls = {
 vim.lsp.config.denols = {
   capabilities = capabilities,
   cmd = { "deno", "lsp" },
-  root_markers = { "deno.json", "deno.jsonc", "deno.lock" },
+  root_markers = deno_markers,
+  workspace_required = true,
   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
   settings = {
     deno = {
       enable = true,
       lint = true,
       unstable = true,
+      codeLens = {
+        implementations = true,
+        references = true,
+        referencesAllFunctions = true,
+      },
       inlayHints = {
         parameterNames = { enabled = "all" }, -- 'none' | 'literals' | 'all'
         parameterTypes = { enabled = true },
@@ -176,12 +195,28 @@ vim.lsp.config.denols = {
       },
     },
   },
+  init_options = {
+    lint = true,
+    unstable = true,
+  },
+  handlers = {
+    -- Filter "React must be in scope" (TS 2686) for Preact/Fresh projects.
+    ["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
+      if result and result.diagnostics then
+        result.diagnostics = vim.tbl_filter(function(d)
+          return d.code ~= 2686
+        end, result.diagnostics)
+      end
+      return vim.lsp.handlers["textDocument/publishDiagnostics"](err, result, ctx, config)
+    end,
+  },
 }
 
 vim.lsp.config.tailwindcss = {
   capabilities = capabilities,
   cmd = { "tailwindcss-language-server", "--stdio" },
   root_markers = { "tailwind.config.js", "tailwind.config.ts", "tailwind.config.cjs", ".git" },
+  workspace_required = true,
   filetypes = { "html", "css", "scss", "javascriptreact", "typescriptreact" },
 }
 
@@ -189,7 +224,8 @@ vim.lsp.config.tailwindcss = {
 vim.lsp.config.gopls = {
   capabilities = capabilities,
   cmd = { "gopls" },
-  root_markers = { "go.mod", "go.work", ".git" },
+  root_markers = { "go.work", "go.mod", ".git" },
+  workspace_required = true,
   settings = {
     gopls = {
       analyses = {
@@ -229,7 +265,8 @@ vim.lsp.config.gopls = {
 vim.lsp.config.pyright = {
   capabilities = capabilities,
   cmd = { "pyright-langserver", "--stdio" },
-  root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", "pyrightconfig.json", ".git" },
+  root_markers = { "pyrightconfig.json", "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" },
+  workspace_required = true,
   commands = {
     OrganizeImports = {
       py_organize_imports,
@@ -243,14 +280,12 @@ vim.lsp.config.pyright = {
         autoSearchPaths = true,
         useLibraryCodeForTypes = true,
         diagnosticMode = "workspace",
-      },
-    },
-    pyright = {
-      inlayHints = {
-        variableTypes = true,
-        functionReturnTypes = true,
-        callArgumentNames = true,
-        parameterTypes = true,
+        inlayHints = {
+          variableTypes = true,
+          functionReturnTypes = true,
+          callArgumentNames = true,
+          parameterTypes = true,
+        },
       },
     },
   },
@@ -260,7 +295,15 @@ vim.lsp.config.pyright = {
 vim.lsp.config.solidity = {
   capabilities = capabilities,
   cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
-  root_markers = { "hardhat.config.js", "hardhat.config.ts", "foundry.toml", ".git" },
+  root_markers = {
+    "hardhat.config.js",
+    "hardhat.config.ts",
+    "hardhat.config.cjs",
+    "foundry.toml",
+    "forge.toml",
+    ".git",
+  },
+  workspace_required = true,
   settings = {
     solidity = {
       includePath = {
@@ -285,6 +328,7 @@ vim.lsp.config.clangd = {
   capabilities = capabilities,
   cmd = { "clangd" },
   root_markers = { "compile_commands.json", "compile_flags.txt", ".clangd", ".git" },
+  workspace_required = true,
   filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
   settings = {
     clangd = {
@@ -303,6 +347,7 @@ vim.lsp.config.csharp_ls = {
   capabilities = capabilities,
   cmd = { "csharp-ls" },
   root_markers = { "*.sln", "*.csproj", ".git" },
+  workspace_required = true,
   filetypes = { "cs" },
 }
 

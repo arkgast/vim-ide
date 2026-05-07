@@ -27,10 +27,12 @@ The codebase uses lazy.nvim for plugin management. Plugins are declared in `lua/
 LSP setup is centralized in `lua/plugins/nvim-lspconfig.lua` using the new Neovim 0.11+ `vim.lsp.config` API. Key patterns:
 
 - **New API**: Uses `vim.lsp.config.server_name = {}` instead of `require('lspconfig').server_name.setup({})`
-- **Root markers**: Uses `root_markers` array with `.git` as fallback for better project detection
-- **Multi-runtime JavaScript/TypeScript**: Uses root markers to distinguish between:
-  - `ts_ls`: Detects `package.json`, `tsconfig.json`, `jsconfig.json`
-  - `denols`: Detects `deno.json`, `deno.jsonc`, `deno.lock`
+- **Root markers**: Uses `root_markers` array with `.git` as fallback for better project detection. No dependency on `lspconfig.util` — root resolution uses built-in `vim.fs.root` when a function form is required.
+- **Workspace required**: Most servers set `workspace_required = true` so they don't attach to single files outside a project root.
+- **Multi-runtime JavaScript/TypeScript**: Disambiguates via root detection:
+  - `ts_ls`: uses a `root_dir` function that returns nil if a Deno marker is found, otherwise resolves `package.json` / `tsconfig.json` / `jsconfig.json` / `.git`
+  - `denols`: `root_markers = { "deno.json", "deno.jsonc", "deno.lock" }`
+  - `denols` also installs a per-client `textDocument/publishDiagnostics` handler that filters TS error 2686 ("React must be in scope") for Preact/Fresh projects
 - **Custom commands**: TypeScript and Go have custom `:OrganizeImports` commands
 - **Python**: Improved Pyright configuration with better root detection and analysis settings
 - **Rust**: Enhanced rust-analyzer with `cargo.allFeatures` enabled
@@ -43,7 +45,7 @@ LSP setup is centralized in `lua/plugins/nvim-lspconfig.lua` using the new Neovi
 
 ### Formatting & Linting
 
-- **Formatting**: Handled by conform.nvim (`lua/plugins/conform.lua`) with format-on-save and format-after-save for slow formatters. Python uses `uv run black`, TypeScript/Deno uses `deno fmt`, Solidity uses `forge fmt`.
+- **Formatting**: Handled by conform.nvim (`lua/plugins/conform.lua`) with format-on-save and format-after-save for slow formatters. Python uses `uv run black`, TypeScript/Deno uses `deno fmt`, Solidity uses `forge fmt`, Nginx uses `nginxfmt` (installed via `pip3 install nginxfmt` in setup.sh).
 - **Linting**: Managed by nvim-lint (`lua/plugins/nvim-lint.lua`) with automatic detection of Deno vs Node.js projects via file presence checks
 
 ### Key Features
@@ -90,7 +92,7 @@ When adding/modifying language servers in `lua/plugins/nvim-lspconfig.lua`:
 - **Leader key**: Space (`<Space>`)
 - **Diagnostic displays**: Virtual text is disabled; diagnostics appear in floating windows on CursorHold
 - **Undo persistence**: Stored in `~/.config/nvim/undodir`
-- **Tab width**: Default 2 spaces (4 for Solidity, C#, Java, Python, Rust, PHP)
+- **Tab width**: Default 2 spaces (4 for Solidity, C#, Java, Python, Rust, PHP). Nginx and Make use literal tabs (`noexpandtab`) with width 4.
 - **Python dependency management**: Uses `uv` for running black formatter
 
 ## Treesitter Keybindings
@@ -158,7 +160,7 @@ When adding/modifying language servers in `lua/plugins/nvim-lspconfig.lua`:
 ### Inlay Hints
 - `<leader>th`: Toggle inlay hints for current buffer
 
-**Note**: Inlay hints can enabled for all buffers when a language server that supports them attaches. Supported servers include:
+**Note**: Inlay hints are initialized but disabled by default when an LSP server attaches. Use `<leader>th` to toggle them on/off. Supported servers include:
 - **TypeScript/JavaScript (ts_ls)**: Parameter names, types, return types, enum values, property types, variable types
 - **Deno (denols)**: Parameter names, types, return types, enum values, property types, variable types
 - **Go (gopls)**: Variable types, literal field names, literal types, constant values, type parameters, parameter names, range variable types
@@ -184,6 +186,14 @@ When adding/modifying language servers in `lua/plugins/nvim-lspconfig.lua`:
 - **Python (pyright)**: Uses `pyright.organizeimports` command to organize Python imports
 
 The organize imports function automatically detects the current buffer's filetype and calls the appropriate language server command.
+
+## Session Manager Keybindings
+
+Capital `S` prefix is used to avoid clash with treesitter swap mappings on `<leader>s{p,P,f,F}`.
+
+- `<leader>Sl`: Load last session
+- `<leader>Ss`: Save current session
+- `<leader>Sd`: Delete session
 
 ## Rust Cargo.toml Keybindings (crates.nvim)
 

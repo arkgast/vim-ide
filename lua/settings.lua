@@ -15,6 +15,10 @@ o.background = "dark"
 -- autocmd
 cmd([[autocmd FileType solidity,cs,java,python,rust,php setlocal shiftwidth=4 softtabstop=4 tabstop=4 ]])
 
+cmd([[
+  autocmd FileType nginx,make setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=0
+]])
+
 api.nvim_create_autocmd("CursorHold", {
   group = api.nvim_create_augroup("Diagnostic", {}),
   callback = function()
