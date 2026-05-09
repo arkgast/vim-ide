@@ -54,6 +54,14 @@ rustup component add clippy
 
 cargo install cargo-watch
 
+# Solana CLI — install manually, see official docs:
+#   https://docs.anza.xyz/cli/install
+# After install, ensure ~/.local/share/solana/install/active_release/bin is in PATH.
+
+# Anchor — install via avm (Anchor Version Manager) once Solana is on PATH:
+#   cargo install --git https://github.com/coral-xyz/anchor avm --force
+#   avm install latest && avm use latest
+
 # CSharp
 dotnet tool install --global csharp-ls
 

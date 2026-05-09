@@ -259,7 +259,44 @@ rustaceanvim is the modern successor to rust-tools.nvim with enhanced rust-analy
 ### Configuration
 rust-analyzer is configured via rustaceanvim (not nvim-lspconfig):
 - Clippy as default checker
-- All cargo features enabled
-- Proc macro support enabled
+- Cargo `allFeatures` disabled — Anchor's `idl-build` feature would pull in IDL codegen that references bare `solana_program`, causing `cargo check` to fail with E0433 inside rust-analyzer (Anchor itself warns against adding `solana-program` as a direct dep)
+- Proc macro support enabled (required for Anchor's `#[program]`, `#[derive(Accounts)]`, `declare_id!`)
 - Inlay hints customized for readability
-- Experimental diagnostics enabled
+- Experimental diagnostics disabled (rust-analyzer's experimental type checker false-positives on Anchor macro expansion; real errors still come from cargo check via checkOnSave)
+- `diagnostics.disabled` includes `unresolved-extern-crate` and `unresolved-macro-call` — Anchor's `#[program]` macro emits paths through `anchor_lang::solana_program` re-export which RA's name resolver can't follow; cargo check resolves them correctly
+- Separate target dir (`cargo.targetDir = true`) so rust-analyzer doesn't clobber `anchor build` / `cargo build-sbf` cache
+- `files.excludeDirs` skips `.anchor`, `target`, `test-ledger`, `node_modules`, `dist`
+
+## Anchor / Solana Development
+
+Helper module at `lua/plugins/anchor.lua` (loaded from `init.lua`). Activates keymaps in any buffer whose path is inside an `Anchor.toml` workspace. Commands run in a horizontal terminal split (cwd switched to the Anchor root).
+
+### Keymaps (`<leader>A` prefix)
+
+Anchor lifecycle:
+- `<leader>Ab`: `anchor build`
+- `<leader>AB`: `anchor build --no-idl`
+- `<leader>At`: `anchor test`
+- `<leader>AT`: `anchor test --skip-local-validator`
+- `<leader>Ad`: `anchor deploy` (localnet)
+- `<leader>AD`: `anchor deploy --provider.cluster devnet`
+- `<leader>Ac`: `anchor clean`
+- `<leader>Ak`: `anchor keys list`
+- `<leader>As`: `anchor keys sync`
+- `<leader>Ai`: Pick an IDL JSON from `target/idl/` and open it
+
+Solana CLI:
+- `<leader>Av`: Start `solana-test-validator --reset` in a terminal
+- `<leader>Al`: Tail `solana logs`
+- `<leader>Aa`: Show wallet address
+- `<leader>Ax`: Show balance
+
+### User Commands
+- `:AnchorBuild`, `:AnchorTest`, `:AnchorIdl`
+- `:AnchorDeploy [localnet|devnet|testnet|mainnet]`
+- `:SolanaValidator`, `:SolanaLogs`
+
+### Toolchain
+Installed via `setup.sh`:
+- Solana CLI from `release.anza.xyz` (Anza fork — current upstream)
+- Anchor via `avm` (Anchor Version Manager); `avm install latest && avm use latest`

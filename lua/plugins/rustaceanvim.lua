@@ -57,16 +57,50 @@ local function rustacean_setup()
             extraArgs = { "--all", "--", "-W", "clippy::all" },
           },
           cargo = {
-            allFeatures = true,
+            -- Don't enable all features. Anchor's `idl-build` feature
+            -- pulls in IDL-generation code that references bare
+            -- `solana_program`; without it as a direct dep (Anchor warns
+            -- against adding it) `cargo check --all-features` fails
+            -- with E0433. Use defaults instead.
+            allFeatures = false,
             loadOutDirsFromCheck = true,
+            -- Use a separate target dir so rust-analyzer doesn't fight
+            -- `anchor build` / `cargo build-sbf` for cargo's lock.
+            targetDir = true,
+            buildScripts = {
+              enable = true,
+            },
           },
           procMacro = {
             enable = true,
+            -- Anchor relies on heavy proc-macros (`#[program]`,
+            -- `#[derive(Accounts)]`, `declare_id!`); keep enabled.
+          },
+          files = {
+            excludeDirs = {
+              ".anchor",
+              "target",
+              "test-ledger",
+              "node_modules",
+              "dist",
+            },
           },
           diagnostics = {
             enable = true,
+            -- Keep experimental off: it false-positives heavily on
+            -- macro-expanded code (Anchor's #[derive(Accounts)] /
+            -- #[program] produce bogus type-mismatch errors). Real
+            -- errors still surface via checkOnSave (clippy).
             experimental = {
-              enable = true,
+              enable = false,
+            },
+            -- Anchor's #[program] macro expands to paths that reference
+            -- `solana_program` via anchor_lang's re-export. RA's name
+            -- resolver can't follow the re-export and falsely reports
+            -- E0433. cargo check is fine, so silence these IDs.
+            disabled = {
+              "unresolved-extern-crate",
+              "unresolved-macro-call",
             },
           },
           inlayHints = {
