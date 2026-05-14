@@ -38,8 +38,8 @@ map("n", "]d", dgs.goto_next, opts)
 -- mundo
 map("n", "<leader>u", ":MundoToggle<CR>", opts)
 
--- true-zen
-map("n", "<leader>m", ":TZFocus<CR>", opts)
+-- zen-mode
+map("n", "<leader>m", ":ZenMode<CR>", opts)
 
 -- telescope
 map("n", "<C-p>", ":Telescope fd<CR>", opts)

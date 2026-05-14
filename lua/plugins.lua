@@ -214,9 +214,11 @@ require("lazy").setup({
 
   -- utils
   {
-    "Pocco81/true-zen.nvim",
+    "folke/zen-mode.nvim",
+    cmd = "ZenMode",
+    keys = { { "<leader>m", ":ZenMode<CR>", desc = "Zen Mode" } },
     config = function()
-      require("true-zen").setup()
+      require("zen-mode").setup()
     end,
   },
 
