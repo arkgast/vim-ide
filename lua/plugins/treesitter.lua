@@ -225,7 +225,43 @@ require("nvim-ts-autotag").setup({
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldenable = true
+vim.opt.foldcolumn = "0"
 vim.opt.fillchars:append({ fold = " " })
+
+-- Custom single-cell fold marker for the statuscolumn. Avoids Neovim's
+-- depth-digit behavior in `foldcolumn` when nesting exceeds column width.
+_G.fold_mark = function()
+  local lnum = vim.v.lnum
+  if vim.fn.foldclosed(lnum) ~= -1 then
+    return "▶"
+  end
+  if vim.fn.foldlevel(lnum) > vim.fn.foldlevel(lnum - 1) then
+    return "▽"
+  end
+  return " "
+end
+vim.opt.statuscolumn = "%s%{%v:lua.fold_mark()%}%=%{v:relnum?v:relnum:v:lnum} "
+
+-- Highlight groups that combine semantic fg with Folded bg so the entire
+-- folded line shares a uniform background regardless of colorscheme.
+local function refresh_fold_hl()
+  local folded = vim.api.nvim_get_hl(0, { name = "Folded", link = false })
+  local bg = folded.bg
+  local map = {
+    FoldHeader = "Function",
+    FoldDots = "Comment",
+    FoldCount = "Number",
+  }
+  for name, link in pairs(map) do
+    local src = vim.api.nvim_get_hl(0, { name = link, link = false })
+    vim.api.nvim_set_hl(0, name, { fg = src.fg, bg = bg, bold = src.bold })
+  end
+end
+refresh_fold_hl()
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = vim.api.nvim_create_augroup("FoldHighlights", { clear = true }),
+  callback = refresh_fold_hl,
+})
 
 -- Custom foldtext: meaningful header (climbs treesitter when foldstart is a
 -- bare brace), dot-filled ruler, right-aligned line count. Returns highlight
@@ -349,9 +385,7 @@ _G.custom_foldtext = function()
   local budget = math.max(width - textoff, 20)
 
   local compact = budget < 60
-  local right = compact
-      and string.format(" 󰁂 %d ", count)
-    or string.format(" 󰁂 %d lines ", count)
+  local right = compact and string.format(" 󰁂 %d ", count) or string.format(" 󰁂 %d lines ", count)
 
   local header_w = vim.fn.strdisplaywidth(header)
   local right_w = vim.fn.strdisplaywidth(right)
@@ -382,10 +416,10 @@ _G.custom_foldtext = function()
   local dots = " " .. string.rep("·", fill_w) .. " "
 
   return {
-    { indent, "Normal" },
-    { header, "Function" },
-    { dots, "Comment" },
-    { right, "Number" },
+    { indent, "Folded" },
+    { header, "FoldHeader" },
+    { dots, "FoldDots" },
+    { right, "FoldCount" },
   }
 end
 vim.opt.foldtext = "v:lua.custom_foldtext()"
