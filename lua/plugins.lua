@@ -270,4 +270,116 @@ require("lazy").setup({
 
   -- tmux
   "christoomey/vim-tmux-navigator",
+
+  -- discoverability
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("plugins.which-key")
+    end,
+  },
+
+  -- motion
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("plugins.flash")
+    end,
+    keys = {
+      {
+        "s",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump()
+        end,
+        desc = "Flash jump",
+      },
+      {
+        "S",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").treesitter()
+        end,
+        desc = "Flash treesitter",
+      },
+      {
+        "r",
+        mode = "o",
+        function()
+          require("flash").remote()
+        end,
+        desc = "Remote flash",
+      },
+    },
+  },
+
+  -- file pinning
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("plugins.harpoon")
+    end,
+  },
+
+  -- todos
+  {
+    "folke/todo-comments.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("plugins.todo-comments")
+    end,
+  },
+
+  -- ui: cmdline / notifications
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    },
+    config = function()
+      require("plugins.noice")
+    end,
+  },
+
+  -- indent guides
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    event = { "BufReadPost", "BufNewFile" },
+    config = function()
+      require("plugins.indent-blankline")
+    end,
+  },
+
+  -- buffer-as-directory file editing
+  {
+    "stevearc/oil.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    cmd = "Oil",
+    keys = { { "<leader>-", desc = "Open parent dir (oil)" } },
+    config = function()
+      require("plugins.oil")
+    end,
+  },
+
+  -- symbol outline
+  {
+    "stevearc/aerial.nvim",
+    cmd = { "AerialToggle", "AerialOpen", "AerialNext", "AerialPrev" },
+    keys = { { "<leader>a", desc = "Toggle aerial outline" } },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("plugins.aerial")
+    end,
+  },
 })
