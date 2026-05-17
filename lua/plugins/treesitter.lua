@@ -221,8 +221,186 @@ require("nvim-ts-autotag").setup({
   },
 })
 
--- Folding with Treesitter
+-- Folding with Treesitter (built-in foldexpr — Neovim 0.10+)
 vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-vim.opt.foldenable = false -- Don't fold by default
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldenable = true
+vim.opt.fillchars:append({ fold = " " })
+
+-- Custom foldtext: meaningful header (climbs treesitter when foldstart is a
+-- bare brace), dot-filled ruler, right-aligned line count. Returns highlight
+-- chunks so the header/dots/count get distinct colors.
+local fold_anchor_nodes = {
+  function_declaration = true,
+  function_definition = true,
+  function_item = true,
+  method_definition = true,
+  method_declaration = true,
+  class_declaration = true,
+  class_definition = true,
+  struct_item = true,
+  enum_item = true,
+  trait_item = true,
+  impl_item = true,
+  mod_item = true,
+  try_statement = true,
+  catch_clause = true,
+  finally_clause = true,
+  if_statement = true,
+  for_statement = true,
+  while_statement = true,
+  do_statement = true,
+  match_expression = true,
+  match_arm = true,
+  arrow_function = true,
+  lambda_expression = true,
+  interface_declaration = true,
+  type_alias_declaration = true,
+  variable_declaration = true,
+  lexical_declaration = true,
+  object = true,
+  table_constructor = true,
+}
+
+local function is_meaningless(line)
+  local s = line:gsub("^%s+", ""):gsub("%s+$", "")
+  if s == "" then
+    return true
+  end
+  -- bare braces / parens / arrows: `{`, `}`, `})`, `} {`, `} else {`,
+  -- `} catch (e) {`, `) {`, `=> {`, etc.
+  if s:match("^[%){}%]]+$") then
+    return true
+  end
+  if s:match("^[%){}%]=>%s]*{$") then
+    return true
+  end
+  return false
+end
+
+local function resolve_header(foldstart, foldend)
+  local raw = vim.fn.getline(foldstart)
+  if not is_meaningless(raw) then
+    return raw
+  end
+
+  -- Try treesitter: find ancestor whose first line is meaningful.
+  local ok, node = pcall(vim.treesitter.get_node, {
+    pos = { foldstart - 1, 0 },
+    ignore_injections = false,
+  })
+  if ok and node then
+    local cur = node
+    while cur do
+      local srow = cur:start()
+      local candidate = vim.fn.getline(srow + 1)
+      if fold_anchor_nodes[cur:type()] and not is_meaningless(candidate) then
+        return candidate
+      end
+      cur = cur:parent()
+    end
+  end
+
+  -- Fallback: scan forward inside the fold for the first meaningful line,
+  -- then backward above the fold.
+  for lnum = foldstart + 1, foldend do
+    local l = vim.fn.getline(lnum)
+    if not is_meaningless(l) then
+      return l
+    end
+  end
+  for lnum = foldstart - 1, math.max(foldstart - 5, 1), -1 do
+    local l = vim.fn.getline(lnum)
+    if not is_meaningless(l) then
+      return l
+    end
+  end
+  return raw, foldstart
+end
+
+local function leading_indent_width(line)
+  return vim.fn.strdisplaywidth(line:match("^%s*") or "")
+end
+
+local function clean_header(line)
+  local s = line:gsub("^%s+", ""):gsub("%s+$", "")
+  -- strip trailing open-brace / arrow so the dot ruler starts cleanly
+  s = s:gsub("%s*=>%s*{?$", "")
+  s = s:gsub("%s*{$", "")
+  return s
+end
+
+_G.custom_foldtext = function()
+  local foldstart = vim.v.foldstart
+  local foldend = vim.v.foldend
+  local count = foldend - foldstart + 1
+
+  local raw_header = resolve_header(foldstart, foldend)
+  local indent_w = leading_indent_width(raw_header)
+  local header = clean_header(raw_header)
+  if header == "" then
+    header = vim.fn.getline(foldstart):gsub("^%s+", "")
+    indent_w = 0
+  end
+
+  local winid = vim.api.nvim_get_current_win()
+  local width = vim.api.nvim_win_get_width(winid)
+  local textoff = (vim.fn.getwininfo(winid)[1] or {}).textoff or 0
+  local budget = math.max(width - textoff, 20)
+
+  local compact = budget < 60
+  local right = compact
+      and string.format(" 󰁂 %d ", count)
+    or string.format(" 󰁂 %d lines ", count)
+
+  local header_w = vim.fn.strdisplaywidth(header)
+  local right_w = vim.fn.strdisplaywidth(right)
+
+  -- If indent alone would crowd the budget, drop it.
+  if indent_w + header_w + right_w + 4 > budget then
+    indent_w = 0
+  end
+
+  -- Header truncation if it eats the whole budget
+  if indent_w + header_w + right_w + 4 > budget then
+    local max_header = budget - indent_w - right_w - 4
+    if max_header < 6 then
+      header = ""
+      header_w = 0
+    else
+      local truncated = vim.fn.strcharpart(header, 0, max_header - 1)
+      header = truncated .. "…"
+      header_w = vim.fn.strdisplaywidth(header)
+    end
+  end
+
+  local fill_w = budget - indent_w - header_w - right_w - 2
+  if fill_w < 1 then
+    fill_w = 1
+  end
+  local indent = string.rep(" ", indent_w)
+  local dots = " " .. string.rep("·", fill_w) .. " "
+
+  return {
+    { indent, "Normal" },
+    { header, "Function" },
+    { dots, "Comment" },
+    { right, "Number" },
+  }
+end
+vim.opt.foldtext = "v:lua.custom_foldtext()"
 vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldnestmax = 10
+
+-- Fallback to indent folding when no treesitter parser is attached,
+-- so buffers without a parser still get sensible folds.
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  group = vim.api.nvim_create_augroup("TSFoldFallback", { clear = true }),
+  callback = function(args)
+    local ok, parser = pcall(vim.treesitter.get_parser, args.buf)
+    if not ok or not parser then
+      vim.api.nvim_set_option_value("foldmethod", "indent", { scope = "local" })
+    end
+  end,
+})

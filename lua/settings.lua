@@ -71,11 +71,6 @@ o.ignorecase = true
 o.smartcase = true
 o.scrolloff = 4
 
--- fold
-o.foldmethod = "indent"
-o.foldnestmax = 10
-o.foldlevelstart = 5
-
 -- diagnostic
 vim.diagnostic.config({
   virtual_text = false,
