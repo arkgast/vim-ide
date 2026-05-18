@@ -8,16 +8,16 @@ harpoon:setup({
 })
 
 local map = vim.keymap.set
-map("n", "<leader>ha", function()
+map("n", "<leader>Ha", function()
   harpoon:list():add()
 end, { desc = "Harpoon add file" })
-map("n", "<leader>hh", function()
+map("n", "<leader>HH", function()
   harpoon.ui:toggle_quick_menu(harpoon:list())
 end, { desc = "Harpoon menu" })
-map("n", "<leader>hn", function()
+map("n", "<leader>Hn", function()
   harpoon:list():next()
 end, { desc = "Harpoon next" })
-map("n", "<leader>hp", function()
+map("n", "<leader>Hp", function()
   harpoon:list():prev()
 end, { desc = "Harpoon prev" })
 
