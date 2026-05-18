@@ -369,6 +369,27 @@ require("lazy").setup({
     end,
   },
 
+  -- markdown
+  {
+    "dhruvasagar/vim-table-mode",
+    ft = "markdown",
+    cmd = { "TableModeToggle", "TableModeRealign", "Tableize" },
+    config = function()
+      require("plugins.vim-table-mode")
+    end,
+  },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown", "Avante" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("plugins.render-markdown")
+    end,
+  },
+
   -- symbol outline
   {
     "stevearc/aerial.nvim",

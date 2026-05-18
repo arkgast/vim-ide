@@ -18,6 +18,7 @@ wk.add({
   { "<leader>o", group = "organize" },
   { "<leader>t", group = "toggle" },
   { "<leader>H", group = "harpoon" },
+  { "<leader>M", group = "markdown" },
   { "<leader>h", group = "hunks (gitsigns)" },
   { "<leader>x", group = "trouble" },
   { "g", group = "goto" },
