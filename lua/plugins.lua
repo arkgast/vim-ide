@@ -245,8 +245,11 @@ require("lazy").setup({
   -- editing
   {
     "numToStr/Comment.nvim",
+    dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
     config = function()
-      require("Comment").setup()
+      require("Comment").setup({
+        pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+      })
     end,
   },
 
@@ -366,6 +369,101 @@ require("lazy").setup({
     keys = { { "<leader>-", desc = "Open parent dir (oil)" } },
     config = function()
       require("plugins.oil")
+    end,
+  },
+
+  -- testing
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-neotest/nvim-nio",
+      "nvim-neotest/neotest-jest",
+      "marilari88/neotest-vitest",
+      "nvim-neotest/neotest-plenary",
+    },
+    keys = { { "<leader>T", desc = "Test" } },
+    config = function()
+      require("plugins.neotest")
+    end,
+  },
+
+  -- git UX
+  {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
+    keys = {
+      { "<leader>gd", desc = "Diffview open" },
+      { "<leader>gD", desc = "Diffview close" },
+      { "<leader>gh", desc = "File history" },
+      { "<leader>gH", desc = "Repo history" },
+    },
+    config = function()
+      require("plugins.diffview")
+    end,
+  },
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    cmd = "Neogit",
+    keys = { { "<leader>gg", desc = "Neogit" } },
+    config = function()
+      require("plugins.neogit")
+    end,
+  },
+
+  -- refactoring
+  {
+    "ThePrimeagen/refactoring.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "lewis6991/async.nvim",
+    },
+    keys = { { "<leader>R", desc = "Refactor", mode = { "n", "x" } } },
+    config = function()
+      require("plugins.refactoring")
+    end,
+  },
+
+  -- color preview
+  {
+    "brenoprata10/nvim-highlight-colors",
+    event = { "BufReadPost", "BufNewFile" },
+    config = function()
+      require("plugins.colors")
+    end,
+  },
+
+  -- jsx/js QoL
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    lazy = true,
+  },
+  {
+    "axelvc/template-string.nvim",
+    ft = { "javascript", "typescript", "javascriptreact", "typescriptreact", "vue", "svelte" },
+    config = function()
+      require("plugins.jsx-tools")
+    end,
+  },
+
+  -- project find/replace
+  {
+    "MagicDuck/grug-far.nvim",
+    cmd = "GrugFar",
+    keys = {
+      { "<leader>fR", desc = "Find/replace (grug-far)" },
+      { "<leader>fr", desc = "Find/replace word", mode = { "n", "v" } },
+    },
+    config = function()
+      require("plugins.grug-far")
     end,
   },
 
