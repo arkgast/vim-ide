@@ -3,9 +3,6 @@ require("neotest").setup({
     require("neotest-jest")({
       jestCommand = "npx jest --",
       env = { CI = true },
-      cwd = function()
-        return vim.fn.getcwd()
-      end,
     }),
     require("neotest-vitest"),
     require("rustaceanvim.neotest"),

@@ -15,8 +15,4 @@ require("template-string").setup({
   },
   jsx_brackets = true,
   remove_template_string = true,
-  restore_quotes = {
-    normal = [["]],
-    jsx = [["]],
-  },
 })
